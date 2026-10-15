@@ -214,8 +214,38 @@ td.big{font-family:var(--font-display);font-size:20px;font-weight:700}
 .sims div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:6px 0;font-size:15px}
 .ok-t{color:var(--green);font-weight:700}.ko-t{color:var(--red);font-weight:700}
 .kbd{font-size:13px;color:var(--muted)}
+.h2{font-size:24px;font-weight:700;margin-bottom:10px}
+.today{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.6fr);gap:10px}
+.tcell{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;display:flex;flex-direction:column;gap:4px;text-align:left;min-width:0}
+.tcell .k{font-family:var(--font-display);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tcell .v{font-family:var(--font-display);font-size:30px;font-weight:700;line-height:1}
+.tcell .v2{font-size:13px;color:var(--muted)}
+.tcell.rec{border-color:var(--sign);background:var(--sign-soft)}
+.tcell.rec b{font-size:16px;line-height:1.25}
+.gpips{display:flex;gap:6px;padding:6px 0 2px}
+.gpip{width:16px;height:16px;border-radius:4px;border:2px solid var(--line)}
+.gpip.on{background:var(--green);border-color:var(--green)}
+@media (max-width:720px){.today{grid-template-columns:repeat(3,minmax(0,1fr))}.tcell.rec{grid-column:1/-1}}
+.inp{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.inp.code{width:100%;font-size:12px;font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all;resize:vertical}
+.chart{width:100%;height:auto;display:block}
+.chart .ax{font-size:12px;fill:var(--muted);font-family:var(--font-body)}
+.chart .lbl2{font-size:14px;font-weight:700;fill:var(--fg);font-family:var(--font-body)}
+.chart .pt:hover circle+circle{stroke-width:3}
+.tlist{display:flex;flex-direction:column;gap:6px}
+.trow{display:grid;grid-template-columns:34px minmax(0,1fr) auto 52px;grid-template-rows:auto auto;gap:4px 10px;align-items:center;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:8px 10px;text-align:left}
+.trow:hover{border-color:var(--sign)}
+.badge.sm{width:34px;height:34px;font-size:17px;grid-row:span 2}
+.trow .tn{font-weight:700;min-width:0}.trow .tn small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.trow .pct{text-align:right;font-weight:700}
+.trow .bar{grid-column:2/5;margin:0}
+.chip{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid}
+.chip.good{color:var(--green);background:var(--green-bg)}.chip.mid{color:var(--amber);background:var(--amber-bg)}.chip.bad{color:var(--red);background:var(--red-bg)}.chip.none{color:var(--muted);background:var(--surface-2)}
+.bar i.mid{background:var(--amber)}.bar i.bad{background:var(--red)}
+@media (max-width:540px){.trow{grid-template-columns:34px minmax(0,1fr) 52px;grid-template-rows:auto auto auto}.badge.sm{grid-row:span 3}.trow .chip{grid-column:2;grid-row:2;justify-self:start}.trow .pct{grid-column:3;grid-row:1}.trow .bar{grid-column:2/4;grid-row:3}}
+body.exam .side{display:none}body.exam .shell{grid-template-columns:minmax(0,1fr)}body.exam .menubtn{display:none}
 .sg{display:block;width:100%;height:auto}
-.qimg{display:flex;justify-content:center;margin:-4px 0 16px}.qimg .sg{width:150px}
+.qimg{display:flex;justify-content:center;margin:-4px 0 16px}.qimg .sg{width:150px}.qimg .scene{width:100%;max-width:440px;border-radius:10px}.mini .scene{border-radius:4px}
 .mini{float:right;width:56px;margin:0 0 6px 12px}
 .fcimg{background:#fff;border-radius:12px;padding:10px;width:132px}
 .flash.tall{min-height:340px}
@@ -364,7 +394,7 @@ const SIGNS={
  "M-dra":["Dientes de dragón","Te acercas a una travesía o vía urbana: reduce la velocidad.",road(dash(48.25)+[6,30].map(y=>`<path d="M53 ${y} L60 ${y+7} L53 ${y+14}Z M91 ${y} L84 ${y+7} L91 ${y+14}Z" fill="#fff"/>`).join(""),62)],
  "M-stop":["Stop pintado","Línea transversal continua: detención obligatoria.",road(dash(48.25)+`<rect x="52" y="28" width="40" height="4" fill="#fff"/><text x="72" y="52" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="12" fill="#fff">STOP</text>`,64)]
 };
-function sign(code,label){const s=SIGNS[code];if(!s)return"";return `<svg viewBox="0 0 100 100" class="sg" role="img" aria-label="${label?s[0]:"Señal de la pregunta"}">${s[2]}</svg>`}
+function sign(code,label){if(code&&code.startsWith("SC-")){const sc=SCENES[code];return sc?`<svg viewBox="0 0 200 140" class="sg scene" role="img" aria-label="Situación de tráfico">${scDefs}${sc}</svg>`:""}const s=SIGNS[code];if(!s)return"";return `<svg viewBox="0 0 100 100" class="sg" role="img" aria-label="${label?s[0]:"Señal de la pregunta"}">${s[2]}</svg>`}
 const GROUPS=[
  ["Prioridad","Tienen formas únicas para reconocerlas también por detrás. Además, varias señales triangulares de peligro también dan o quitan prioridad.",["R-1","R-2","R-3","R-4","P-1","P-1a","P-1b","P-1c","R-5","R-6"],`<div class="trap"><p>El rombo da prioridad hasta su fin. El triángulo con la cruz solo en la próxima intersección.</p></div>`],
  ["Peligro","Triángulo con borde rojo: avisan, no obligan. Con fondo amarillo son de obras.",["P-3","P-4","P-7","P-8","P-11","P-11a","P-10a","P-10b","P-10c","P-13a","P-17","P-18","P-19","P-20","P-22","P-23","P-25","P-50"],`<div class="trick"><p>Locomotora = paso a nivel <b>sin</b> barreras (te acercas). Valla = <b>con</b> barreras. Aspa = estás <b>ya</b> en el paso sin barreras; aspa y media = más de una vía. Balizas: 3 franjas 200 m, 2 franjas 150 m, 1 franja 100 m.</p></div>`],
@@ -374,6 +404,54 @@ const GROUPS=[
  ["Marcas viales","Pintadas en el suelo, son las últimas en la jerarquía. En los dibujos, el coche azul eres tú, en el carril derecho.",["M-cont","M-disc","M-adod","M-adoc","M-rev","M-cebr","M-amar","M-ceda","M-stop","M-zz","M-ybc","M-ybd","M-grid","M-dam","M-dra"],`<div class="trick"><p>Con líneas adosadas manda la que tienes más cerca. Amarillas en el borde: <b>continua</b> prohíbe parar y estacionar; <b>discontinua</b> y <b>zigzag</b> solo estacionar (zigzag forma una «E» de Estacionar).</p></div>`]
 ];
 function signNotes(){return GROUPS.map(([h,intro,codes,extra])=>`<section><h3>${h}</h3><p>${intro}</p><div class="gallery">${codes.map(c=>`<div class="gtile">${sign(c,true)}<div><b>${SIGNS[c][0]}</b><small>${c.startsWith("M-")?"Marca vial":c}</small><span>${SIGNS[c][1]}</span></div></div>`).join("")}</div>${extra}</section>`).join("")}
+
+/* ---------- Situaciones de tráfico (lienzo 200 × 140, vista desde arriba) ---------- */
+const SCN={g:"#b5cc9c",road:"#5b6068",A:"#2f6fd6",B:"#d64545",C:"#d99a00",D:"#7a4fd0",T:"#e8b923"};
+const scDefs=`<defs>${["A","B","C","D"].map(k=>`<marker id="ah${k}" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="${SCN[k]}"/></marker>`).join("")}</defs>`;
+const vcar=(x,y,dir,k,lab,w=12,h=20)=>{const r={N:0,E:90,S:180,W:270}[dir];return `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="3" fill="${SCN[k]||k}" stroke="#fff" stroke-width="1"/><rect x="${-w/2+1.5}" y="${-h/2+2.5}" width="${w-3}" height="4.5" rx="1" fill="#dfe9f7"/></g><text x="${x}" y="${y+4.5}" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" fill="#fff">${lab||""}</text>`};
+const arr=(d,k)=>`<path d="${d}" fill="none" stroke="${SCN[k]}" stroke-width="2.2" stroke-dasharray="4 3" marker-end="url(#ah${k})"/>`;
+const dV=(x,a,b)=>{let s="";for(let y=a;y<b-3;y+=11)s+=`<rect x="${x-.75}" y="${y}" width="1.5" height="6" fill="#fff"/>`;return s};
+const dH=(y,a,b)=>{let s="";for(let x=a;x<b-3;x+=11)s+=`<rect x="${x}" y="${y-.75}" width="6" height="1.5" fill="#fff"/>`;return s};
+const bg=()=>`<rect width="200" height="140" fill="${SCN.g}"/>`;
+const crossRd=()=>bg()+`<rect x="78" y="0" width="44" height="140" fill="${SCN.road}"/><rect x="0" y="48" width="200" height="44" fill="${SCN.road}"/>`+dV(100,0,46)+dV(100,94,140)+dH(70,0,76)+dH(70,124,200);
+const signAt=(code,x,y,s=16)=>`<rect x="${x-.6}" y="${y}" width="1.2" height="${s*.8}" fill="#444"/><g transform="translate(${x-s/2} ${y-s/2}) scale(${s/100})">${SIGNS[code][2]}</g>`;
+const ped=(x,y)=>`<ellipse cx="${x}" cy="${y}" rx="6" ry="3.6" fill="#333" stroke="#fff" stroke-width="1"/><circle cx="${x}" cy="${y}" r="2.7" fill="#f0c9a0"/>`;
+const bikeT=(x,y,dir)=>{const r={N:0,E:90,S:180,W:270}[dir];return `<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-1.8" y="-10" width="3.6" height="20" rx="1.5" fill="#222"/><circle r="4.4" fill="#e67e22" stroke="#fff" stroke-width="1"/></g>`};
+const note=(t,x=6,y=6)=>`<rect x="${x}" y="${y}" width="${t.length*4.6+10}" height="13" rx="3" fill="rgba(20,25,35,.78)"/><text x="${x+5}" y="${y+9.3}" font-family="Arial,Helvetica,sans-serif" font-size="8.2" fill="#fff">${t}</text>`;
+const lbl=(t,x,y)=>`<text x="${x}" y="${y}" font-family="Arial,Helvetica,sans-serif" font-size="8.5" font-weight="700" fill="#14213a" stroke="#fff" stroke-width="2.4" paint-order="stroke">${t}</text>`;
+const CA=()=>vcar(111,112,"N","A","A"), CB=()=>vcar(150,59,"W","B","B"), CC=()=>vcar(89,28,"S","C","C"), CD=()=>vcar(50,81,"E","D","B");
+const SCENES={
+ "SC-1":crossRd()+arr("M111 100 V6","A")+arr("M138 59 H6","B")+CA()+CB()+note("Sin señales"),
+ "SC-2":crossRd()+signAt("R-2",140,38)+arr("M111 100 V6","A")+arr("M138 59 H6","B")+CA()+CB(),
+ "SC-3":crossRd()+arr("M111 100 V6","A")+arr("M138 59 H6","B")+arr("M89 40 V134","C")+CA()+CB()+CC()+note("Sin señales"),
+ "SC-4":bg()+`<rect x="78" y="0" width="44" height="140" fill="${SCN.road}"/><rect x="0" y="48" width="200" height="44" fill="${SCN.road}"/><circle cx="100" cy="70" r="42" fill="${SCN.road}"/><circle cx="100" cy="70" r="17" fill="${SCN.g}" stroke="#fff" stroke-width="1.5"/>`+arr("M131 62 A31 31 0 0 0 105 39","A")+arr("M111 106 V98","B")+vcar(131,74,"N","A","A")+vcar(111,124,"N","B","B")+note("Rotonda sin señales"),
+ "SC-5":bg()+`<rect y="42" width="200" height="56" fill="#6aa6d8"/><rect x="78" y="0" width="44" height="42" fill="${SCN.road}"/><rect x="78" y="98" width="44" height="42" fill="${SCN.road}"/><rect x="89" y="42" width="22" height="56" fill="${SCN.road}"/><rect x="87" y="42" width="2" height="56" fill="#ddd"/><rect x="111" y="42" width="2" height="56" fill="#ddd"/>`+vcar(100,70,"N","A","A")+vcar(100,20,"S","B","B",14,28)+note("Paso estrecho sin señales",6,121),
+ "SC-6":crossRd()+`<rect y="65" width="200" height="1.5" fill="#c9c9c9"/><rect y="74" width="200" height="1.5" fill="#c9c9c9"/>`+arr("M111 100 V6","A")+arr("M74 70 H190","C")+CA()+vcar(42,70,"E","T","Tranvía",14,58).replace('font-size="9"','font-size="7"').replace('fill="#fff">Tranvía','fill="#14213a">Tranvía')+note("Sin señales"),
+ "SC-7":crossRd()+signAt("R-3",130,100)+`<rect y="65" width="200" height="1.5" fill="#c9c9c9"/><rect y="74" width="200" height="1.5" fill="#c9c9c9"/>`+arr("M111 100 V6","A")+arr("M74 70 H190","C")+CA()+vcar(42,70,"E","T","Tranvía",14,58).replace('font-size="9"','font-size="7"').replace('fill="#fff">Tranvía','fill="#14213a">Tranvía'),
+ "SC-8":crossRd()+arr("M111 102 Q111 81 132 81 H194","A")+CA()+ped(146,56)+ped(146,68)+lbl("Peatones cruzando",104,44)+note("Sin paso de peatones"),
+ "SC-9":bg()+`<rect y="40" width="200" height="60" fill="${SCN.road}"/><rect y="69" width="200" height="2" fill="#fff"/><rect y="42" width="200" height="1.5" fill="#fff"/><rect y="96.5" width="200" height="1.5" fill="#fff"/>`+arr("M62 85 Q92 56 160 84","A")+vcar(46,85,"E","A","A")+bikeT(118,90,"E")+note("Fuera de poblado · nadie de frente"),
+ "SC-10":bg()+`<rect y="44" width="200" height="58" fill="${SCN.road}"/><rect x="140" y="0" width="30" height="46" fill="${SCN.road}"/>`+dH(72,0,138)+dH(72,172,200)+arr("M128 80 Q155 80 155 58 V6","B")+arr("M80 93 Q110 96 140 94 H196","A")+vcar(116,80,"E","B","B")+`<circle cx="125" cy="74" r="2" fill="#ffb300"/>`+vcar(66,86,"E","A","A")+note("B va a girar a la izquierda"),
+ "SC-11":bg()+`<rect y="40" width="200" height="52" fill="${SCN.road}"/><polygon points="0,92 140,92 178,92 140,110 0,110" fill="${SCN.road}"/><rect y="40" width="200" height="1.5" fill="#fff"/>`+dH(66,0,200)+`${Array.from({length:12},(_,i)=>`<rect x="${i*12}" y="91" width="7" height="2.6" fill="#fff"/>`).join("")}`+arr("M82 101 Q125 101 145 82 H196","A")+arr("M107 79 H196","B")+vcar(70,101,"E","A","A")+vcar(95,79,"E","B","B")+note("Autovía: A en el carril de aceleración"),
+ "SC-12":crossRd()+signAt("R-1",130,100)+arr("M111 100 V6","A")+arr("M62 81 H194","D")+CA()+vcar(50,81,"E","D","B"),
+ "SC-13":crossRd()+`<circle cx="94" cy="62" r="5.5" fill="#1d3f7a" stroke="#fff" stroke-width="1.2"/>`+lbl("Agente con el brazo levantado",8,42)+arr("M111 62 V6","A")+vcar(111,74,"N","A","A")+CB()+note("A ya está dentro del cruce",8,124),
+ "SC-14":bg()+`<rect x="78" y="0" width="44" height="140" fill="${SCN.road}"/>`+dV(100,0,140)+`${Array.from({length:20},(_,i)=>`<rect x="${i*10+2}" y="58" width="3" height="22" fill="#8a6a4a"/>`).join("")}<rect y="62" width="200" height="2" fill="#bbb"/><rect y="74" width="200" height="2" fill="#bbb"/><g transform="rotate(-40 126 92)"><rect x="80" y="89" width="46" height="5" fill="#fff" stroke="#c8102e" stroke-width="1"/>${[86,96,106,116].map(x=>`<rect x="${x}" y="89" width="5" height="5" fill="#c8102e"/>`).join("")}</g><rect x="130" y="96" width="14" height="8" rx="2" fill="#222"/><circle cx="134" cy="100" r="2.4" fill="#ff3b30"/><circle cx="140" cy="100" r="2.4" fill="#ff3b30"/>`+vcar(111,118,"N","A","A")+note("La barrera está subiendo"),
+ "SC-15":bg()+`<rect y="36" width="200" height="68" fill="${SCN.road}"/>`+dH(58.7,0,200)+dH(81.3,0,200)+arr("M90 70 Q120 70 120 56 Q120 47 98 47","A")+vcar(78,70,"E","A","A")+note("Tres carriles, doble sentido"),
+ "SC-16":bg()+`<rect x="88" y="0" width="24" height="140" fill="${SCN.road}"/>`+vcar(100,112,"N","A","A")+vcar(100,26,"S","B","B")+lbl("A sube",116,116)+lbl("B baja",116,30)+note("Pendiente 10 % · sin señales ni apartaderos",6,121),
+ "SC-17":crossRd()+arr("M111 100 V6","A")+CA()+bikeT(92,81,"E")+bikeT(72,81,"E")+bikeT(56,81,"E")+bikeT(40,81,"E")+lbl("Ciclistas",30,104)+note("Sin señales · el primero ya ha entrado"),
+ "SC-18":bg()+`<rect x="78" y="0" width="44" height="140" fill="${SCN.road}"/>`+dV(100,60,140)+`${[80,88,96,104,112].map(x=>`<rect x="${x}" y="34" width="5" height="18" fill="#fff"/>`).join("")}`+ped(96,44)+arr("M111 92 V8","A")+vcar(111,104,"N","A","A")+note("Peatón cruzando por el paso")
+};
+const SCNOTES=`<section><h3>Cómo leer las situaciones</h3>
+<p>Vista desde arriba. El coche <b>azul (A)</b> eres tú, salvo que la pregunta diga otra cosa. Las flechas discontinuas indican hacia dónde va cada uno. Un recuadro oscuro aclara lo que no se ve en el dibujo.</p>
+<div class="trick"><p>Orden para resolver cualquier cruce: <b>1</b> agente · <b>2</b> semáforo · <b>3</b> señales · <b>4</b> sin señales, la derecha libre y sus excepciones (rotonda, raíles, vía pavimentada, carril de incorporación) · <b>5</b> peatones y ciclistas en sus casos especiales.</p></div>
+</section>
+<section><h3>Ejemplo resuelto: tres coches sin señales</h3>
+<div class="qimg">${sign("SC-3")}</div>
+<p>A tiene a B a su derecha: espera. B tiene a C a su derecha: espera. C no tiene a nadie a su derecha: <b>pasa primero</b>. Después ya tiene libre la derecha B, y por último A. Orden: <b>C, B, A</b>.</p>
+</section>
+<section><h3>Ejemplo resuelto: señal contra norma</h3>
+<div class="qimg">${sign("SC-7")}</div>
+<p>Sin señales, el tranvía tendría preferencia por circular sobre raíles. Pero A tiene la señal de calzada con preferencia, y <b>la señal gana a la norma</b>: pasa A.</p>
+</section>`;
 
 const SIGNTEXT=`
 <section><h3>Señales de peligro: cómo leerlas</h3>
@@ -763,7 +841,7 @@ notes:`
 <section><h3>Vehículos especiales y señales V</h3>
 <p>Los especiales usan la vía solo para desplazarse y no llevan carga salvo los hechos para ello. La <b>V-2</b> (rotativa amarillo auto, sin preferencia) la encienden: grúas cuando obstaculizan, especiales trabajando, especiales circulando a 40 km/h o menos, y siempre al entrar en autopista o autovía. Si falla: luz de cruce + emergencia.</p>
 <div class="tbl-wrap"><table><tr><th>Señal</th><th>Significado</th></tr>
-<tr><td>V-1</td><td>Rotativa azul de prioritarios, visible a 50 m</td></tr><tr><td>V-2</td><td>Rotativa amarillo auto de especiales</td></tr><tr><td>V-3</td><td>Distintivos de policía</td></tr><tr><td>V-4</td><td>Limitación de velocidad del vehículo</td></tr><tr><td>V-5</td><td>Vehículo lento (motor que no supera 40 km/h)</td></tr><tr><td>V-6</td><td>Vehículo largo, más de 12 m</td></tr><tr><td>V-7</td><td>Servicio público</td></tr><tr><td>V-10</td><td>Transporte escolar</td></tr><tr><td>V-11</td><td>Mercancías peligrosas (placas naranjas)</td></tr><tr><td>V-12</td><td>Ensayos e investigación (+30 km/h)</td></tr><tr><td>V-13</td><td>Conductor novel (L)</td></tr><tr><td>V-14</td><td>Autoescuela</td></tr><tr><td>V-15</td><td>Persona con movilidad reducida</td></tr><tr><td>V-16</td><td>Luz amarilla de emergencia, lo más alto posible</td></tr><tr><td>V-19</td><td>Distintivo de ITV, ángulo superior derecho</td></tr><tr><td>V-20</td><td>Carga que sobresale por detrás</td></tr><tr><td>V-21</td><td>Transporte especial</td></tr><tr><td>V-22</td><td>Acompañamiento de ciclistas</td></tr><tr><td>V-23</td><td>Contorno de vehículos grandes</td></tr><tr><td>V-24</td><td>Grúa de auxilio en carretera</td></tr></table></div>
+<tr><td>V-1</td><td>Rotativa azul de prioritarios, visible a 50 m</td></tr><tr><td>V-2</td><td>Rotativa amarillo auto de especiales</td></tr><tr><td>V-3</td><td>Distintivos de policía</td></tr><tr><td>V-4</td><td>Limitación de velocidad del vehículo</td></tr><tr><td>V-5</td><td>Vehículo lento (motor que no supera 40 km/h)</td></tr><tr><td>V-6</td><td>Vehículo largo, más de 12 m</td></tr><tr><td>V-7</td><td>Servicio público</td></tr><tr><td>V-10</td><td>Transporte escolar</td></tr><tr><td>V-11</td><td>Mercancías peligrosas (placas naranjas)</td></tr><tr><td>V-12</td><td>Ensayos e investigación (+30 km/h)</td></tr><tr><td>V-13</td><td>Conductor novel (L)</td></tr><tr><td>V-14</td><td>Autoescuela</td></tr><tr><td>V-15</td><td>Persona con movilidad reducida</td></tr><tr><td>V-16</td><td>Baliza amarilla conectada: desde el 1-1-2026 sustituye a los triángulos. Se pone en el techo desde dentro del coche</td></tr><tr><td>V-19</td><td>Distintivo de ITV, ángulo superior derecho</td></tr><tr><td>V-20</td><td>Carga que sobresale por detrás</td></tr><tr><td>V-21</td><td>Transporte especial</td></tr><tr><td>V-22</td><td>Acompañamiento de ciclistas</td></tr><tr><td>V-23</td><td>Contorno de vehículos grandes</td></tr><tr><td>V-24</td><td>Grúa de auxilio en carretera</td></tr></table></div>
 <p>Etiquetas ambientales, de menos a más contaminante: <b>0 · ECO · C · B</b>.</p>
 </section>`,
 qs:[
@@ -779,7 +857,7 @@ qs:[
 ["Llevar pasajero en una moto:","Aumenta la distancia de frenado.","Reduce la distancia de frenado.","No influye en el frenado.","Más peso obliga a los frenos a trabajar más y alarga la frenada, aunque mejora la adherencia y reduce el bloqueo de la rueda trasera."],
 ["¿Dónde se puede dejar la mercancía al descargar en la vía?","En ningún sitio de la vía: directamente del vehículo al establecimiento.","En la acera.","En el arcén.","Está prohibido depositarla en calzada, arcén o zonas peatonales."]
 ],
-fc:[["¿Qué edad mínima tiene el pasajero de una moto?","12 años (7 si conduce padre/madre/tutor o mayor autorizado)."],["¿Cuáles son las dimensiones máximas de un vehículo?","4 m alto · 12 m largo · 2,55 m ancho."],["¿Cuánto puede sobresalir la carga en un turismo?","Solo por detrás: 10 % divisible, 15 % indivisible."],["¿Cuánto puede sobresalir la carga en un camión de más de 5 m?","Solo indivisible: 2 m delante, 3 m detrás, 0,40 m laterales."],["¿Cómo es el panel V-20 y cuándo se ponen dos?","50 × 50 cm. Dos en V invertida si ocupa todo el ancho."],["¿Qué es la V-16 y dónde se coloca?","Luz amarilla de emergencia, lo más alto del vehículo."]]
+fc:[["¿Qué edad mínima tiene el pasajero de una moto?","12 años (7 si conduce padre/madre/tutor o mayor autorizado)."],["¿Cuáles son las dimensiones máximas de un vehículo?","4 m alto · 12 m largo · 2,55 m ancho."],["¿Cuánto puede sobresalir la carga en un turismo?","Solo por detrás: 10 % divisible, 15 % indivisible."],["¿Cuánto puede sobresalir la carga en un camión de más de 5 m?","Solo indivisible: 2 m delante, 3 m detrás, 0,40 m laterales."],["¿Cómo es el panel V-20 y cuándo se ponen dos?","50 × 50 cm. Dos en V invertida si ocupa todo el ancho."],["¿Qué es la V-16 y dónde se coloca?","Baliza luminosa amarilla conectada con la DGT. Desde el 1-1-2026 sustituye a los triángulos. Se pone en el techo sin salir del coche, junto con la luz de emergencia."]]
 },
 { short:"Alumbrado", title:"Alumbrado y señalización óptica",
 notes:`
@@ -969,6 +1047,7 @@ notes:`
 <tr><td>General: automóviles ≤ 3.500 kg y 9 plazas con más de 2 años de permiso; camiones ≤ 3.500 kg; ciclistas</td><td class="big">0,5</td><td class="big">0,25</td></tr>
 <tr><td>Noveles (2 primeros años), profesionales (bus, taxi, camión &gt; 3.500 kg), prioritarios, mercancías peligrosas, transportes especiales</td><td class="big">0,3</td><td class="big">0,15</td></tr>
 <tr><td>Menores de edad</td><td class="big">0,0</td><td class="big">0,0</td></tr></table></div>
+<div class="trap"><p>Se debate bajar la tasa general a 0,2 g/l, pero a octubre de 2026 <b>no está aprobado</b>: en el examen valen 0,5 y 0,3.</p></div>
 <div class="trick"><p>En aire es la <b>mitad</b> que en sangre, y se pasa de gramos a miligramos. La L se lleva 1 año desde el primer permiso; la tasa reducida dura 2 años desde ese primer permiso, no desde cada uno.</p></div>
 <p>El alcohol alcanza su máximo una hora después de la última copa (entre 30 y 90 minutos) y se elimina lentamente, unos 0,15 a 0,20 g/l por hora. La mejor tasa es 0: afecta desde la primera gota.</p>
 </section>
@@ -1105,7 +1184,7 @@ notes:`
 <section><h3>Mantenimiento</h3>
 <ul><li><b>Batería</b>: con el motor en marcha la energía la da el alternador. Si tiene mantenimiento, rellena con <b>agua destilada</b>. Bornes limpios con vaselina.</li><li><b>Aceite</b>: se mide con motor parado, frío y en llano; se cambia en caliente (cae mejor) cuando diga el fabricante; el usado, a un punto limpio. Testigo apagado = engrase correcto.</li><li><b>Frenos</b>: latiguillos sin fugas; nivel y cambio del líquido según el fabricante.</li><li><b>Suspensión</b> gastada: desgaste irregular de neumáticos, cabeceo al frenar o acelerar, luces que oscilan; la frenada puede alargarse hasta un 50 %.</li><li><b>Puesta a punto</b> tras las vacaciones, sobre todo de playa (correa de distribución).</li></ul>
 <div class="tbl-wrap"><table><tr><th>Humo del escape</th><th>Problema</th></tr><tr><td>Blanco</td><td>Agua en la combustión</td></tr><tr><td>Azulado</td><td>Se quema aceite</td></tr><tr><td>Negro</td><td>Mala combustión (filtro de aire sucio, caudalímetro)</td></tr></table></div>
-<p><b>A bordo</b> (turismos y camiones ≤ 3.500 kg): rueda de repuesto o alternativa, chaleco y V-16. Con remolque, extintor. Motos, nada. Rueda de uso temporal: respeta sus condiciones (por ejemplo, 80 km/h y 50 km).</p>
+<p><b>A bordo</b> (turismos y camiones ≤ 3.500 kg): rueda de repuesto o alternativa, chaleco y <b>V-16 conectada</b> (desde el 1 de enero de 2026 sustituye a los triángulos). Con remolque, extintor. Motos, nada. Rueda de uso temporal: respeta sus condiciones (por ejemplo, 80 km/h y 50 km).</p>
 </section>
 <section><h3>Conducción eficiente</h3>
 <p>Arranca sin acelerar; en gasolina sal enseguida, en diésel espera unos segundos. Primera solo unos 2 s o 6 m. Cambia de marcha a 2.000-2.500 rpm en gasolina y a 1.500-2.000 en diésel; usa la marcha más larga posible y salta marchas. Velocidad moderada, sin acelerones ni frenazos, sin exceso de carga, ventanillas cerradas (efecto paracaídas), climatizador moderado, apaga en retenciones largas. <b>Errores</b>: bajar en punto muerto, usar otro combustible, apagar en paradas cortas.</p>
@@ -1154,7 +1233,7 @@ notes:`
 </section>
 <section><h3>Qué hacer: P-A-S</h3>
 <div class="tbl-wrap"><table><tr><th>Paso</th><th>Qué hacer</th></tr>
-<tr><td class="big">P</td><td><b>Proteger</b>: primero a ti (chaleco), luego el lugar (V-16, señalizar), luego a las víctimas. Freno de mano y quitar el contacto de los accidentados.</td></tr>
+<tr><td class="big">P</td><td><b>Proteger</b>: primero a ti (chaleco), luego el lugar (V-16 en el techo y luz de emergencia; sal del coche solo si hay un sitio seguro fuera de la calzada, por el lado contrario al tráfico), luego a las víctimas. Freno de mano y quitar el contacto de los accidentados.</td></tr>
 <tr><td class="big">A</td><td><b>Avisar</b> al 112: lugar, número de heridos, estado. Funciona en toda Europa, sin cobertura de tu compañía y sin saldo.</td></tr>
 <tr><td class="big">S</td><td><b>Socorrer</b>.</td></tr></table></div>
 <p>Auxiliar es obligatorio para implicados, testigos y quien tenga conocimiento. Llama a las autoridades si hay muertos o heridos graves, o si no hay acuerdo sobre la culpa; entonces no muevas nada. Da tus datos si te los piden.</p>
@@ -1318,6 +1397,29 @@ fc:[
 ["¿Qué señales de obligación prohíben la entrada al resto?","Ciclos, ciclomotores, animales de montura, peatones y patinetes (VMP)."],
 ["¿Qué indica cada color de las señales en poblado?","Verde calles · amarillo viajero · naranja deporte · marrón ecológico."]
 ]
+},{ short:"Situaciones", title:"Situaciones de tráfico dibujadas",
+notes:SCNOTES,
+qs:[
+["¿Quién pasa primero?","B, porque viene por la derecha de A.","A, porque va recto.","El que llegue antes.","Sin señales manda la derecha libre. A tiene a B a su derecha, así que cede. Ir recto no da preferencia.","SC-1"],
+["¿Quién pasa primero?","A, porque B tiene un stop.","B, porque viene por la derecha de A.","Los dos a la vez.","La señal gana a la norma. Sin el stop pasaría B; con él, B debe detenerse y ceder.","SC-2"],
+["¿En qué orden pasan los tres vehículos?","C, B, A.","A, B, C.","B, C, A.","C es el único que tiene libre su derecha. Cuando pasa, la tiene libre B, y por último A.","SC-3"],
+["En esta rotonda sin señales, ¿quién tiene preferencia?","A, que ya circula por la rotonda.","B, porque viene por la derecha.","El que vaya a salir antes.","En las rotondas sin señales tiene preferencia el que está dentro: es una excepción a la regla de la derecha.","SC-4"],
+["A ya ha entrado en el paso estrecho. ¿Quién pasa?","A, porque entró primero.","B, porque es más grande.","El que tenga que retroceder menos.","Sin señales pasa el que entra primero. El orden por tamaño solo se usa si no se sabe quién entró antes.","SC-5"],
+["Sin señales, ¿quién pasa primero?","El tranvía.","A, porque el tranvía viene por su izquierda.","El que llegue antes.","Los vehículos sobre raíles tienen preferencia vengan por donde vengan, salvo que una señal diga otra cosa.","SC-6"],
+["A tiene esta señal y se acerca el tranvía. ¿Quién pasa primero?","A.","El tranvía.","El tranvía, porque circula sobre raíles.","Calzada con preferencia: la señal gana a la norma. Sin la señal pasaría el tranvía.","SC-7"],
+["A gira a la derecha y unos peatones ya están cruzando la calle a la que entra. ¿Quién pasa?","Los peatones.","A, porque no hay paso de peatones.","A, porque los vehículos siempre tienen preferencia.","Se dan las dos condiciones: A viene girando y los peatones ya están cruzando. Debe dejarles terminar aunque no haya paso.","SC-8"],
+["¿Puede A adelantar al ciclista pisando la línea continua?","Sí, si no hay peligro, dejando al menos 1,5 m.","No, nunca se puede pisar una continua.","Sí, pero dejando 1 m.","A ciclos, ciclomotores, animales y tracción animal se les puede adelantar aunque haya continua, sin peligro. Fuera de poblado, 1,5 m de separación.","SC-9"],
+["B va a girar a la izquierda. ¿Por dónde puede adelantarle A?","Por la derecha, sin usar el arcén.","Por la izquierda.","No puede adelantarle.","Cuando el de delante marca claramente que va a girar a la izquierda, se le adelanta por la derecha. El arcén solo si no hacerlo creara retenciones.","SC-10"],
+["A está en el carril de aceleración y B circula por la autovía. ¿Quién tiene preferencia?","B.","A.","El que vaya más rápido.","Quien se incorpora cede. B debe facilitar la incorporación, pero la preferencia es suya.","SC-11"],
+["A tiene un ceda el paso y B viene por su izquierda. ¿Debe ceder A?","Sí: el ceda el paso obliga a ceder a quien venga por cualquier lado.","No, porque B viene por la izquierda.","Solo si B es más grande.","La regla de la derecha solo se aplica sin señales. Con ceda el paso cedes a todos.","SC-12"],
+["El agente levanta el brazo cuando A ya está dentro del cruce. ¿Qué hace A?","Continúa y sale del cruce.","Se detiene en medio del cruce.","Retrocede hasta la línea de detención.","El brazo levantado detiene a todos los que se acercan, salvo a los que ya estaban dentro de la intersección.","SC-13"],
+["La barrera está subiendo y las luces rojas siguen encendidas. ¿Qué hace A?","Espera a que la barrera esté quieta y se apaguen las luces.","Pasa, porque el tren ya ha pasado.","Pasa despacio por el lado sin barrera.","No se pasa con la barrera en movimiento, baje o suba, ni con el semáforo rojo intermitente encendido.","SC-14"],
+["¿Puede A hacer un cambio de sentido desde el carril central?","No.","Sí, si no viene nadie.","Sí, porque las líneas son discontinuas.","El carril central solo se usa para adelantar y para girar a la izquierda. Un cambio de sentido desde ahí no está permitido.","SC-15"],
+["Paso estrecho con fuerte pendiente, sin señales ni apartaderos. ¿Quién pasa?","A, que sube.","B, que baja.","El de mayor tamaño.","En gran pendiente pasa el que sube, salvo que tenga un apartadero más cerca.","SC-16"],
+["Un grupo de ciclistas llega por la izquierda de A y el primero ya ha entrado en el cruce. ¿Qué hace A?","Deja pasar a todo el grupo.","Pasa, porque vienen por su izquierda.","Deja pasar solo al primero.","Por la izquierda no tendrían preferencia, pero si el primero ya entró, el grupo pasa entero.","SC-17"],
+["Un peatón cruza por el paso de peatones. ¿Qué hace A?","Se detiene y le deja cruzar.","Pasa por detrás del peatón sin detenerse.","Toca el claxon para avisar.","En los pasos de peatones sin semáforo, los peatones tienen preferencia.","SC-18"]
+],
+fc:[]
 }
 ];
 
@@ -1327,7 +1429,7 @@ fc:[
 const KEY="teoricaB.v1";
 let S;
 function load(){let d=null;try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-  S=Object.assign({q:{},wrong:[],known:{},sims:[]},d||{});}
+  S=Object.assign({q:{},wrong:[],known:{},sims:[],days:{},exam:"",goal:3},d||{});}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 load();
 let theme=null;try{theme=localStorage.getItem(KEY+".theme")}catch(e){}
@@ -1339,6 +1441,19 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(M
 const pct=(a,b)=>b?Math.round(a*100/b):0;
 function topicDone(ti){return T[ti].qs.filter((_,qi)=>(S.q[ti+"-"+qi]||{}).ok>0).length}
 function totalDone(){return ALL.filter(id=>(S.q[id]||{}).ok>0).length}
+const dkey=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const today=()=>dkey(new Date());
+function streak(){let n=0;const d=new Date();if(!(S.days[dkey(d)]>0))d.setDate(d.getDate()-1);while(S.days[dkey(d)]>0){n++;d.setDate(d.getDate()-1)}return n}
+function daysToExam(){if(!S.exam)return null;const e=new Date(S.exam+"T09:00:00");return Math.ceil((e-new Date())/864e5)}
+/* Repaso inteligente: lo fallado y lo no visto pesa más */
+function weight(id){const q=S.q[id];let w=q?1+2.5*q.ko-.4*q.ok:1.6;if(S.wrong.includes(id))w+=3;return Math.max(.25,w)}
+function wpick(ids,n){const pool=ids.slice(),out=[];while(out.length<n&&pool.length){const tot=pool.reduce((a,id)=>a+weight(id),0);let r=Math.random()*tot,k=0;for(;k<pool.length-1;k++){r-=weight(pool[k]);if(r<=0)break}out.push(pool.splice(k,1)[0])}return out}
+function topicStats(ti){let ok=0,ko=0,seen=0;T[ti].qs.forEach((_,qi)=>{const q=S.q[ti+"-"+qi];if(q){seen++;ok+=q.ok;ko+=q.ko}});return{ok,ko,seen,acc:ok+ko?ok/(ok+ko):null,cov:topicDone(ti)/T[ti].qs.length}}
+function recommend(){const st=T.map((_,i)=>Object.assign({t:i},topicStats(i)));
+  const weak=st.filter(x=>x.ok+x.ko>=4&&x.acc<.85).sort((a,b)=>a.acc-b.acc)[0];
+  if(weak)return{t:weak.t,why:"es donde más fallas ("+Math.round(weak.acc*100)+" % de aciertos)"};
+  const low=st.slice().sort((a,b)=>a.cov-b.cov)[0];return{t:low.t,why:low.cov===0?"aún no lo has empezado":"es el que menos has practicado"}}
+function sortDeck(list,keep){const a=list.filter(c=>!S.known[c.id]),b=list.filter(c=>S.known[c.id]);return keep?a.concat(b):shuffle(a).concat(shuffle(b))}
 
 let view={name:"home"};
 let quiz=null, deck=null, timerId=null;
@@ -1363,6 +1478,7 @@ function finish(){clearInterval(timerId);
   if(!quiz.instant){quiz.items.forEach(it=>{if(it.chosen!==null){it.done=true;record(it)}})}
   quiz.finished=true;
   const f=fails();
+  if(quiz.items.length>=5){const k=today();S.days[k]=(S.days[k]||0)+1;const ks=Object.keys(S.days).sort();while(ks.length>150)delete S.days[ks.shift()]}
   if(quiz.sim){S.sims.unshift({d:new Date().toISOString(),f,n:quiz.items.length});S.sims=S.sims.slice(0,20)}
   save();render();scrollTop()}
 const isOk=it=>it.chosen!==null&&it.opts[it.chosen].ok;
@@ -1381,7 +1497,8 @@ function scrollTop(){window.scrollTo({top:0,behavior:"instant"in window?"instant
 function renderSide(){
   const on=n=>view.name===n?" on":"";
   let h=`<h4>Estudio</h4><nav class="nav">
-  <button class="${on("home")}" data-a="home"><span class="n">◆</span><span class="lbl">Inicio y progreso</span><span></span></button>
+  <button class="${on("home")}" data-a="home"><span class="n">◆</span><span class="lbl">Inicio</span><span></span></button>
+  <button class="${on("prog")}" data-a="prog"><span class="n">▲</span><span class="lbl">Mi progreso</span><span></span></button>
   <button class="${on("sim")}" data-a="sim"><span class="n">30</span><span class="lbl">Simulacro DGT</span><span></span></button>
   <button class="${on("fails")}" data-a="fails"><span class="n">✕</span><span class="lbl">Repasar fallos</span><span class="pc num">${S.wrong.length}</span></button>
   <button class="${on("mix")}" data-a="mix"><span class="n">⇄</span><span class="lbl">Tarjetas mezcladas</span><span></span></button>
@@ -1394,6 +1511,7 @@ function renderHome(){
   const done=totalDone(), sims=S.sims, passed=sims.filter(s=>s.f<=3).length;
   let h=`<div><div class="eyebrow">Examen teórico · Permiso B</div><h1 class="h1">Tu teórica, tema a tema</h1>
   <p class="lead">Apuntes con trucos, tests estilo DGT con la explicación de cada opción y tarjetas para repasar. En el examen real hay 30 preguntas y apruebas con 3 fallos como máximo.</p></div>
+  ${todayPanel()}
   <div class="stats">
    <div class="stat"><div class="v num">${pct(done,ALL.length)}%</div><div class="k">Temario dominado · ${Object.keys(S.known).length} tarjetas sabidas</div></div>
    <div class="stat"><div class="v num">${done}<small style="font-size:18px;color:var(--muted)">/${ALL.length}</small></div><div class="k">Preguntas acertadas</div></div>
@@ -1407,7 +1525,7 @@ function renderHome(){
   </div>
   <div><h2 style="font-size:26px;margin-bottom:10px">Temas</h2><div class="grid">`;
   T.forEach((t,i)=>{const d=topicDone(i),p=pct(d,t.qs.length);
-    h+=`<button class="tcard" data-a="topic" data-t="${i}"><span class="badge">${i+1}</span><b>${t.title}</b><div><div class="bar"><i style="width:${p}%"></i></div><small class="num">${d}/${t.qs.length} acertadas · ${t.fc.length} tarjetas</small></div></button>`});
+    h+=`<button class="tcard" data-a="topic" data-t="${i}"><span class="badge">${i+1}</span><b>${t.title}</b><div><div class="bar"><i style="width:${p}%"></i></div><small class="num">${d}/${t.qs.length} acertadas${t.fc.length?" · "+t.fc.length+" tarjetas":""}</small></div></button>`});
   h+=`</div></div>`;
   h+=`<div class="panel"><h2 style="font-size:24px;margin-bottom:8px">Últimos simulacros</h2>`;
   if(!sims.length)h+=`<p class="empty" style="margin:0">Todavía no has hecho ninguno. Cuando termines uno, aparecerá aquí con su resultado.</p>`;
@@ -1422,7 +1540,7 @@ function renderTopic(){
   <div class="tabs" role="tablist">
    <button class="${tab==="notes"?"on":""}" data-a="tab" data-v="notes">Apuntes</button>
    <button class="${tab==="test"?"on":""}" data-a="tab" data-v="test">Test (${t.qs.length})</button>
-   <button class="${tab==="cards"?"on":""}" data-a="tab" data-v="cards">Tarjetas (${t.fc.length})</button></div>`;
+   ${t.fc.length?`<button class="${tab==="cards"?"on":""}" data-a="tab" data-v="cards">Tarjetas (${t.fc.length})</button>`:""}</div>`;
   if(tab==="notes"){h+=`<div class="notes">${t.notes}</div><div class="row"><button class="btn pri" data-a="tab" data-v="test">Hacer el test del tema</button>${view.t<T.length-1?`<button class="btn" data-a="topic" data-t="${view.t+1}">Siguiente tema</button>`:""}</div>`}
   else if(tab==="test")h+=renderQuiz();
   else h+=renderCards();
@@ -1472,6 +1590,7 @@ function renderCards(){
   const c=deck.cards[deck.i], kn=deck.cards.filter(x=>S.known[x.id]).length;
   return `<p class="lead" style="margin:0">Lee la pregunta e intenta responder de memoria. Luego toca la tarjeta para ver la respuesta y marca si te la sabías. Las que marques como sabidas cuentan en tu progreso.</p>
   <div class="qtop"><span class="qcount num">Tarjeta ${deck.i+1} de ${deck.cards.length}</span><span class="known num">Te sabes ${kn} de ${deck.cards.length}</span></div>
+  ${kn&&!deck.only&&kn<deck.cards.length?`<div class="row"><button class="btn" data-a="fonly">Repasar solo las ${deck.cards.length-kn} que no me sé</button><span class="kbd">Las que no te sabes salen primero.</span></div>`:""}
   <div class="pbar"><i style="width:${(deck.i+1)/deck.cards.length*100}%"></i></div>
   <div class="fcwrap"><button class="flash ${deck.flip?"flip":""} ${c.img?"tall":""}" data-a="flip" aria-label="Girar tarjeta">
    <div class="face front"><small>${deck.mix?"Tema "+(c.t+1)+" · "+T[c.t].short:"Pregunta"}${S.known[c.id]?" · ya te la sabes":""}</small>${c.img?`<div class="fcimg">${sign(c.img)}</div>`:""}<div class="txt">${c.f||"¿Qué significa esta señal?"}</div><small style="opacity:.75">Toca para ver la respuesta</small></div>
@@ -1482,6 +1601,53 @@ function renderCards(){
 }
 function flipCard(){deck.flip=!deck.flip;const el=document.querySelector(".flash");if(el)el.classList.toggle("flip",deck.flip);const ct=document.getElementById("fcctl");if(ct)ct.innerHTML=fcControls()}
 
+function todayPanel(){
+  const n=S.days[today()]||0, g=S.goal, st=streak(), dl=daysToExam(), r=recommend();
+  let pips="";for(let k=0;k<g;k++)pips+=`<span class="gpip ${k<n?"on":""}"></span>`;
+  return `<div class="today">
+   <div class="tcell"><div class="k">Hoy</div><div class="gpips">${pips}</div><div class="v2 num">${n} de ${g} tests${n>=g?" · objetivo cumplido":""}</div></div>
+   <div class="tcell"><div class="k">Racha</div><div class="v num">${st}</div><div class="v2">${st===1?"día seguido":"días seguidos"}</div></div>
+   <div class="tcell"><div class="k">Examen</div>${dl===null?`<button class="btn" data-a="prog">Poner fecha</button>`:`<div class="v num">${dl>0?dl:dl===0?"Hoy":"—"}</div><div class="v2">${dl>1?"días":dl===1?"día":dl===0?"¡mucha suerte!":"fecha pasada"}</div>`}</div>
+   <button class="tcell rec" data-a="topic" data-t="${r.t}"><div class="k">Estudia hoy</div><b>Tema ${r.t+1}: ${T[r.t].short}</b><div class="v2">Porque ${r.why}.</div></button>
+  </div>`}
+function simChart(){
+  const sims=S.sims.slice(0,15).reverse();
+  if(sims.length<2)return `<p class="empty" style="margin:0">Cuando hagas al menos dos simulacros verás aquí tu evolución.</p>`;
+  const W=window.innerWidth<640?360:600,H=window.innerWidth<640?230:210,L=30,R=10,Tp=14,B=30,mx=Math.max(10,...sims.map(x=>x.f)),x=i=>L+(sims.length===1?0:i*(W-L-R)/(sims.length-1)),y=v=>Tp+(1-v/mx)*(H-Tp-B);
+  let g="";for(let v=0;v<=mx;v+=mx>12?5:2)g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)" stroke-width="1"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" class="ax">${v}</text>`;
+  const band=`<rect x="${L}" y="${y(3)}" width="${W-L-R}" height="${y(0)-y(3)}" style="fill:var(--green-bg)"/>`;
+  const thr=`<line x1="${L}" x2="${W-R}" y1="${y(3)}" y2="${y(3)}" style="stroke:var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/><text x="${L+6}" y="${y(3)-6}" class="ax">Límite para aprobar: 3 fallos</text>`;
+  const pts=sims.map((s,i)=>`${x(i)},${y(s.f)}`).join(" ");
+  const dots=sims.map((s,i)=>`<g class="pt"><circle cx="${x(i)}" cy="${y(s.f)}" r="12" style="fill:transparent"/><circle cx="${x(i)}" cy="${y(s.f)}" r="4.5" style="fill:var(--surface);stroke:var(--sign)" stroke-width="2"/><title>${new Date(s.d).toLocaleDateString("es-ES",{day:"numeric",month:"short"})}: ${s.f} fallos · ${s.f<=3?"APTO":"NO APTO"}</title></g>`).join("");
+  const last=sims[sims.length-1];
+  return `<div class="tbl-wrap" style="border:0"><svg viewBox="0 0 ${W} ${H}" class="chart" role="img" aria-label="Fallos en tus últimos simulacros">${band}${g}${thr}<polyline points="${pts}" fill="none" style="stroke:var(--sign)" stroke-width="2" stroke-linejoin="round"/>${dots}<text x="${x(sims.length-1)}" y="${y(last.f)-12}" text-anchor="middle" class="lbl2">${last.f}</text><text x="${L}" y="${H-8}" class="ax">Más antiguo</text><text x="${W-R}" y="${H-8}" text-anchor="end" class="ax">Último</text></svg></div>`}
+function renderProg(){
+  const dl=daysToExam(), sims=S.sims, last5=sims.slice(0,5), ready=last5.length===5&&last5.every(x=>x.f<=3);
+  let h=`<div><div class="eyebrow">Tu preparación</div><h1 class="h1">Mi progreso</h1><p class="lead">Dónde fallas más, cómo te van los simulacros y cuánto queda para el examen.</p></div>
+  ${todayPanel()}
+  <div class="panel"><h2 class="h2">Fecha del examen</h2>
+   <div class="row"><label for="examDate" class="kbd">Día del examen</label><input type="date" id="examDate" class="inp" value="${S.exam||""}"></div>
+   <p style="margin:10px 0 0">${dl===null?"Pon la fecha cuando te apuntes y verás la cuenta atrás en el inicio.":dl>0?`Faltan <b>${dl} días</b>. Con ${S.goal} tests al día harás unos <b>${dl*S.goal}</b> antes del examen.`:"La fecha ya ha pasado. Cámbiala si te has vuelto a apuntar."}</p>
+   <p style="margin:8px 0 0">${ready?`<span class="ok-t">Vas lista:</span> tus 5 últimos simulacros son APTO.`:`Objetivo antes de presentarte: <b>5 simulacros seguidos con 3 fallos o menos</b>. ${(()=>{let n=0;for(const x of sims){if(x.f<=3)n++;else break}return n===1?"Llevas 1 seguido.":"Llevas "+n+" seguidos."})()}`}</p>
+   <div class="row" style="margin-top:12px"><span class="kbd">Objetivo diario</span><button class="btn" data-a="goal" data-d="-1" aria-label="Menos tests al día">−</button><b class="num">${S.goal} tests</b><button class="btn" data-a="goal" data-d="1" aria-label="Más tests al día">+</button></div>
+  </div>
+  <div class="panel"><h2 class="h2">Fallos en tus simulacros</h2>${simChart()}</div>
+  <div class="panel"><h2 class="h2">Tus temas, del más flojo al más fuerte</h2><div class="tlist">`;
+  const st=T.map((_,i)=>Object.assign({t:i},topicStats(i))).sort((a,b)=>(a.acc===null)-(b.acc===null)||(a.acc??1)-(b.acc??1));
+  st.forEach(x=>{const p=x.acc===null?null:Math.round(x.acc*100),cl=p===null?"none":p>=85?"good":p>=60?"mid":"bad",wd=p===null?"Sin empezar":p>=85?"Bien":p>=60?"Regular":"Flojo";
+    h+=`<button class="trow" data-a="topic" data-t="${x.t}"><span class="badge sm">${x.t+1}</span><span class="tn">${T[x.t].short}<small class="num">${x.seen} de ${T[x.t].qs.length} preguntas vistas</small></span><span class="chip ${cl}">${wd}</span><span class="pct num">${p===null?"—":p+" %"}</span><span class="bar"><i class="${cl}" style="width:${p||0}%"></i></span></button>`});
+  h+=`</div></div>
+  <div class="panel"><h2 class="h2">Copia de seguridad</h2>
+   <p style="margin:0 0 10px">Tu progreso solo se guarda en este dispositivo. Copia este código de vez en cuando y guárdalo (en una nota o un correo). Si pierdes los datos o cambias de tablet, pégalo abajo para recuperarlo.</p>
+   <textarea id="exportCode" class="inp code" readonly rows="3">${btoa(unescape(encodeURIComponent(JSON.stringify(S))))}</textarea>
+   <div class="row" style="margin:8px 0 16px"><button class="btn pri" data-a="copycode">Copiar código</button></div>
+   <label for="importCode" class="kbd">Pega aquí un código guardado</label>
+   <textarea id="importCode" class="inp code" rows="3" placeholder="Pega el código completo"></textarea>
+   <div class="row" style="margin-top:8px"><button class="btn" data-a="import">Recuperar progreso</button></div>
+   <p id="bkmsg" class="kbd" role="status" style="margin:8px 0 0"></p>
+  </div>`;
+  return h}
+
 function render(){
   renderSide();
   let h="";
@@ -1489,11 +1655,13 @@ function render(){
   else if(view.name==="topic")h=renderTopic();
   else if(view.name==="sim"||view.name==="fails"){
     h=`<div><div class="eyebrow">${view.name==="sim"?"Simulacro de examen":"Repaso"}</div><h1 class="h1">${view.name==="sim"?"Simulacro DGT":"Repasar fallos"}</h1>
-    <p class="lead">${view.name==="sim"?"30 preguntas de todos los temas, 30 minutos y corrección al final, como en el examen. Puedes cambiar la respuesta hasta pulsar Siguiente.":"Preguntas que has fallado. Al acertarlas desaparecen de esta lista."}</p></div>`;
+    <p class="lead">${view.name==="sim"?"Como en la DGT: 30 preguntas, 30 minutos y corrección al final. No se puede volver atrás; puedes cambiar la respuesta hasta pulsar Siguiente. Salen más a menudo las preguntas que sueles fallar.":"Preguntas que has fallado. Al acertarlas desaparecen de esta lista."}</p></div>`;
     if(quiz)h+=renderQuiz();else h+=`<div class="panel"><p class="empty" style="margin:0 0 12px">No tienes fallos guardados. Haz algún test y los que falles aparecerán aquí.</p><button class="btn pri" data-a="sim">Hacer un simulacro</button></div>`;
   }
+  else if(view.name==="prog")h=renderProg();
   else if(view.name==="mix"){h=`<div><div class="eyebrow">Repaso rápido</div><h1 class="h1">Tarjetas mezcladas</h1><p class="lead">Datos clave de todo el temario: tasas, velocidades, plazos, puntos y trucos.</p></div>`+renderCards()}
   $("#app").innerHTML=h;
+  document.body.classList.toggle("exam",!!(view.name==="sim"&&quiz&&!quiz.finished));
   $("#themeBtn").textContent=isDark()?"Modo claro":"Modo oscuro";
 }
 function isDark(){const a=document.documentElement.getAttribute("data-theme");if(a)return a==="dark";return matchMedia("(prefers-color-scheme: dark)").matches}
@@ -1505,15 +1673,16 @@ function makeDeck(list,mix){deck={cards:list,i:0,flip:false,mix}}
 function topicDeck(ti){return T[ti].fc.map((c,k)=>({id:ti+"-"+k,t:ti,f:c[0],b:c[1],img:c[2]}))}
 function go(v){clearInterval(timerId);view=v;quiz=null;deck=null;
   if(v.name==="topic"){if(v.tab==="test")startQuiz(shuffle(T[v.t].qs.map((_,i)=>v.t+"-"+i)),{title:"Test del tema "+(v.t+1)});
-    if(v.tab==="cards")makeDeck(topicDeck(v.t),false)}
-  if(v.name==="sim"){let ids=[];T.forEach((t,ti)=>{ids.push(...shuffle(t.qs.map((_,i)=>ti+"-"+i)).slice(0,2))});
-    ids.push(...shuffle(ALL.filter(x=>!ids.includes(x))).slice(0,30-ids.length));startQuiz(shuffle(ids),{instant:false,sim:true,timed:30,title:"Simulacro"})}
+    if(v.tab==="cards")makeDeck(sortDeck(topicDeck(v.t),true),false)}
+  if(v.name==="sim"){let ids=[];T.forEach((t,ti)=>{ids.push(...wpick(t.qs.map((_,i)=>ti+"-"+i),2))});
+    ids=ids.slice(0,30);ids.push(...wpick(ALL.filter(x=>!ids.includes(x)),30-ids.length));startQuiz(shuffle(ids),{instant:false,sim:true,timed:30,title:"Simulacro"})}
   if(v.name==="fails"&&S.wrong.length)startQuiz(shuffle(S.wrong).slice(0,30),{mix:true,title:"Repaso de fallos"});
-  if(v.name==="mix"){let all=[];T.forEach((_,ti)=>all.push(...topicDeck(ti)));makeDeck(shuffle(all),true)}
+  if(v.name==="mix"){let all=[];T.forEach((_,ti)=>all.push(...topicDeck(ti)));makeDeck(sortDeck(all),true)}
   document.body.classList.remove("nav-open");render();scrollTop();
   try{if(v.name==="topic")history.replaceState(null,"","#tema"+(v.t+1));else history.replaceState(null,"","#"+v.name)}catch(e){}
 }
-let resetArmed=false;
+let resetArmed=false,importArmed=false,quitArmed=false;
+document.addEventListener("change",e=>{if(e.target.id==="examDate"){S.exam=e.target.value;save();render()}});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a;
   if(a==="menu"){document.body.classList.toggle("nav-open");return}
   if(a==="theme"){const n=isDark()?"light":"dark";document.documentElement.setAttribute("data-theme",n);try{localStorage.setItem(KEY+".theme",n)}catch(e){}render();return}
@@ -1521,11 +1690,21 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b
   if(a==="sim")return go({name:"sim"});
   if(a==="fails")return go({name:"fails"});
   if(a==="mix")return go({name:"mix"});
+  if(a==="prog")return go({name:"prog"});
+  if(a==="goal"){S.goal=Math.min(10,Math.max(1,S.goal+(+b.dataset.d)));save();return render()}
+  if(a==="fonly"){deck.cards=deck.cards.filter(c=>!S.known[c.id]);deck.i=0;deck.flip=false;deck.only=true;return render()}
+  if(a==="copycode"){const ta=$("#exportCode");const done=()=>{$("#bkmsg").textContent="Código copiado. Guárdalo en una nota o envíatelo por correo."};
+    try{navigator.clipboard.writeText(ta.value).then(done,()=>{ta.select();$("#bkmsg").textContent="Mantén pulsado el código seleccionado y elige Copiar."})}catch(err){ta.select();$("#bkmsg").textContent="Mantén pulsado el código seleccionado y elige Copiar."}return}
+  if(a==="import"){const msg=$("#bkmsg");let d;try{d=JSON.parse(decodeURIComponent(escape(atob($("#importCode").value.trim()))))}catch(err){msg.textContent="Ese código no es válido. Cópialo entero, sin espacios de más.";return}
+    if(!d||typeof d.q!=="object"){msg.textContent="Ese código no es válido.";return}
+    if(!importArmed){importArmed=true;b.textContent="Pulsa otra vez: sustituirá tu progreso actual";setTimeout(()=>{importArmed=false;if(b.isConnected)b.textContent="Recuperar progreso"},5000);return}
+    importArmed=false;S=Object.assign({q:{},wrong:[],known:{},sims:[],days:{},exam:"",goal:3},d);save();render();$("#bkmsg").textContent="Progreso recuperado.";return}
   if(a==="topic")return go({name:"topic",t:+b.dataset.t,tab:"notes"});
   if(a==="tab")return go({name:"topic",t:view.t,tab:b.dataset.v});
   if(a==="choose")return choose(+b.dataset.k);
   if(a==="next")return nextQ();
-  if(a==="quit")return view.name==="topic"?go({name:"topic",t:view.t,tab:"notes"}):go({name:"home"});
+  if(a==="quit"){if(view.name==="sim"&&quiz&&!quiz.finished&&!quitArmed){quitArmed=true;b.textContent="Pulsa otra vez para salir";setTimeout(()=>{quitArmed=false;if(b.isConnected)b.textContent="Salir del test"},4000);return}
+    quitArmed=false;return view.name==="topic"?go({name:"topic",t:view.t,tab:"notes"}):go({name:"home"})}
   if(a==="again")return go(Object.assign({},view));
   if(a==="flip"){flipCard();return}
   if(a==="fprev"){deck.i=Math.max(0,deck.i-1);deck.flip=false;return render()}
@@ -1533,7 +1712,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b
     if(deck.i<deck.cards.length-1){deck.i++}deck.flip=false;return render()}
   if(a==="fshuffle"){deck.cards=shuffle(deck.cards);deck.i=0;deck.flip=false;return render()}
   if(a==="reset"){if(!resetArmed){resetArmed=true;b.textContent="Pulsa otra vez para confirmar";setTimeout(()=>{resetArmed=false;if(b.isConnected)b.textContent="Borrar mi progreso"},4000);return}
-    resetArmed=false;S={q:{},wrong:[],known:{},sims:[]};save();render()}
+    resetArmed=false;S={q:{},wrong:[],known:{},sims:[],days:{},exam:"",goal:3};save();render()}
 });
 document.addEventListener("keydown",e=>{if(e.target.closest("input,textarea"))return;
   if(quiz&&!quiz.finished&&(view.name!=="topic"||view.tab==="test")){
@@ -1544,9 +1723,10 @@ document.addEventListener("keydown",e=>{if(e.target.closest("input,textarea"))re
     else if(e.key==="ArrowLeft"&&deck.i>0){deck.i--;deck.flip=false;render()}}
 });
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change",render);
+let rsz;window.addEventListener("resize",()=>{clearTimeout(rsz);rsz=setTimeout(()=>{if(view.name==="prog")render()},250)});
 (function boot(){const h=(location.hash||"").slice(1);const m=h.match(/^tema(\d+)$/);
   if(m&&+m[1]>=1&&+m[1]<=T.length)go({name:"topic",t:+m[1]-1,tab:"notes"});
-  else if(["sim","fails","mix"].includes(h))go({name:h});else render()})();
+  else if(["sim","fails","mix","prog"].includes(h))go({name:h});else render()})();
 </script>
 <script>
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}

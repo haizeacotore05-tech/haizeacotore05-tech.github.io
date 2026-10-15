@@ -1,5 +1,5 @@
 // Guarda la app para usarla sin conexión. Sube VERSION cuando cambies la app.
-const VERSION="teorica-b-v3";
+const VERSION="teorica-b-v4";
 const FILES=["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./icon-512-maskable.png","./icon-180.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(VERSION).then(c=>c.addAll(FILES)));self.skipWaiting()});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==VERSION).map(x=>caches.delete(x)))));self.clients.claim()});
