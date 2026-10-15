@@ -1,0 +1,17 @@
+{
+  "name": "Teórica Permiso B",
+  "short_name": "Teórica B",
+  "description": "Apuntes, tests DGT, simulacro, señales y tarjetas para el teórico del permiso B.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f2f4f8",
+  "theme_color": "#1d4f9f",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
