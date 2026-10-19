@@ -534,6 +534,41 @@ body.lang-it .specs div:nth-child(2) dd::before{content:"aggiornato il "}
 .ahora ul{list-style:none;margin:0;padding:0}
 .ahora li{position:relative;padding-left:18px;font-family:var(--serif);font-style:italic;font-size:1.04rem;line-height:1.55;color:var(--soft)}
 .ahora li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:50% 0;background:var(--moss);transform:rotate(45deg)}
+
+/* ===== adiós radio: cabecera limpia ===== */
+.console{border:0 !important;background:none !important;box-shadow:none !important;padding:0 !important;max-width:none !important;overflow:visible !important}
+.console .meters,.console .grille,.console .tuner,.console .branch{display:none !important}
+/* ===== balda "Ahora mismo" ===== */
+.taller{margin:56px 0 0;max-width:640px}
+.taller-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 14px}
+.taller-h h2{font-family:var(--serif);font-weight:400;font-size:1.9rem;margin:0;line-height:1}
+.taller-h span{font-family:var(--sans);font-size:.8rem;color:var(--faint)}
+.balda{position:relative;border-radius:16px;overflow:hidden;background:var(--panel);border:1px solid var(--line);
+  box-shadow:0 18px 40px -26px rgba(60,35,15,.5)}
+.balda svg{display:block;width:100%;height:auto}
+.obj{cursor:pointer;transform-box:fill-box;transform-origin:50% 100%;transition:transform .35s cubic-bezier(.3,1.4,.4,1)}
+.obj:hover,.obj.on{transform:translateY(-5px)}
+.obj,.obj:focus{outline:none}
+.balda svg *:focus{outline:none}
+.obj:focus-visible .tagp{stroke:var(--orange);stroke-width:2}
+.tag-g{transform-box:fill-box;transform-origin:50% 0}
+@media (prefers-reduced-motion:no-preference){
+  .tag-g{animation:sway 5s ease-in-out infinite alternate}
+  .tag-g.t2{animation-delay:-1.3s}.tag-g.t3{animation-delay:-2.6s}.tag-g.t4{animation-delay:-3.9s}
+  .wheel-lines{animation:spin 2.4s linear infinite;transform-box:fill-box;transform-origin:50% 50%}
+  .sun-o{animation:glowo 4s ease-in-out infinite alternate}
+}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+@keyframes spin{to{transform:scaleX(-1)}}
+@keyframes glowo{from{opacity:.75}to{opacity:1}}
+.nota{min-height:3.4em;margin:14px 2px 0;font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.5;color:var(--soft);
+  transition:opacity .35s ease,transform .35s ease}
+.nota.out{opacity:0;transform:translateY(5px)}
+.nota b{font-style:normal;font-family:var(--sans);font-weight:500;font-size:.78rem;color:var(--orange);display:block;letter-spacing:.02em;margin-bottom:2px}
+/* filtros sencillos */
+.fchips{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 0}
+.fchips button{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-family:var(--sans);font-size:.8rem;color:var(--soft)}
+.fchips button[aria-pressed="true"]{background:#6B4329;border-color:#6B4329;color:#F6EDE0}
 </style>
 </head>
 <body>
@@ -592,6 +627,63 @@ body.lang-it .specs div:nth-child(2) dd::before{content:"aggiornato il "}
         <div class="freq"><span>88</span><span>Desliza para sintonizar</span><span>108</span></div>
       </div>
     </div>
+<section class="taller" id="taller">
+  <div class="taller-h"><h2 id="tallerT">Ahora mismo</h2><span id="tallerS">toca un objeto</span></div>
+  <div class="balda"><svg viewBox="0 0 400 250" role="img" aria-labelledby="balda-t"><title id="balda-t">Balda de nogal con un cuenco de cerámica en el torno, un caballete con un óleo, una postal del Teide y un guion con claqueta</title>
+<defs><pattern id="veta" width="60" height="14" patternUnits="userSpaceOnUse"><rect width="60" height="14" fill="#6B4329"/><path d="M0 4 Q15 2 30 5 T60 4 M0 10 Q20 12 35 9 T60 11" stroke="#5A3721" stroke-width="1" fill="none"/></pattern></defs>
+<rect width="400" height="250" fill="var(--panel)"/>
+<g opacity=".5" stroke="var(--line)" stroke-width="1"><path d="M0 40 H400 M0 80 H400 M0 120 H400" stroke-dasharray="1 7"/></g>
+<!-- objetos -->
+<g class="obj" data-k="ceramica" tabindex="0" role="button" aria-label="Cerámica">
+  <ellipse cx="62" cy="160" rx="40" ry="7" fill="#8D8477"/><rect x="22" y="152" width="80" height="8" fill="#A39A8C"/><ellipse cx="62" cy="152" rx="40" ry="7" fill="#C9BFAE"/>
+  <path d="M38 150 Q36 118 46 112 L78 112 Q88 118 86 150 Z" fill="#B5734A"/>
+  <ellipse cx="62" cy="112" rx="16" ry="4" fill="#8E5534"/><ellipse cx="62" cy="112" rx="12" ry="2.6" fill="#6E3F25"/>
+  <g class="wheel-lines" stroke="#9A5E3A" stroke-width="1.2" fill="none"><path d="M44 124 Q62 128 80 124 M41 136 Q62 141 83 136 M40 146 Q62 150 84 146"/></g>
+  <path d="M30 145 q-8 -6 -4 -16 q6 2 9 9" fill="#E3C6A6" stroke="#B08A6A" stroke-width="1"/>
+</g>
+<g class="obj" data-k="oleo" tabindex="0" role="button" aria-label="Óleo">
+  <path d="M135 168 L152 70 M181 168 L164 70 M158 70 L158 168" stroke="#7A4E31" stroke-width="4" stroke-linecap="round"/>
+  <rect x="130" y="128" width="56" height="5" fill="#7A4E31"/>
+  <rect x="128" y="72" width="60" height="56" fill="#F6F1E7" stroke="#C9BFAE"/>
+  <rect x="132" y="76" width="52" height="30" fill="#9EB8C9"/>
+  <circle class="sun-o" cx="170" cy="86" r="6" fill="#E9A040"/>
+  <path d="M132 106 Q144 92 156 100 Q166 90 184 102 V106 Z" fill="#6E8A5B"/>
+  <rect x="132" y="106" width="52" height="18" fill="#C98A5A"/>
+  <path d="M136 112 h14 M154 117 h20 M140 120 h10" stroke="#E8C79B" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="196" cy="160" rx="14" ry="6" fill="#D9C7A6" transform="rotate(-12 196 160)"/><circle cx="191" cy="159" r="2" fill="#C8551F"/><circle cx="197" cy="157" r="2" fill="#5E6B48"/><circle cx="202" cy="160" r="2" fill="#E9A040"/>
+</g>
+<g class="obj" data-k="teide" tabindex="0" role="button" aria-label="Teide">
+  <g transform="rotate(-7 262 135)">
+    <rect x="226" y="98" width="74" height="62" fill="#F6F1E7" stroke="#C9BFAE"/>
+    <rect x="231" y="103" width="64" height="44" fill="#E9C9A0"/>
+    <circle cx="282" cy="113" r="5" fill="#F7E3B6"/>
+    <path d="M231 147 L254 118 L258 116 L263 119 L295 147 Z" fill="#7A5644"/>
+    <path d="M254 118 L258 116 L263 119 L260 123 L256 122 Z" fill="#F7E3B6"/>
+    <path d="M231 147 Q246 140 262 146 T295 144 V147 Z" fill="#4A372A"/>
+    <text x="263" y="156" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" letter-spacing="1" fill="#8D8477">TEIDE · 3.715 M</text>
+    <rect x="286" y="100" width="11" height="13" fill="none" stroke="#C8551F" stroke-dasharray="2 1.5"/>
+  </g>
+  <path d="M306 168 q2 -12 10 -16 q4 10 -2 16 Z" fill="#5E6B48"/><path d="M309 168 q-4 -9 0 -18" stroke="#5E6B48" stroke-width="1.4" fill="none"/>
+</g>
+<g class="obj" data-k="guion" tabindex="0" role="button" aria-label="Guion">
+  <rect x="328" y="146" width="52" height="22" fill="#F6F1E7" stroke="#C9BFAE"/><path d="M332 152 h40 M332 157 h34 M332 162 h38" stroke="#C9BFAE"/>
+  <rect x="330" y="120" width="50" height="26" fill="#2B1F16"/>
+  <path d="M330 120 L380 120 L377 108 L327 108 Z" fill="#2B1F16"/>
+  <path d="M334 108 l-6 12 M346 108 l-6 12 M358 108 l-6 12 M370 108 l-6 12" stroke="#F0E7D9" stroke-width="3"/>
+  <text x="355" y="135" text-anchor="middle" font-family="Instrument Serif,Georgia,serif" font-size="8.6" fill="#F0E7D9" font-style="italic">María Isabel</text>
+  <text x="355" y="142" text-anchor="middle" font-family="Space Mono,monospace" font-size="5" fill="#B3A694">ESC. 1 · TOMA 1</text>
+</g>
+<!-- balda -->
+<rect x="0" y="168" width="400" height="16" fill="url(#veta)"/><rect x="0" y="184" width="400" height="5" fill="#4A2E1B"/>
+<rect x="38" y="189" width="10" height="18" fill="#4A2E1B"/><rect x="352" y="189" width="10" height="18" fill="#4A2E1B"/>
+<!-- etiquetas -->
+<g class="tag-g t1" data-k="ceramica"><path d="M62 184 V198" stroke="#8D8477"/><path class="tagp" d="M36 198 H88 V232 H36 Z" fill="#F3EAD8" stroke="#C9BFAE"/><circle cx="62" cy="203" r="2" fill="#8D8477"/><text x="62" y="217" text-anchor="middle" font-family="Instrument Serif,Georgia,serif" font-size="13" fill="#2B1F16">Cerámica</text><text x="62" y="227" text-anchor="middle" font-family="Archivo,sans-serif" font-size="7.5" fill="#9A5B34">en curso</text></g>
+<g class="tag-g t2" data-k="oleo"><path d="M158 184 V198" stroke="#8D8477"/><path class="tagp" d="M134 198 H182 V232 H134 Z" fill="#F3EAD8" stroke="#C9BFAE"/><circle cx="158" cy="203" r="2" fill="#8D8477"/><text x="158" y="217" text-anchor="middle" font-family="Instrument Serif,Georgia,serif" font-size="13" fill="#2B1F16">Óleo</text><text x="158" y="227" text-anchor="middle" font-family="Archivo,sans-serif" font-size="7.5" fill="#9A5B34">a ratos</text></g>
+<g class="tag-g t3" data-k="teide"><path d="M262 184 V198" stroke="#8D8477"/><path class="tagp" d="M238 198 H286 V232 H238 Z" fill="#F3EAD8" stroke="#C9BFAE"/><circle cx="262" cy="203" r="2" fill="#8D8477"/><text x="262" y="217" text-anchor="middle" font-family="Instrument Serif,Georgia,serif" font-size="13" fill="#2B1F16">Teide</text><text x="262" y="227" text-anchor="middle" font-family="Archivo,sans-serif" font-size="7.5" fill="#9A5B34">entrenando</text></g>
+<g class="tag-g t4" data-k="guion"><path d="M355 184 V198" stroke="#8D8477"/><path class="tagp" d="M331 198 H379 V232 H331 Z" fill="#F3EAD8" stroke="#C9BFAE"/><circle cx="355" cy="203" r="2" fill="#8D8477"/><text x="355" y="217" text-anchor="middle" font-family="Instrument Serif,Georgia,serif" font-size="13" fill="#2B1F16">Guion</text><text x="355" y="227" text-anchor="middle" font-family="Archivo,sans-serif" font-size="7.5" fill="#9A5B34">escribiendo</text></g>
+</svg></div>
+  <p class="nota" id="nota"></p>
+</section>
     <p class="lede"><span>Herramientas para leer,</span><span>entender y no olvidar.</span><span class="leaf">Todas crecen despacio.</span></p>
     <section class="boletin" aria-label="Boletín del día">
       <div class="bcell bfrase"><b class="blabel">Para hoy · <span id="bday"></span></b><p id="bfrase"></p>
@@ -980,8 +1072,6 @@ function renderMe(){
     '<div class="portrait" data-profile><i class="tape"></i><div class="frame">'+pic+'</div></div>'+
     '<div class="who"><b>Al mando</b><h2>'+esc(profile.name)+'</h2><p>'+esc(profile.bio)+'</p>'+
     (links.length?'<div class="links">'+links.join("")+'</div>':'')+
-    (function(){ var L=(typeof LANG!=="undefined"?LANG:"es"), A=AHORA[L]||AHORA.es;
-      return '<div class="ahora"><span class="aht">'+A.t+'</span><ul>'+A.i.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>'; })()+
     (editing?'<div class="editbar"><button data-editme>Editar perfil</button></div>':'')+
     '</div>';
 }
@@ -1956,6 +2046,37 @@ loadRemote().then(function(data){
   if (ch) persist();
   $("#sync").textContent="Sincronizado";
 });
+
+/* ===== balda Ahora mismo ===== */
+var TALLER={
+  es:{t:"Ahora mismo",s:"toca un objeto",ceramica:["Cerámica","Estoy haciendo un curso de cerámica: barro, torno y paciencia."],oleo:["Óleo","Pinto al óleo de vez en cuando, sin prisa y sin reglas."],teide:["Teide","Entrenando en los montes de Bizkaia para subir el Teide."],guion:["Guion","Escribiendo María Isabel, mi primer largometraje."]},
+  en:{t:"Right now",s:"tap an object",ceramica:["Ceramics","Taking a ceramics course: clay, the wheel and patience."],oleo:["Oil painting","I paint in oil now and then, slowly and without rules."],teide:["Teide","Training in the Biscay mountains to climb Mount Teide."],guion:["Screenplay","Writing María Isabel, my first feature film."]},
+  it:{t:"In questo momento",s:"tocca un oggetto",ceramica:["Ceramica","Sto seguendo un corso di ceramica: argilla, tornio e pazienza."],oleo:["Pittura a olio","Dipingo a olio ogni tanto, senza fretta e senza regole."],teide:["Teide","Mi alleno sulle montagne della Biscaglia per salire sul Teide."],guion:["Sceneggiatura","Sto scrivendo María Isabel, il mio primo lungometraggio."]}
+};
+var tallerSel="ceramica";
+function tallerLang(){ return TALLER[(typeof LANG!=="undefined"&&TALLER[LANG])?LANG:"es"]; }
+function tallerShow(k,anim){
+  var T=tallerLang(), n=document.getElementById("nota"); if(!n||!T[k]) return; tallerSel=k;
+  document.querySelectorAll("#taller .obj").forEach(function(o){ o.classList.toggle("on", o.getAttribute("data-k")===k); });
+  var put=function(){ n.innerHTML="<b>"+esc(T[k][0])+"</b>"+esc(T[k][1]); n.classList.remove("out"); };
+  if(anim){ n.classList.add("out"); setTimeout(put,220); } else put();
+  var tt=document.getElementById("tallerT"), ts=document.getElementById("tallerS"); if(tt) tt.textContent=T.t; if(ts) ts.textContent=T.s;
+}
+(function(){
+  var sec=document.getElementById("taller"); if(!sec) return;
+  sec.addEventListener("click",function(e){ var g=e.target.closest("[data-k]"); if(g) tallerShow(g.getAttribute("data-k"),true); });
+  sec.addEventListener("keydown",function(e){ if((e.key==="Enter"||e.key===" ")&&e.target.closest(".obj")){ e.preventDefault(); tallerShow(e.target.closest(".obj").getAttribute("data-k"),true); } });
+  tallerShow(tallerSel,false);
+  document.addEventListener("click",function(e){ if(e.target.closest(".langsw button")) setTimeout(function(){ tallerShow(tallerSel,false); },30); });
+  setTimeout(function(){
+    var me=document.getElementById("me"), rack=document.querySelector(".rackhead"), stats=document.getElementById("stats");
+    if(me) me.parentNode.insertBefore(sec, me.nextSibling);
+    if(rack){ var fc=document.getElementById("fchips"); if(!fc){ fc=document.createElement("div"); fc.className="fchips"; fc.id="fchips"; }
+      rack.parentNode.insertBefore(fc, rack.nextSibling); syncChips(); }
+  },5);
+})();
+function syncChips(){ var fc=document.getElementById("fchips"), st=document.getElementById("stations"); if(fc&&st) fc.innerHTML=st.innerHTML; }
+(function(){ var st=document.getElementById("stations"); if(st&&window.MutationObserver) new MutationObserver(syncChips).observe(st,{childList:true,subtree:true,attributes:true}); })();
 </script>
 <script>if("serviceWorker" in navigator){addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script>
 </body>
