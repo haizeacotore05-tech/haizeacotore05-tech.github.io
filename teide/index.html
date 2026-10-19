@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#3A2A22">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Teide">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
+<title>Hacia el Teide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Tierra volcánica: arena de pómez, basalto, ocre de lava fría, retama y cielo de amanecer; estratos y curvas de nivel */
+:root{
+  --bg:#E7D7BC; --bg2:#DCC7A6; --panel:#F4EADB; --line:#CDB693;
+  --ink:#2A1F18; --ink2:#5A4636; --muted:#86705A;
+  --gold:#A8701E; --cyan:#4F5E86; --sig:#C9692B;
+  --rust:#C9692B; --moss:#5F7A3A; --lava:#9A3B1E; --plum:#4F5E86; --ok:#5F7A3A; --mid:#B8861F; --bad:#A63A22;
+  --mk-sl:#5F7A3A; --mk-pr:#D3A12A; --mk-gr:#B23A2A;
+  --sky1:#F2C089; --sky2:#7D7499; --far:#7A5644; --mid-r:#B08656; --near:#4A372A; --sunc:#FBE3B0;
+  --dusk1:#3A2A22; --dusk2:#6B4632; --on:#F6E8D0;
+  --topo:rgba(122,86,52,.13); --strata:repeating-linear-gradient(180deg,#B08656 0 3px,#D3A86E 3px 5px,#7A5644 5px 7px,#E0C394 7px 10px);
+  --shadow:0 1px 2px rgba(42,31,24,.07),0 14px 30px -20px rgba(42,31,24,.45);
+  --serif:"Bricolage Grotesque","Trebuchet MS",sans-serif; --display:"Bricolage Grotesque","Trebuchet MS",sans-serif; --mono:"DM Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16110D; --bg2:#211913; --panel:#201812; --line:#3A2C21;
+    --ink:#F3E4CA; --ink2:#CDB797; --muted:#9A8268;
+    --gold:#E3A94B; --cyan:#9AA6D0; --sig:#E8894A;
+    --rust:#E8894A; --moss:#A7C07A; --lava:#EE7B52; --plum:#9AA6D0; --ok:#A7C07A; --mid:#E8BC55; --bad:#EE7B52;
+    --mk-sl:#A7C07A; --mk-pr:#E8BC55; --mk-gr:#E46A55;
+    --sky1:#5A3F55; --sky2:#141327; --far:#3A2A28; --mid-r:#2C211B; --near:#140F0C; --sunc:#F3D9A2;
+    --dusk1:#2A1E17; --dusk2:#4A3022; --on:#F6E8D0;
+    --topo:rgba(227,169,75,.07); --strata:repeating-linear-gradient(180deg,#5A4030 0 3px,#3A2A20 3px 5px,#7A5644 5px 7px,#2A1E17 7px 10px);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 30px -20px rgba(0,0,0,.85);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+    --bg:#16110D; --bg2:#211913; --panel:#201812; --line:#3A2C21;
+    --ink:#F3E4CA; --ink2:#CDB797; --muted:#9A8268;
+    --gold:#E3A94B; --cyan:#9AA6D0; --sig:#E8894A;
+    --rust:#E8894A; --moss:#A7C07A; --lava:#EE7B52; --plum:#9AA6D0; --ok:#A7C07A; --mid:#E8BC55; --bad:#EE7B52;
+    --mk-sl:#A7C07A; --mk-pr:#E8BC55; --mk-gr:#E46A55;
+    --sky1:#5A3F55; --sky2:#141327; --far:#3A2A28; --mid-r:#2C211B; --near:#140F0C; --sunc:#F3D9A2;
+    --dusk1:#2A1E17; --dusk2:#4A3022; --on:#F6E8D0;
+    --topo:rgba(227,169,75,.07); --strata:repeating-linear-gradient(180deg,#5A4030 0 3px,#3A2A20 3px 5px,#7A5644 5px 7px,#2A1E17 7px 10px);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 30px -20px rgba(0,0,0,.85);
+    color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;min-height:100%;font-family:var(--serif);color:var(--ink);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  background:var(--bg);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.topo{position:fixed;inset:0;z-index:0;pointer-events:none;color:var(--topo)}
+.topo svg{width:100%;height:100%;display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--gold);text-underline-offset:3px;text-decoration-thickness:1px;font-weight:600}
+:focus-visible{outline:2px solid var(--sig);outline-offset:2px}
+.wrap{max-width:780px;margin:0 auto;position:relative;z-index:1}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+h1,h2,h3{text-wrap:balance}
+
+
+/* Balizas de sendero */
+.mk{display:inline-flex;flex-direction:column;width:18px;height:12px;border-radius:2px;overflow:hidden;vertical-align:middle;box-shadow:0 0 0 1px var(--line)}
+.mk::before{content:"";flex:1;background:#fff}
+.mk::after{content:"";flex:1;background:var(--c,var(--mk-gr))}
+
+/* ---------- Transiciones ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleY(.12)}to{transform:none}}
+@keyframes drift{from{transform:translateX(-12px)}to{transform:translateX(12px)}}
+@keyframes sunup{from{transform:translateY(22px)}to{transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  .view{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+  .view .stag>*{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+  .view .stag>*:nth-child(2){animation-delay:.06s}.view .stag>*:nth-child(3){animation-delay:.12s}
+  .view .stag>*:nth-child(4){animation-delay:.18s}.view .stag>*:nth-child(5){animation-delay:.24s}
+  .view .stag>*:nth-child(6){animation-delay:.3s}.view .stag>*:nth-child(n+7){animation-delay:.34s}
+  .pane{animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+  .peak-g{transform-box:fill-box;transform-origin:bottom;animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+  .cloud{animation:drift 9s ease-in-out infinite alternate}
+  .sun{animation:sunup 1.8s cubic-bezier(.2,.7,.2,1) both}
+  .fill{transition:width 1s cubic-bezier(.2,.7,.2,1)}
+  .hall{transition:transform .25s,border-color .25s,box-shadow .25s}
+}
+
+/* ---------- Portada ---------- */
+.mast{padding:30px 0 22px;position:relative}
+.mast h1{font-family:var(--display);font-weight:800;font-size:clamp(46px,14vw,82px);letter-spacing:-.045em;line-height:.88;margin:14px 0 14px}
+.mast h1 span{display:block;color:var(--sig);font-style:normal}
+.mast .sub{color:var(--ink2);font-size:17px;max-width:40ch}
+.mast .rule{display:none}
+.pano{margin:6px 0 0;border-radius:22px 22px 6px 6px;overflow:hidden;box-shadow:var(--shadow);background:var(--panel);border:1px solid var(--line)}
+.pano svg{display:block;width:100%;height:auto}
+.pano .cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:11px 16px;border-top:10px solid transparent;border-image:var(--strata) 10}
+.pano .cap span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+.intro{color:var(--ink2);margin:10px 0 0;max-width:58ch;font-size:16.5px}
+
+/* Destacado: próxima cumbre */
+.feature{margin-top:22px;border-radius:22px 22px 6px 6px;background:linear-gradient(165deg,var(--dusk1),var(--dusk2));color:var(--on);box-shadow:var(--shadow);overflow:hidden;position:relative}
+.feature::before{content:"";position:absolute;right:-50px;top:-70px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle at 40% 60%,#F7D58E,#E08A3C 60%,transparent 61%);opacity:.9}
+.feature::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--strata);opacity:.9}
+.feature .in{padding:24px 22px 22px;position:relative}
+.feature .eyebrow{color:var(--on)!important;opacity:.75}
+.feature h2{font-family:var(--display);font-weight:800;font-size:min(52px,calc((100vw - 90px) / (var(--n,10) * .58)));line-height:.95;margin:10px 0 8px;letter-spacing:-.04em;white-space:nowrap}
+.feature .meta{font-family:var(--mono);font-size:12px;opacity:.8}
+.nw{white-space:nowrap}
+.feature .k{color:var(--on);opacity:.65}
+.feature .pill{border-color:var(--on);color:var(--on)}
+.feature .why{opacity:.85;color:var(--on)}
+.feature .btn{border-color:var(--on);color:var(--on)}
+.feature .in{padding-bottom:30px}
+.feature .btn.solid{background:#E9A040;border-color:#E9A040;color:#2A1F18}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+.grid2>div{min-width:0}
+.facts{margin-top:18px;padding-top:16px;border-top:1px solid color-mix(in srgb,currentColor 22%,transparent)}
+.k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;font-weight:500}
+.v{font-size:15.5px;font-weight:500}
+.v.big{font-family:var(--display);font-size:40px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{display:inline-block;font-family:var(--mono);font-size:11.5px;padding:4px 10px;border:1px solid var(--ok);color:var(--ok);border-radius:30px;white-space:nowrap;text-transform:capitalize}
+.feature .why{margin:16px 0 0;font-size:15px}
+.row-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{border:1.5px solid var(--ink);background:none;color:var(--ink);padding:11px 18px;font-family:var(--serif);font-weight:700;font-size:14px;border-radius:40px}
+.btn.solid{background:var(--ink);color:var(--panel)}
+.btn.ghost{border-color:var(--line);color:var(--ink2)}
+.btn.warn{border-color:var(--bad);color:var(--bad)}
+
+/* Salas */
+.sect{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin:50px 0 16px;padding-bottom:12px;border-bottom:10px solid transparent;border-image:var(--strata) 10}
+.sect .eyebrow{color:var(--ink)}
+.halls{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.hall{--acc:var(--sig);text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:20px 20px 6px 6px;padding:18px 16px 16px;min-height:160px;
+  position:relative;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.glyph{width:34px;height:34px;color:var(--acc);display:block;margin-bottom:10px}
+.glyph svg{width:100%;height:100%;display:block}
+.hall:hover{transform:translateY(-3px);border-color:var(--acc)}
+.hall .tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hall .hn{font-family:var(--display);font-weight:800;font-size:clamp(20px,5.2vw,26px);line-height:1;margin:6px 0 8px;letter-spacing:-.035em;overflow-wrap:normal;hyphens:none}
+.hall .hl{font-size:13.5px;color:var(--ink2);line-height:1.45;margin-top:auto}
+.hall.wide{grid-column:1/-1;min-height:0;background:linear-gradient(165deg,var(--dusk1),var(--dusk2));color:var(--on);border-color:transparent}
+.hall.wide .tag,.hall.wide .hl{color:var(--on);opacity:.75}
+.hall.wide .glyph{color:#E9A040}
+.statline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.statline>div{padding:14px 14px 12px;background:var(--panel);border:1px solid var(--line);border-radius:16px 16px 4px 4px;min-width:0}
+.statline b{display:block;font-family:var(--display);font-size:clamp(26px,8vw,34px);font-weight:800;line-height:1;margin-bottom:6px;letter-spacing:-.04em}
+
+/* ---------- Vistas de sala ---------- */
+.back{background:none;border:none;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:22px 0 4px}
+.back:hover{color:var(--sig)}
+.room{--acc:var(--sig)}
+.roomhead{padding:12px 0 18px;border-bottom:10px solid transparent;border-image:var(--strata) 10;position:relative}
+.roomhead .eyebrow{color:var(--acc)}
+.roomhead h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,12vw,64px);line-height:.92;margin:10px 0 0;letter-spacing:-.045em}
+.dropcap::first-letter{font-weight:inherit}
+.pull{margin:22px 0 4px;padding:4px 0 4px 16px;border-left:4px solid var(--acc);font-family:var(--display);font-size:22px;line-height:1.25;font-weight:700;letter-spacing:-.02em}
+.gtabs{display:flex;gap:6px;margin-top:20px;overflow-x:auto;scrollbar-width:none;padding:8px 0;
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg)}
+.gtabs::-webkit-scrollbar{display:none}
+.gtab{flex:0 0 auto;background:var(--panel);border:1px solid var(--line);border-radius:40px;padding:8px 14px;font-family:var(--serif);font-weight:600;font-size:13px;color:var(--ink2)}
+.gtab[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px 20px 6px 6px;box-shadow:var(--shadow);margin-top:16px;overflow:hidden;position:relative}
+.panel .ph{padding:20px 20px 0}
+.panel .ph h2,.panel .ph h3{font-family:var(--display);font-size:26px;font-weight:800;line-height:1.05;margin:6px 0 0;padding-bottom:14px;border-bottom:1px solid var(--line);letter-spacing:-.035em}
+.panel .pb{padding:16px 20px 20px}
+.panel .pb>p{margin:0 0 .9em}
+.muted{color:var(--muted)}
+.note{margin:16px 0 0;padding:12px 14px;border-radius:10px;background:var(--bg2);color:var(--ink2);font-size:14.5px}
+.note b{color:var(--ink)}
+.src{font-size:13px;color:var(--muted);margin-top:16px}
+
+/* Escalera */
+.ladder svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sw{width:10px;height:10px;display:inline-block;border-radius:50%}
+.meter .bar{height:12px;border-radius:12px;background:var(--bg2);margin-top:10px;position:relative;overflow:hidden}
+.meter .fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--moss),var(--gold),var(--sig));border-radius:12px}
+.meter .ends{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+
+/* Fichas */
+.pk{--acc:var(--sig)}
+.pk .ph{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.pk .ph>div{min-width:0;flex:1}
+.pk .ph h3{border:0!important;padding:0!important;font-size:min(32px,calc((100vw - 150px) / (var(--n,10) * .55)))!important;white-space:nowrap}
+.pk .alt{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:4px}
+.seal{flex:0 0 auto;width:60px;height:60px;border-radius:50%;border:1.5px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.3}
+.seal b{font-size:10px}
+.seal.done{border:none;background:var(--ok);color:var(--panel)}
+.seal.next{border:none;background:var(--sig);color:var(--panel)}
+.levels{display:flex;gap:6px;margin:14px 20px 0;padding:4px;background:var(--bg2);border-radius:40px}
+.lv{flex:1;background:none;border:0;padding:8px 4px;border-radius:40px;font-family:var(--serif);font-weight:600;font-size:12.5px;color:var(--ink2)}
+.lv[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:0 1px 3px rgba(42,31,24,.18)}
+.dots{display:inline-flex;gap:3px;margin-left:8px;vertical-align:middle}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line);display:inline-block}
+.dots i.on{background:var(--sig)}
+.warnline{color:var(--bad);font-weight:500}
+.hand{font-style:italic;font-size:16px;line-height:1.5;color:var(--ink2)}
+
+/* Conceptos */
+.cdef{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.cdef:first-child{border-top:0;padding-top:0}
+.cdef dt{font-family:var(--display);font-size:19px;font-weight:800;line-height:1.2;letter-spacing:-.02em}
+.cdef dd{margin:0;color:var(--ink2)}
+.diagram svg{display:block;width:100%;height:auto}
+.scale{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.scale div{padding-top:4px;font-size:13.5px;color:var(--ink2);min-width:0;line-height:1.4;border-top:0!important}
+.scale b{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
+
+/* Tiempo */
+.wxwrap{overflow-x:auto;margin:0 -4px}
+.wx{width:100%;border-collapse:collapse;font-size:15px}
+.wx th{text-align:left;font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 10px 10px 4px;border-bottom:1px solid var(--line)}
+.wx td{padding:12px 10px 12px 4px;border-bottom:1px solid var(--line);vertical-align:top;font-variant-numeric:tabular-nums}
+.wx tr:last-child td{border-bottom:0}
+.wx td.d{font-weight:600;white-space:nowrap;text-transform:capitalize}
+.wx .m{font-family:var(--mono);font-size:12.5px}
+.wx tr.rec td{background:color-mix(in srgb,var(--ok) 10%,transparent)}
+.st{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:30px;white-space:nowrap;font-weight:500;
+  background:color-mix(in srgb,currentColor 14%,transparent)}
+.st.buena{color:var(--ok)} .st.regular{color:var(--mid)} .st.mala{color:var(--bad)}
+.rules{list-style:none;margin:0;padding:0}
+.rules li{padding:14px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:100px 1fr;gap:12px}
+.rules li:first-child{border-top:0;padding-top:0}
+.rules b{font-family:var(--display);font-size:17px;font-weight:800;line-height:1.3;letter-spacing:-.02em}
+.rules span{color:var(--ink2);font-size:15px}
+
+/* Cuaderno */
+form.log{display:grid;gap:16px}
+label.k{margin-bottom:6px}
+input[type=text],input[type=number],input[type=date],select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-family:var(--serif);font-size:15px}
+textarea{min-height:110px;resize:vertical;line-height:1.55}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:1px solid var(--line);background:none;padding:7px 14px;border-radius:40px;font-family:var(--serif);font-weight:600;font-size:13px;color:var(--ink2)}
+.seg button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--panel)}
+.entry{padding:18px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:58px 1fr;gap:14px}
+.entry:first-child{border-top:0;padding-top:0}
+.entry .dt{font-family:var(--mono);font-size:10.5px;color:var(--muted);line-height:1.35;text-transform:uppercase;letter-spacing:.08em}
+.entry .dt b{display:block;font-family:var(--display);font-size:32px;font-weight:800;color:var(--ink);letter-spacing:0;line-height:1}
+.entry h4{margin:0;font-family:var(--display);font-size:21px;font-weight:800;line-height:1.15;letter-spacing:-.025em}
+.entry .m{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:3px}
+.entry .notes{margin-top:8px;white-space:pre-wrap;color:var(--ink2)}
+.linkbtn{background:none;border:0;padding:0;margin-top:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.empty{padding:10px 0 4px;color:var(--muted)}
+.saved{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* Teide */
+.steps{list-style:none;margin:0;padding:0}
+.steps>li{padding:20px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:40px 1fr;gap:12px}
+.steps>li:first-child{border-top:0;padding-top:0}
+.steps .n{width:30px;height:30px;border-radius:50% 50% 50% 4px;background:var(--acc,var(--sig));color:var(--panel);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:15px}
+.steps h3{margin:0;font-family:var(--display);font-weight:700;font-size:19px;line-height:1.25;letter-spacing:-.02em}
+.need{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-top:8px;padding:3px 9px;border-radius:30px;background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad);font-weight:500}
+.need.opt{background:var(--bg2);color:var(--muted)}
+.steps p{margin:8px 0 0;color:var(--ink2);font-size:15px}
+.steps dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:12px 0 0;font-size:14.5px}
+.steps dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.steps dd{margin:0;min-width:0}
+.check{list-style:none;margin:0;padding:0}
+.check li{border-top:1px solid var(--line)}
+.check li:first-child{border-top:0}
+.check label{display:grid;grid-template-columns:24px 1fr;gap:12px;padding:12px 0;cursor:pointer;align-items:start}
+.check input{width:19px;height:19px;margin:2px 0 0;accent-color:var(--ok)}
+.check .t{font-weight:500}
+.check .t small{display:block;color:var(--muted);font-size:14px;font-weight:400}
+.check input:checked+.t{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
+.doneline{margin-top:12px;padding-top:6px;border-top:1px dashed var(--line)}
+.doneline label{padding:6px 0}
+.stages{list-style:none;margin:0;padding:0;position:relative}
+.stages::before{content:"";position:absolute;left:5px;top:12px;bottom:12px;width:2px;background:var(--line)}
+.stages li{display:grid;grid-template-columns:12px 72px 1fr;gap:12px;padding:12px 0;position:relative}
+.stages .dot{width:12px;height:12px;border-radius:50%;background:var(--panel);border:2.5px solid var(--sig);margin-top:6px;position:relative}
+.stages li:last-child .dot{background:var(--sig)}
+.stages .a{font-family:var(--mono);font-size:12.5px;color:var(--sig);padding-top:3px;font-weight:500}
+.stages b{font-family:var(--display);font-size:18px;font-weight:800;line-height:1.25}
+.stages span{display:block;color:var(--ink2);font-size:15px}
+.fecha{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fecha input{width:auto}
+
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;
+  background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);
+  padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+nav.tabs button{flex:1;max-width:140px;background:none;border:0;padding:16px 2px 17px;color:var(--muted);font-family:var(--serif);font-weight:600;font-size:12px;position:relative}
+nav.tabs button[aria-current="page"]{color:var(--ink)}
+nav.tabs button[aria-current="page"]::before{content:"";position:absolute;left:50%;top:6px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--sig)}
+.sync{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;text-align:center;margin:44px 0 0}
+@media (max-width:420px){.cdef{grid-template-columns:1fr;gap:4px}.rules li{grid-template-columns:1fr;gap:2px}.scale{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+</head>
+<body>
+<div class="topo" aria-hidden="true"><svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="currentColor" stroke-width="1.2"><ellipse cx="330" cy="150" rx="45" ry="30" transform="rotate(-18 330 150)"/><ellipse cx="330" cy="150" rx="84" ry="56" transform="rotate(-18 330 150)"/><ellipse cx="330" cy="150" rx="123" ry="82" transform="rotate(-18 330 150)"/><ellipse cx="330" cy="150" rx="162" ry="108" transform="rotate(-18 330 150)"/><ellipse cx="330" cy="150" rx="201" ry="134" transform="rotate(-18 330 150)"/><ellipse cx="330" cy="150" rx="240" ry="160" transform="rotate(-18 330 150)"/><ellipse cx="330" cy="150" rx="279" ry="186" transform="rotate(-18 330 150)"/><ellipse cx="330" cy="150" rx="318" ry="212" transform="rotate(-18 330 150)"/><ellipse cx="330" cy="150" rx="357" ry="238" transform="rotate(-18 330 150)"/><ellipse cx="60" cy="560" rx="39" ry="26" transform="rotate(14 60 560)"/><ellipse cx="60" cy="560" rx="78" ry="52" transform="rotate(14 60 560)"/><ellipse cx="60" cy="560" rx="117" ry="78" transform="rotate(14 60 560)"/><ellipse cx="60" cy="560" rx="156" ry="104" transform="rotate(14 60 560)"/><ellipse cx="60" cy="560" rx="195" ry="130" transform="rotate(14 60 560)"/><ellipse cx="60" cy="560" rx="234" ry="156" transform="rotate(14 60 560)"/><ellipse cx="60" cy="560" rx="273" ry="182" transform="rotate(14 60 560)"/><ellipse cx="60" cy="560" rx="312" ry="208" transform="rotate(14 60 560)"/><ellipse cx="60" cy="560" rx="351" ry="234" transform="rotate(14 60 560)"/></g></svg></div>
+<div class="wrap" id="app"></div>
+<nav class="tabs" id="tabs">
+  <button data-t="hoy" aria-current="page">Inicio</button>
+  <button data-t="montes">Montañas</button>
+  <button data-t="tiempo">Tiempo</button>
+  <button data-t="cuaderno">Cuaderno</button>
+  <button data-t="teide">Teide</button>
+</nav>
+
+<script>
+/* ---------- Datos ---------- */
+const BILBAO={lat:43.263,lon:-2.935};
+const PEAKS=[
+  {id:"pagasarri",name:"Pagasarri",alt:673,zone:"Bilbao",from:"Bilbao (Iturrigorri)",gain:600,dist:"10 km",hours:3,time:"3 h",lvl:1,
+   train:"La base de todo: subir sin parar, a un ritmo constante, hasta que se te haga corto.",tip:"Sales andando desde casa: perfecto para repetir a menudo, incluso entre semana."},
+  {id:"ganekogorta",name:"Ganekogorta",alt:998,zone:"Bilbao · Alonsotegi",from:"Bilbao, pasando por el Pagasarri",gain:950,dist:"18 km",hours:6,time:"5–6 h",lvl:2,
+   train:"Tu primera jornada larga. Aprendes a aguantar muchas horas comiendo y bebiendo por el camino.",tip:"Más corta si empiezas en Buia o en Alonsotegi.",warn:"Lleva comida de verdad, no solo una barrita."},
+  {id:"gorbeia",name:"Gorbeia",alt:1482,zone:"Parque Natural de Gorbeia",from:"Areatza",gain:1330,dist:"20 km",hours:7,time:"6–7 h",lvl:3,
+   train:"Desde abajo es el ensayo más parecido al Teide en desnivel. Si te sale bien, estás lista.",tip:"Versión corta desde Pagomakurre, con unos 500 m de subida, para una primera visita.",warn:"La niebla llega rápido: lleva el track descargado en el móvil."},
+  {id:"anboto",name:"Anboto",alt:1331,zone:"Urkiola",from:"Puerto de Urkiola",gain:650,dist:"10 km",hours:4,time:"4 h",lvl:3,
+   train:"Cuesta fuerte y un tramo final de roca con las manos. Ganas piernas y confianza.",tip:"La tradición dice que es la casa de Mari, la diosa de la mitología vasca.",warn:"Con lluvia o niebla la roca final resbala: mejor otro día."},
+  {id:"aizkorri",name:"Aizkorri",alt:1528,zone:"Aizkorri-Aratz",from:"Santuario de Arantzazu",gain:850,dist:"16 km",hours:6,time:"6 h",lvl:3,
+   train:"La prueba final antes del viaje: jornada larga y terreno variado.",tip:"Al lado está el Aitxuri (1.551 m), el punto más alto de Euskadi."},
+  {id:"teide",name:"Teide",alt:3715,zone:"Tenerife · Parque Nacional",from:"Montaña Blanca",gain:1365,dist:"17 km",hours:0,time:"2 días con refugio",lvl:4,
+   train:"El desnivel ya lo habrás hecho en casa. Lo nuevo es la altura: ir despacio y beber mucho.",tip:"Permisos, equipo y etapas en la sala del Teide.",warn:"Necesita permiso y reservas: míralo con tiempo."}
+];
+const TEIDE_GAIN=1365;
+const LVL=["","Fácil","Media","Exigente","La meta"];
+const LVLTXT=["","Camino ancho, sin sustos","Muchas horas o cuesta seguida","Mucho desnivel o paso de roca","Altura, permisos y reservas"];
+
+/* Previsión consultada el 19/10/2026 para la zona del Ganekogorta */
+const FORECAST={checked:"2026-10-19",days:[
+  {date:"2026-10-20",hi:14.7,lo:6.1,rain:15},{date:"2026-10-21",hi:14.6,lo:8.6,rain:20},
+  {date:"2026-10-22",hi:17.3,lo:8.0,rain:10},{date:"2026-10-23",hi:14.9,lo:9.9,rain:15},
+  {date:"2026-10-24",hi:16.6,lo:9.1,rain:10},{date:"2026-10-25",hi:17.5,lo:12.4,rain:35},
+  {date:"2026-10-26",hi:21.0,lo:12.3,rain:10}]};
+const RECO={peak:"ganekogorta",days:["2026-10-24","2026-10-26"],
+  why:"El lunes 26 es el mejor día que se ve: poca lluvia y buena temperatura. El sábado 24 también está bien. Evita el domingo 25: más lluvia, y ese día se cambia la hora, así que anochece una hora antes."};
+
+const FEEL=[["facil","Fácil"],["bien","Bien"],["dura","Dura"],["muy","Muy dura"]];
+const ROPA_MONTE=[
+  ["m-botas","Botas de montaña con suela de taco","Ya usadas, nunca nuevas el mismo día."],
+  ["m-calc","Calcetines técnicos o de lana","El algodón hace ampollas."],
+  ["m-cam","Camiseta transpirable","Sintética o de lana. El algodón se queda mojado."],
+  ["m-polar","Forro polar fino","Para la cima y las paradas."],
+  ["m-chub","Chubasquero o cortavientos","Siempre en la mochila, aunque salga sol."],
+  ["m-pant","Pantalón o mallas de montaña",""],
+  ["m-gorro","Gorro y guantes finos","De octubre a abril."],
+  ["m-agua","1,5 litros de agua",""],
+  ["m-comida","Bocadillo, fruta y frutos secos","Un poco cada hora."],
+  ["m-frontal","Linterna frontal","En otoño anochece pronto."],
+  ["m-movil","Móvil cargado con el track descargado","Wikiloc o similar, y una batería externa."],
+  ["m-avisa","Avisar a alguien de la ruta y la hora de vuelta","Sobre todo si vas sola."]];
+const ROPA_TEIDE=[
+  ["t-capas","Tres capas: camiseta técnica, polar y chaqueta cortavientos","Abajo puede hacer calor y arriba bajar de cero."],
+  ["t-pluma","Chaqueta de plumas o abrigo ligero","Para el amanecer en la cima."],
+  ["t-guantes","Guantes, gorro y braga de cuello","El viento es lo que más enfría arriba."],
+  ["t-botas","Las mismas botas con las que has entrenado",""],
+  ["t-agua","Dos o tres litros de agua","El aire es muy seco."],
+  ["t-sol","Gafas de sol y crema de factor 50","A esa altura el sol quema mucho más."],
+  ["t-frontal","Frontal con pilas de repuesto","Del refugio se sale de noche."],
+  ["t-saco","Saco sábana para el refugio","Pregúntalo al reservar."],
+  ["t-dni","DNI y el permiso, en el móvil o impreso","Lo piden en el control."],
+  ["t-bast","Bastones","Opcional, pero ayudan mucho al bajar."]];
+const PERMISOS=[
+  {id:"p-pico",need:true,title:"Permiso para el cráter",sub:"Sendero Telesforo Bravo",
+   text:"Sin él no puedes hacer los últimos 160 m, desde La Rambleta (3.555 m) hasta el pico.",
+   dl:[["Dónde","Solo en la web de Tenerife ON. Los permisos de otras webs no valen."],["Cuándo","Salen cupos cada lunes a las 7:00, hora de Canarias. Las fechas buenas se agotan en minutos."],["Precio","15 € por persona, la ecotasa para visitantes de fuera de Canarias."],["Turnos","De 2 horas entre las 9:00 y las 17:00, con 50 personas por turno. Es personal y para un día y turno concretos. Si llegas tarde, no pasas."]]},
+  {id:"p-blanca",need:true,title:"Ecotasa de Montaña Blanca",sub:"Sendero Montaña Blanca – La Rambleta",
+   text:"Es la ruta a pie desde abajo. Se paga si caminas por ella entre las 9:00 y las 15:00.",
+   dl:[["Dónde","También en Tenerife ON."],["Precio","6 € entre semana, 10 € en fin de semana o festivo."],["Ojo","Si subes de madrugada para dormir en el refugio, confirma al reservar si te afecta."]]},
+  {id:"p-refugio",need:false,title:"Noche en el refugio de Altavista",sub:"3.270 m",
+   text:"Para llegar arriba al amanecer. Reabrió en julio de 2026 tras una reforma.",
+   dl:[["Dónde","En la web oficial del refugio."],["Precio","71 € la noche, 56,80 € con licencia federativa."],["Plazas","49, máximo una noche por persona."],["Sin permiso","Antes se podía subir al pico al amanecer sin permiso durmiendo aquí. Con las normas de 2026 no está claro: pregúntalo al reservar."]]},
+  {id:"p-tele",need:false,title:"Billete del teleférico",sub:"Volcano Teide",
+   text:"Solo si quieres subir o bajar en teleférico. Se compra aparte, en la web de Volcano Teide.",
+   dl:[["Ojo","Si el teleférico se para por viento, el permiso de ese turno deja de valer."]]},
+  {id:"p-coche",need:false,title:"Coche y aparcamiento",sub:"En cambio",
+   text:"El Cabildo prepara reservas de aparcamiento y autobuses lanzadera al parque a partir de 2027. Revísalo cuando tengas fecha."}];
+
+/* ---------- Estado ---------- */
+let tab="hoy", sub={montes:"fichas",teide:"permisos"}, pkTab={};
+let state={salidas:[],check:{},fecha:""};
+let db=null, mode="local", draft={peak:null,feel:"bien"}, confirmDel=null;
+
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=n=>Number(n).toLocaleString("es-ES");
+function todayISO(){const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
+const D=iso=>new Date(iso+"T12:00:00");
+const dayName=iso=>D(iso).toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"short"});
+const doneIds=()=>new Set(state.salidas.map(s=>s.peak));
+const nextPeak=()=>{const d=doneIds();return PEAKS.find(p=>!d.has(p.id))||PEAKS[PEAKS.length-1]};
+const maxGain=()=>state.salidas.reduce((m,s)=>Math.max(m,Number(s.gain)||0),0);
+
+/* Puesta de sol en Bilbao (NOAA), hora local */
+function sunset(iso){
+  const d=D(iso),n=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000),g=2*Math.PI/365*(n-1);
+  const eq=229.18*(0.000075+0.001868*Math.cos(g)-0.032077*Math.sin(g)-0.014615*Math.cos(2*g)-0.040849*Math.sin(2*g));
+  const dec=0.006918-0.399912*Math.cos(g)+0.070257*Math.sin(g)-0.006758*Math.cos(2*g)+0.000907*Math.sin(2*g)-0.002697*Math.cos(3*g)+0.00148*Math.sin(3*g);
+  const lat=BILBAO.lat*Math.PI/180;
+  const ha=Math.acos(Math.cos(90.833*Math.PI/180)/(Math.cos(lat)*Math.cos(dec))-Math.tan(lat)*Math.tan(dec))*180/Math.PI;
+  const [y,m,dd]=iso.split("-").map(Number);
+  return new Date(Date.UTC(y,m-1,dd)+(720-4*(BILBAO.lon-ha)-eq)*60000);
+}
+const hm=dt=>dt.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Madrid"});
+const latestStart=(iso,h)=>new Date(sunset(iso).getTime()-(h*60+45)*60000);
+const verdict=r=>r<=15?["buena","Buena"]:r<=30?["regular","Regular"]:["mala","Mala"];
+
+/* ---------- Guardado ---------- */
+function saveLocal(){try{localStorage.setItem("teide.v1",JSON.stringify(state))}catch(e){}}
+function loadLocal(){try{const s=JSON.parse(localStorage.getItem("teide.v1")||"null");if(s)state={...state,...s}}catch(e){}}
+async function addSalida(s){if(db)await db.collection("salidas").add(s);else{state.salidas.push({...s,id:String(Date.now())});saveLocal();render(false)}}
+async function delSalida(id){if(db)await db.collection("salidas").doc(id).delete();else{state.salidas=state.salidas.filter(s=>s.id!==id);saveLocal();render(false)}}
+async function saveEstado(){if(db){try{await db.doc("teide/estado").set({check:state.check,fecha:state.fecha||""})}catch(e){}}else saveLocal()}
+
+/* ---------- Ilustraciones ---------- */
+function panorama(){
+  return `<svg viewBox="0 0 400 210" role="img" aria-label="Amanecer sobre el Teide, con los montes de Bizkaia en primer plano">
+    <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--sky2)"/><stop offset="1" stop-color="var(--sky1)"/></linearGradient></defs>
+    <rect width="400" height="210" fill="url(#sky)"/>
+    <circle class="sun" cx="300" cy="74" r="20" fill="var(--sunc)" opacity=".9"/>
+    <g class="cloud" fill="var(--panel)" opacity=".55"><ellipse cx="90" cy="52" rx="38" ry="6"/><ellipse cx="118" cy="46" rx="22" ry="5"/></g>
+    <path d="M150 150 L232 62 L240 58 L249 62 L262 74 L350 150 Z" fill="var(--far)"/>
+    <path d="M232 62 L240 58 L249 62 L244 70 L236 68 Z" fill="var(--sunc)" opacity=".35"/>
+    <path d="M0 158 L40 138 L78 146 L120 122 L160 140 L200 128 L246 146 L290 132 L330 146 L370 130 L400 140 L400 210 L0 210 Z" fill="var(--mid-r)"/>
+    <path d="M0 182 L52 160 L96 174 L150 150 L196 170 L240 162 L292 178 L340 160 L400 176 L400 210 L0 210 Z" fill="var(--near)"/>
+    <text x="240" y="50" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" letter-spacing="1.5" fill="var(--ink2)">3.715 M</text>
+  </svg>`;
+}
+function ladderSVG(){
+  const W=380,H=236,top=26,base=200,maxA=3800,done=doneIds(),nx=nextPeak().id;
+  const y=a=>base-(a/maxA)*(base-top), sw=(W-20)/PEAKS.length;
+  let g="";
+  [1000,2000,3000].forEach(a=>{g+=`<line x1="10" x2="${W-10}" y1="${y(a)}" y2="${y(a)}" stroke="var(--line)" stroke-dasharray="2 4"/><text x="12" y="${y(a)-4}" font-family="DM Mono,monospace" font-size="8" fill="var(--muted)">${fmt(a)} m</text>`});
+  PEAKS.forEach((p,i)=>{
+    const cx=10+sw*i+sw/2,half=p.id==="teide"?sw*.64:sw*.42,py=y(p.alt),isD=done.has(p.id),isN=p.id===nx&&!isD;
+    const fill=isD?"var(--moss)":p.id==="teide"?"var(--lava)":"var(--muted)";
+    g+=`<polygon class="peak-g" style="animation-delay:${i*.08}s" points="${cx-half},${base} ${cx},${py} ${cx+half},${base}" fill="${fill}" fill-opacity="${isD?.9:p.id==="teide"?.45:.3}" stroke="${isN?"var(--rust)":"none"}" stroke-width="1.6" stroke-dasharray="3 3"/>`;
+    g+=`<text x="${cx}" y="${py-7}" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="var(--ink2)">${fmt(p.alt)}</text>`;
+    g+=`<text x="${cx}" y="${base+17}" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-size="12" font-weight="600" fill="${isN?"var(--rust)":"var(--ink)"}">${p.name}</text>`;
+  });
+  g+=`<line x1="6" x2="${W-6}" y1="${base}" y2="${base}" stroke="var(--ink)" stroke-opacity=".5"/>`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Las seis cumbres a escala por altitud">${g}</svg>`;
+}
+function conceptSVG(){
+  const W=380,H=214,base=184,top=22,maxA=3800,y=a=>base-(a/maxA)*(base-top);
+  const T={x:262,a:3715,s:2350,w:72},G={x:92,a:998,s:70,w:42};
+  let g=`<line x1="10" x2="370" y1="${base}" y2="${base}" stroke="var(--ink)" stroke-opacity=".5"/><text x="12" y="${base+15}" font-family="DM Mono,monospace" font-size="8" fill="var(--muted)">nivel del mar · 0 m</text>`;
+  [G,T].forEach(p=>{
+    g+=`<polygon points="${p.x-p.w},${base} ${p.x},${y(p.a)} ${p.x+p.w},${base}" fill="var(--muted)" fill-opacity=".25"/>`;
+    g+=`<line x1="${p.x-p.w}" x2="${p.x+p.w+16}" y1="${y(p.s)}" y2="${y(p.s)}" stroke="var(--cyan)" stroke-dasharray="3 3"/>`;
+    g+=`<line x1="${p.x-p.w-8}" x2="${p.x-p.w-8}" y1="${base}" y2="${y(p.a)}" stroke="var(--muted)"/>`;
+    g+=`<line x1="${p.x+p.w+10}" x2="${p.x+p.w+10}" y1="${y(p.s)}" y2="${y(p.a)}" stroke="var(--rust)" stroke-width="3"/>`;
+  });
+  const mT=(y(T.a)+y(T.s))/2;
+  g+=`<text x="${T.x}" y="${y(T.a)-7}" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Teide</text>
+    <text x="${T.x+T.w+16}" y="${mT+3}" font-family="DM Mono,monospace" font-size="8.5" fill="var(--rust)">1.365</text>
+    <text x="${T.x-T.w-12}" y="${(base+y(T.a))/2}" text-anchor="end" font-family="DM Mono,monospace" font-size="8.5" fill="var(--muted)">3.715</text>
+    <text x="${T.x-T.w+4}" y="${y(T.s)-5}" font-family="DM Mono,monospace" font-size="7.5" fill="var(--cyan)">empiezas a 2.350</text>
+    <text x="${G.x}" y="${y(G.a)-7}" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-size="13" font-weight="600" fill="var(--ink)">Ganekogorta</text>
+    <text x="${G.x-G.w-12}" y="${(base+y(G.a))/2+3}" text-anchor="end" font-family="DM Mono,monospace" font-size="8.5" fill="var(--muted)">998</text>
+    <text x="${G.x+G.w+16}" y="${(y(G.a)+y(G.s))/2+3}" font-family="DM Mono,monospace" font-size="8.5" fill="var(--rust)">950</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="El Teide mide 3.715 m pero se empieza a andar a 2.350, así que se suben 1.365 m. El Ganekogorta mide 998 m y desde Bilbao se suben unos 950 m.">${g}</svg>`;
+}
+
+/* ---------- Bloques ---------- */
+function nextFeature(){
+  const n=nextPeak(),t=todayISO(),reco=RECO.peak===n.id?RECO:null;
+  const days=reco?reco.days.filter(d=>d>=t):[];
+  const ref=days[days.length-1]||t;
+  return `<article class="feature"><div class="in">
+    <div class="eyebrow" style="color:var(--rust)">${doneIds().has("teide")?"Meta cumplida":"Tu próxima cumbre"}</div>
+    <h2 style="--n:${n.name.length}">${n.name}</h2>
+    <div class="meta num">${fmt(n.alt)} m de altitud · ${fmt(n.gain)} m de subida · <span class="nw">${n.time}</span></div>
+    ${n.hours?`<div class="grid2 facts">
+      <div><span class="k">Días recomendados</span>${days.length?`<div class="pills">${days.map(d=>`<span class="pill">${dayName(d)}</span>`).join("")}</div>`:`<span class="v">Consulta la sala del Tiempo</span>`}</div>
+      <div><span class="k">Sal como muy tarde</span><span class="v big num">${hm(latestStart(ref,n.hours))}</span><span class="k" style="margin-top:4px">Anochece ${hm(sunset(ref))}</span></div>
+    </div>${days.length?`<p class="why">${reco.why}</p>`:""}`:""}
+    <div class="row-acts"><button class="btn solid" data-peak="${n.id}">Ver la ficha</button><button class="btn ghost" data-go="tiempo">El tiempo</button></div>
+  </div></article>`;
+}
+
+/* ---------- Vistas ---------- */
+function vHoy(){
+  const total=state.salidas.reduce((a,s)=>a+(Number(s.gain)||0),0);
+  return `<div class="stag">
+  <header class="mast">
+    <div class="eyebrow">Seis cumbres · De Bilbao a Tenerife</div>
+    <h1>Hacia el <span>Teide</span></h1>
+    <div class="sub">Un plan para llegar a 3.715 metros con las piernas hechas en casa.</div>
+    <div class="rule"></div>
+  </header>
+  <figure class="pano" style="margin-left:0;margin-right:0">${panorama()}
+    <div class="cap"><span>Montes de Bizkaia</span><span>Teide · 3.715 m</span></div></figure>
+  ${nextFeature()}
+  <div class="statline">
+    <div><b class="num">${doneIds().size}<span class="muted" style="font-size:18px">/6</span></b><span class="eyebrow">Cumbres</span></div>
+    <div><b class="num">${state.salidas.length}</b><span class="eyebrow">Salidas</span></div>
+    <div><b class="num">${fmt(total)}</b><span class="eyebrow">Metros subidos</span></div>
+  </div>
+  <div class="sect"><span class="eyebrow">Las salas</span></div>
+  <div class="halls">
+    <button class="hall" style="--acc:var(--moss)" data-go="montes"><span class="glyph"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 28 L12 12 L18 20 L23 14 L32 28 Z"/><path d="M10 15.5 L12 12 L14.5 15.5"/></svg></span><span class="tag">Seis fichas</span><span class="hn">Montañas</span><span class="hl">Del Pagasarri al Teide, cada una con lo que entrena.</span></button>
+    <button class="hall" style="--acc:var(--mk-pr)" data-go="montes" data-sub="conceptos"><span class="glyph"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 29 V5"/><path d="M6 5 l-3 4 M6 5 l3 4"/><path d="M14 29 L22 14 L30 29"/><path d="M26 22 V14"/></svg></span><span class="tag">Antes de empezar</span><span class="hn">Conceptos</span><span class="hl">Altitud, desnivel y dificultad, explicados.</span></button>
+    <button class="hall" style="--acc:var(--cyan)" data-go="tiempo"><span class="glyph"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="13" cy="13" r="5"/><path d="M13 3v2M3 13h2M5.9 5.9l1.4 1.4M20.1 5.9l-1.4 1.4"/><path d="M12 27h15a5 5 0 0 0 0-10 7 7 0 0 0-13 3 4 4 0 0 0-2 7z"/></svg></span><span class="tag">Previsión y luz</span><span class="hn">El tiempo</span><span class="hl">Qué días subir y a qué hora salir.</span></button>
+    <button class="hall" style="--acc:var(--mk-gr)" data-go="cuaderno"><span class="glyph"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M8 4h18v26H8z"/><path d="M5 9h5M5 15h5M5 21h5"/><path d="M13 22 L17 15 L20 19 L22 16 L25 22"/></svg></span><span class="tag">Tu registro</span><span class="hn">Cuaderno</span><span class="hl">Cada salida apuntada mueve tu progreso.</span></button>
+    <button class="hall wide" style="--acc:var(--lava)" data-go="teide"><span class="glyph"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 29 L13 11 H21 L32 29 Z"/><path d="M13 11 L16 14 L18 12 L21 11"/><path d="M15 6 q2-2 1-4 M19 7 q2-2 1-4" stroke-linecap="round"/></svg></span><span class="tag">La meta · 3.715 m</span><span class="hn">El Teide</span><span class="hl">Permisos, reservas, ropa, la subida por etapas y la altura.</span></button>
+  </div>
+  <div class="sect"><span class="eyebrow">Cómo funciona</span></div>
+  <ol class="steps" style="--acc:var(--gold)">
+    <li><span class="n">1</span><div><h3>Una salida cada dos o tres semanas</h3><p>Mejor constancia que una paliza suelta. Entre medias, piernas y glúteos en el gimnasio.</p></div></li>
+    <li><span class="n">2</span><div><h3>Cada montaña, un poco más de subida</h3><p>De 600 m en el Pagasarri a unos 1.300 m en el Gorbeia desde abajo.</p></div></li>
+    <li><span class="n">3</span><div><h3>Apunta cada salida</h3><p>Si una te deja muy cansada, repítela antes de pasar a la siguiente.</p></div></li>
+    <li><span class="n">4</span><div><h3>Entrena con la mochila del Teide</h3><p>Agua, comida y capas. Así el día de verdad nada pesa por sorpresa.</p></div></li>
+  </ol></div>`;
+}
+
+function roomHead(eye,title,lead){
+  return `<button class="back" data-go="hoy">← Inicio</button>
+  <header class="roomhead"><div class="eyebrow">${eye}</div><h1>${title}</h1></header>
+  ${lead?`<p class="intro dropcap" style="margin-top:18px">${lead}</p>`:""}`;
+}
+function gtabs(key,list){return `<div class="gtabs">${list.map(([k,t])=>`<button class="gtab" data-subset="${key}:${k}" aria-pressed="${sub[key]===k}">${t}</button>`).join("")}</div>`}
+
+function peakCard(p,i){
+  const done=doneIds(),nx=nextPeak().id,d=done.has(p.id),cnt=state.salidas.filter(s=>s.peak===p.id).length;
+  const seal=d?`<div class="seal done"><b>Cima</b>${cnt>1?cnt+" veces":"hecha"}</div>`:p.id===nx?`<div class="seal next">Siguiente</div>`:`<div class="seal">${i+1} de 6</div>`;
+  const t=pkTab[p.id]||"datos";
+  let body="";
+  if(t==="datos") body=`<div class="grid2">
+      <div><span class="k">Altitud</span><span class="v num">${fmt(p.alt)} m</span></div>
+      <div><span class="k">Desnivel</span><span class="v num">${fmt(p.gain)} m</span></div>
+      <div><span class="k">Empiezas en</span><span class="v">${esc(p.from)}</span></div>
+      <div><span class="k">Ida y vuelta</span><span class="v">${p.dist} · ${p.time}</span></div>
+      <div><span class="k">Dificultad</span><span class="v">${LVL[p.lvl]}<span class="dots">${[1,2,3,4].map(k=>`<i class="${k<=p.lvl?"on":""}"></i>`).join("")}</span></span></div>
+    </div>`;
+  if(t==="entrena") body=`<p style="margin:0">${p.train}</p><p class="hand" style="margin:12px 0 0">${p.tip}</p>`;
+  if(t==="ojo") body=p.warn?`<p class="warnline" style="margin:0">${p.warn}</p>`:`<p class="muted" style="margin:0">Sin avisos especiales. Revisa el tiempo la víspera.</p>`;
+  return `<article class="panel pk${p.id==="teide"?" teide":""}" id="pk-${p.id}">
+    <div class="ph"><div><div class="eyebrow" style="color:var(--acc)">${p.zone}</div><h3 style="--n:${p.name.length}">${p.name}</h3><div class="alt num">${fmt(p.alt)} m · ${fmt(p.gain)} m de subida</div></div>${seal}</div>
+    <div class="levels">${[["datos","Datos"],["entrena","Qué entrenas"],["ojo","Avisos"]].map(([k,l])=>`<button class="lv" data-pk="${p.id}:${k}" aria-pressed="${t===k}">${l}</button>`).join("")}</div>
+    <div class="pb pane">${body}
+      <div class="row-acts">${p.id==="teide"?`<button class="btn ghost" data-go="teide">Permisos y equipo</button>`:""}<button class="btn${d?" ghost":" solid"}" data-log="${p.id}">${d?"Registrar otra subida":"He subido"}</button></div>
+    </div></article>`;
+}
+
+function vMontes(){
+  let body;
+  if(sub.montes==="fichas") body=`<div class="pane">
+    <div class="panel"><div class="pb ladder" style="padding-top:18px">${ladderSVG()}
+      <div class="legend"><span><i class="sw" style="background:var(--moss)"></i>Subida</span><span><i class="sw" style="border:1.5px dashed var(--rust)"></i>Siguiente</span><span><i class="sw" style="background:var(--muted);opacity:.4"></i>Pendiente</span></div></div></div>
+    <div class="stag">${PEAKS.map(peakCard).join("")}</div>
+    <p class="note">Desniveles y tiempos aproximados, a ritmo tranquilo.</p></div>`;
+  else body=`<div class="pane">
+    <div class="panel"><div class="ph"><span class="eyebrow">Las dos medidas</span><h2>Altitud y desnivel</h2></div><div class="pb">
+      <dl style="margin:0">
+        <div class="cdef"><dt>Altitud</dt><dd>Lo alto que está la cumbre, medido desde el nivel del mar. Es el número famoso de cada montaña.</dd></div>
+        <div class="cdef"><dt>Desnivel</dt><dd>Los metros que subes de verdad, desde donde empiezas a andar hasta la cima. Es lo que cansa, y lo que estás entrenando.</dd></div>
+      </dl>
+      <div class="diagram" style="margin-top:14px">${conceptSVG()}</div>
+      <p class="pull">El Teide es casi cuatro veces más alto que el Ganekogorta, pero en desnivel la diferencia es mucho menor.</p>
+      <p class="muted" style="margin:8px 0 0">Empiezas a andar a 2.350 m, así que solo subes 1.365. Desde Bilbao al Ganekogorta subes unos 950.</p>
+    </div></div>
+    <div class="panel"><div class="ph"><span class="eyebrow">Para leer las fichas</span><h2>Otras ideas</h2></div><div class="pb"><dl style="margin:0">
+      <div class="cdef"><dt>Ida y vuelta</dt><dd>Distancias y tiempos cuentan el camino completo: subir y volver al punto de salida.</dd></div>
+      <div class="cdef"><dt>Ritmo</dt><dd>Los tiempos son a paso tranquilo, con paradas cortas. Al principio tardarás algo más, y es normal.</dd></div>
+      <div class="cdef"><dt>Track</dt><dd>La ruta grabada en el móvil (con Wikiloc, por ejemplo). Te guía aunque no haya cobertura si la descargas antes.</dd></div>
+      <div class="cdef"><dt>Dificultad</dt><dd><div class="scale">${[1,2,3,4].map(i=>`<div><b><i class="mk" style="--c:${["","var(--mk-sl)","var(--mk-pr)","var(--mk-gr)","var(--sig)"][i]}"></i>${LVL[i]}</b>${LVLTXT[i]}</div>`).join("")}</div></dd></div>
+    </dl></div></div></div>`;
+  return `<div class="room" style="--acc:var(--moss)">${roomHead("Sala · Seis cumbres","Las montañas","Seis montañas ordenadas de menos a más. Las cinco primeras están en Euskadi y sirven para entrenar el desnivel; la sexta es la meta.")}
+    ${gtabs("montes",[["fichas","Las seis"],["conceptos","Conceptos"]])}${body}</div>`;
+}
+
+function vTiempo(){
+  const t=todayISO(),n=nextPeak(),rows=FORECAST.days.filter(d=>d.date>=t),stale=rows.length<3;
+  return `<div class="room" style="--acc:var(--cyan)">${roomHead("Sala · Previsión y luz","El tiempo",`En la montaña el tiempo manda. Aquí tienes los próximos días para ${n.name}, con la hora a la que anochece en Bilbao.`)}
+  <div class="stag">
+  <div class="panel"><div class="ph"><span class="eyebrow">Consultado el ${D(FORECAST.checked).toLocaleDateString("es-ES",{day:"numeric",month:"long"})}</span><h2>Próximos días</h2></div><div class="pb">
+    ${rows.length?`<div class="wxwrap"><table class="wx"><thead><tr><th>Día</th><th>Lluvia</th><th>Temp.</th><th>Anochece</th><th>Para subir</th></tr></thead><tbody>
+    ${rows.map(r=>{const v=verdict(r.rain),rec=RECO.peak===n.id&&RECO.days.includes(r.date);
+      return `<tr class="${rec?"rec":""}"><td class="d">${dayName(r.date)}${rec?`<div class="eyebrow" style="color:var(--ok);letter-spacing:1.5px">Recomendado</div>`:""}</td><td class="m">${r.rain}%</td><td class="m">${Math.round(r.lo)}–${Math.round(r.hi)}°</td><td class="m">${hm(sunset(r.date))}</td><td><span class="st ${v[0]}">${v[1]}</span></td></tr>`}).join("")}
+    </tbody></table></div>`:""}
+    ${stale?`<p class="warnline">Esta previsión ya es vieja. Pídeme una nueva en el chat o mira Euskalmet.</p>`:""}
+    ${RECO.peak===n.id&&rows.length?`<p class="note"><b>Para ${n.name}:</b> ${RECO.why}</p>`:""}
+  </div></div>
+  <div class="panel"><div class="ph"><span class="eyebrow">Criterios</span><h2>Cómo leer la previsión</h2></div><div class="pb"><ul class="rules">
+    <li><b>Lluvia</b><span>Hasta un 15 %, buen día. Entre 15 y 30 %, lleva chubasquero y vigila. Más de 30 %, cambia de día.</span></li>
+    <li><b>Viento</b><span>En cumbres abiertas como el Ganekogorta o el Gorbeia, por encima de 40 km/h se pasa mal.</span></li>
+    <li><b>Niebla</b><span>Si la anuncian, elige una ruta que conozcas o déjalo para otro día.</span></li>
+    <li><b>El día antes</b><span>Si ha llovido mucho habrá barro y piedra resbaladiza, sobre todo en el Anboto.</span></li>
+    <li><b>Luz</b><span>Sal con margen para volver de día. La hora máxima de salida de Inicio ya lo calcula.</span></li>
+  </ul></div></div>
+  <div class="panel"><div class="ph"><span class="eyebrow">Fuentes</span><h2>Dónde mirarlo</h2></div><div class="pb"><ul class="rules">
+    <li><b><a href="https://www.euskalmet.euskadi.eus" target="_blank" rel="noopener">Euskalmet</a></b><span>La previsión del Gobierno Vasco, la más fina para Bizkaia.</span></li>
+    <li><b><a href="https://www.aemet.es/es/eltiempo/prediccion/montana" target="_blank" rel="noopener">AEMET</a></b><span>Previsión de montaña con viento y temperatura en cumbres. También tiene el Teide.</span></li>
+  </ul></div></div>
+  </div></div>`;
+}
+
+function vCuaderno(){
+  const sorted=[...state.salidas].sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  const p=PEAKS.find(x=>x.id===(draft.peak||nextPeak().id)),mg=maxGain(),pct=Math.min(100,mg/TEIDE_GAIN*100);
+  return `<div class="room" style="--acc:var(--plum)">${roomHead("Sala · Tu registro","Cuaderno","Cada salida que apuntas sella su cumbre y mueve la barra de abajo, que mide si tus piernas ya aguantan el desnivel del Teide.")}
+  <div class="stag">
+  <div class="panel"><div class="ph"><span class="eyebrow">Tu mejor día frente al Teide</span><h2 class="num">${fmt(mg)} <span class="muted" style="font-size:20px">de ${fmt(TEIDE_GAIN)} m</span></h2></div><div class="pb meter">
+    <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
+    <div class="ends"><span>0 m</span><span>Teide · ${fmt(TEIDE_GAIN)} m</span></div>
+    <p class="muted" style="margin:12px 0 0;font-size:15px">Cuenta los metros de tu salida con más subida. Cuando llegue al final, ya habrás hecho en Euskadi lo que pide el Teide.</p>
+  </div></div>
+  <div class="panel"><div class="ph"><span class="eyebrow">Nueva entrada</span><h2>Apuntar una salida</h2></div><div class="pb">
+  <form class="log" id="logform">
+    <div class="grid2">
+      <div><label class="k" for="f-peak">Montaña</label><select id="f-peak">${PEAKS.map(x=>`<option value="${x.id}"${x.id===p.id?" selected":""}>${x.name}</option>`).join("")}</select></div>
+      <div><label class="k" for="f-date">Fecha</label><input type="date" id="f-date" value="${todayISO()}"></div>
+      <div><label class="k" for="f-time">Tiempo total</label><input type="text" id="f-time" placeholder="5 h 20 min"></div>
+      <div><label class="k" for="f-gain">Desnivel (m)</label><input type="number" id="f-gain" inputmode="numeric" value="${p.gain}"></div>
+    </div>
+    <div><span class="k">¿Cómo acabaste?</span><div class="seg">${FEEL.map(([k,t])=>`<button type="button" data-feel="${k}" aria-pressed="${draft.feel===k}">${t}</button>`).join("")}</div></div>
+    <div><label class="k" for="f-notes">Notas</label><textarea id="f-notes" placeholder="Qué tal las piernas, el tiempo, qué llevarías distinto…"></textarea></div>
+    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><button class="btn solid" type="submit">Guardar salida</button><span class="saved" id="saved"></span></div>
+  </form></div></div>
+  <div class="panel"><div class="ph"><span class="eyebrow">${sorted.length} ${sorted.length===1?"salida":"salidas"}</span><h2>Tus salidas</h2></div><div class="pb">
+  ${sorted.length?sorted.map(s=>{
+    const pk=PEAKS.find(x=>x.id===s.peak)||{name:s.peak},f=FEEL.find(x=>x[0]===s.feel),dt=s.date?D(s.date):null;
+    const col=s.feel==="muy"?"var(--bad)":s.feel==="dura"?"var(--mid)":"var(--ok)";
+    return `<div class="entry"><div class="dt">${dt?`<b class="num">${dt.getDate()}</b>${dt.toLocaleDateString("es-ES",{month:"short"})} ${String(dt.getFullYear()).slice(2)}`:""}</div>
+      <div><h4>${esc(pk.name)} ${f?`<span class="st" style="color:${col};vertical-align:middle;margin-left:6px">${f[1]}</span>`:""}</h4>
+      <div class="m num">${s.gain?fmt(s.gain)+" m de subida":""}${s.time?" · "+esc(s.time):""}</div>
+      ${s.notes?`<div class="notes">${esc(s.notes)}</div>`:""}
+      ${confirmDel===s.id?`<div class="row-acts" style="margin-top:10px"><button class="btn warn" data-del-yes="${s.id}">Borrar</button><button class="btn ghost" data-del-no>Cancelar</button></div>`:`<button class="linkbtn" data-del="${s.id}">Borrar entrada</button>`}
+      </div></div>`}).join(""):`<p class="empty">Todavía no hay ninguna. La primera será el ${nextPeak().name}.</p>`}
+  </div></div></div></div>`;
+}
+
+function checklist(list){return `<ul class="check">${list.map(([k,t,s])=>`<li><label><input type="checkbox" id="c-${k}" data-check="${k}"${state.check[k]?" checked":""}><span class="t">${t}${s?`<small>${s}</small>`:""}</span></label></li>`).join("")}</ul>`}
+const count=l=>l.filter(c=>state.check[c[0]]).length;
+
+function vTeide(){
+  const s=sub.teide,dl=state.fecha?Math.ceil((D(state.fecha)-D(todayISO()))/86400000):null;
+  const nP=PERMISOS.filter(p=>state.check[p.id]).length;
+  let body="";
+  if(s==="permisos") body=`<div class="panel"><div class="ph"><span class="eyebrow">${nP} de ${PERMISOS.length} hechos</span><h2>Permisos y reservas</h2></div><div class="pb">
+    <p class="muted" style="margin:0 0 18px">En el orden en que conviene sacarlos. Marca cada uno cuando lo tengas.</p>
+    <ol class="steps">${PERMISOS.map((p,i)=>`<li><span class="n">${i+1}</span><div>
+      <h3>${p.title}</h3><div class="eyebrow" style="letter-spacing:1.5px;margin-top:2px">${p.sub}</div>
+      <span class="need${p.need?"":" opt"}">${p.need?"Obligatorio":"Según tu plan"}</span>
+      <p>${p.text}</p>
+      ${p.dl?`<dl>${p.dl.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`:""}
+      <ul class="check doneline"><li><label><input type="checkbox" id="c-${p.id}" data-check="${p.id}"${state.check[p.id]?" checked":""}><span class="t">Hecho</span></label></li></ul>
+    </div></li>`).join("")}</ol>
+    <p class="note"><b>Equipo mínimo:</b> en el control pueden no dejarte pasar sin calzado y ropa adecuados, y no devuelven el dinero.</p>
+    <p class="src">Precios y normas de 2026. Cambian a menudo: compruébalos en Tenerife ON antes de reservar.</p>
+  </div></div>`;
+  if(s==="equipo") body=`<div class="panel"><div class="ph"><span class="eyebrow">${count(ROPA_TEIDE)} de ${ROPA_TEIDE.length}</span><h2>Para el Teide</h2></div><div class="pb">
+      <p class="muted" style="margin:0 0 8px">Arriba hace entre 15 y 20 grados menos que en la costa, y con viento puede bajar de cero incluso en verano.</p>${checklist(ROPA_TEIDE)}</div></div>
+    <div class="panel"><div class="ph"><span class="eyebrow">${count(ROPA_MONTE)} de ${ROPA_MONTE.length}</span><h2>Para entrenar aquí</h2></div><div class="pb">
+      <p class="muted" style="margin:0 0 8px">Casi todo te sirve después para el Teide, así que lo vas probando.</p>${checklist(ROPA_MONTE)}</div></div>`;
+  if(s==="subida") body=`<div class="panel"><div class="ph"><span class="eyebrow">Ruta clásica · 1.365 m de subida</span><h2>La subida, por etapas</h2></div><div class="pb">
+    <ol class="stages">
+      <li><span class="dot"></span><span class="a num">2.350 m</span><div><b>Montaña Blanca</b><span>Inicio junto a la carretera. Pista ancha entre piedra pómez.</span></div></li>
+      <li><span class="dot"></span><span class="a num">3.270 m</span><div><b>Refugio de Altavista</b><span>Unas 3 horas desde abajo. Se cena, se duerme poco y se sale de noche.</span></div></li>
+      <li><span class="dot"></span><span class="a num">3.555 m</span><div><b>La Rambleta</b><span>Llegada del teleférico. Control de permisos y último sendero.</span></div></li>
+      <li><span class="dot"></span><span class="a num">3.715 m</span><div><b>Pico del Teide</b><span>Olor a azufre, el amanecer y la sombra del volcán sobre el mar.</span></div></li>
+    </ol>
+    <p class="note"><b>Plan B:</b> teleférico hasta La Rambleta y solo los últimos 160 m a pie. El permiso sigue haciendo falta.</p>
+    <p class="note"><b>Cuándo ir:</b> de mayo a octubre. De diciembre a marzo cierran el sendero a menudo por nieve, hielo o viento.</p>
+  </div></div>
+  <div class="panel"><div class="ph"><span class="eyebrow">Opcional</span><h2>Fecha del viaje</h2></div><div class="pb">
+    <div class="fecha"><label class="k" for="fecha" style="margin:0">Fecha</label><input type="date" id="fecha" value="${esc(state.fecha)}">${dl!==null&&dl>0?`<span class="hand">Faltan ${fmt(dl)} días</span>`:""}</div>
+  </div></div>`;
+  if(s==="altura") body=`<div class="panel"><div class="ph"><span class="eyebrow">Por encima de 3.000 m</span><h2>La altura</h2></div><div class="pb">
+    <p class="pull" style="margin-top:0">No depende de lo en forma que estés: le pasa a todo el mundo.</p>
+    <ol class="steps" style="margin-top:18px">
+      <li><span class="n">1</span><div><h3>Hay bastante menos oxígeno</h3><p>Es normal ir más lenta, respirar fuerte o notar algo de dolor de cabeza.</p></div></li>
+      <li><span class="n">2</span><div><h3>Despacio desde el primer paso</h3><p>Un ritmo al que puedas hablar. Quien sale rápido lo paga arriba.</p></div></li>
+      <li><span class="n">3</span><div><h3>Bebe aunque no tengas sed</h3><p>El aire es muy seco y no notas lo que pierdes.</p></div></li>
+      <li><span class="n">4</span><div><h3>Si empeoras, se baja</h3><p>Dolor de cabeza que va a más, mareo o vómitos: bajar unos cientos de metros es lo que mejor funciona.</p></div></li>
+    </ol></div></div>`;
+  return `<div class="room" style="--acc:var(--lava)">${roomHead("Sala · 3.715 m · Tenerife","El Teide","El pico más alto de España se sube con un permiso, una buena noche en el refugio y mucha calma. Todo lo que tienes que preparar, en orden.")}
+    ${gtabs("teide",[["permisos","Permisos"],["equipo","Ropa y equipo"],["subida","La subida"],["altura","La altura"]])}<div class="pane stag">${body}</div></div>`;
+}
+
+/* ---------- Render ---------- */
+function render(animate=true){
+  const v={hoy:vHoy,montes:vMontes,tiempo:vTiempo,cuaderno:vCuaderno,teide:vTeide}[tab]();
+  const app=document.getElementById("app");
+  app.innerHTML=`<div class="${animate?"view":""}">${v}</div><p class="sync">${mode==="db"?"Guardado en tu cuenta":"Guardado en este dispositivo"}</p>`;
+  document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.t===tab?"page":"false"));
+  bind();
+}
+function go(t,s){if(s)sub.montes=s;tab=t;render(true);window.scrollTo({top:0})}
+function rerenderPane(){const y=window.scrollY;render(false);window.scrollTo({top:y})}
+
+function bind(){
+  const q=s=>document.querySelectorAll(s);
+  q("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go,b.dataset.sub));
+  q("[data-subset]").forEach(b=>b.onclick=()=>{const [k,v]=b.dataset.subset.split(":");sub[k]=v;const y=window.scrollY;render(false);
+    const tabs=document.querySelector(".gtabs");if(tabs&&y>tabs.offsetTop)window.scrollTo({top:tabs.offsetTop-4});else window.scrollTo({top:y})});
+  q("[data-pk]").forEach(b=>b.onclick=()=>{const [id,k]=b.dataset.pk.split(":");pkTab[id]=k;rerenderPane()});
+  q("[data-peak]").forEach(b=>b.onclick=()=>{sub.montes="fichas";tab="montes";render(true);const el=document.getElementById("pk-"+b.dataset.peak);if(el)el.scrollIntoView({block:"start"})});
+  q("[data-log]").forEach(b=>b.onclick=()=>{draft.peak=b.dataset.log;go("cuaderno")});
+  const fe=document.getElementById("fecha");if(fe)fe.onchange=()=>{state.fecha=fe.value||"";saveEstado();rerenderPane()};
+  const sel=document.getElementById("f-peak");if(sel)sel.onchange=()=>{draft.peak=sel.value;document.getElementById("f-gain").value=PEAKS.find(x=>x.id===sel.value).gain};
+  q("[data-feel]").forEach(b=>b.onclick=()=>{draft.feel=b.dataset.feel;q("[data-feel]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+  const form=document.getElementById("logform");
+  if(form)form.onsubmit=async e=>{e.preventDefault();
+    const s={peak:document.getElementById("f-peak").value,date:document.getElementById("f-date").value||todayISO(),time:document.getElementById("f-time").value.trim(),
+      gain:Number(document.getElementById("f-gain").value)||0,feel:draft.feel,notes:document.getElementById("f-notes").value.trim(),created:Date.now()};
+    try{await addSalida(s);draft={peak:null,feel:"bien"};const el=document.getElementById("saved");if(el)el.textContent="Salida guardada"}
+    catch(err){const el=document.getElementById("saved");if(el)el.textContent="No se pudo guardar. Revisa la conexión y prueba otra vez."}};
+  q("[data-del]").forEach(b=>b.onclick=()=>{confirmDel=b.dataset.del;rerenderPane()});
+  q("[data-del-no]").forEach(b=>b.onclick=()=>{confirmDel=null;rerenderPane()});
+  q("[data-del-yes]").forEach(b=>b.onclick=async()=>{const id=b.dataset.delYes;confirmDel=null;try{await delSalida(id)}catch(e){rerenderPane()}});
+  q("[data-check]").forEach(c=>c.onchange=()=>{state.check={...state.check,[c.dataset.check]:c.checked};saveEstado();rerenderPane()});
+}
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>go(b.dataset.t));
+
+loadLocal();render(true);
+(async()=>{
+  try{db=window.claude&&window.claude.use?await window.claude.use("db"):null}catch(e){db=null}
+  if(!db)return;
+  mode="db";
+  db.collection("salidas").onSnapshot(snap=>{state.salidas=snap.docs.map(d=>({id:d.id,...d.data()}));rerenderPane()},()=>{});
+  db.doc("teide/estado").onSnapshot(snap=>{if(snap.exists){const d=snap.data();state.check={...(d.check||{})};state.fecha=d.fecha||""}rerenderPane()},()=>{});
+})();
+</script>
+
+<script>if("serviceWorker" in navigator){addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}</script>
+</body>
+</html>
