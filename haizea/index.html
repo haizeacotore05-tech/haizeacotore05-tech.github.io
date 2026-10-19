@@ -527,6 +527,13 @@ body.lang-it .specs div:nth-child(2) dd::before{content:"aggiornato il "}
 .toast.on{opacity:1}
 .sync{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--faint)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.unit{opacity:1;transform:none}}
+
+/* ahora mismo */
+.ahora{margin:18px 0 0;padding:12px 0 0;border-top:1px solid var(--line)}
+.ahora .aht{display:block;font-family:var(--sans);font-weight:400;font-size:.78rem;letter-spacing:.02em;color:var(--faint);margin-bottom:6px}
+.ahora ul{list-style:none;margin:0;padding:0}
+.ahora li{position:relative;padding-left:18px;font-family:var(--serif);font-style:italic;font-size:1.04rem;line-height:1.55;color:var(--soft)}
+.ahora li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:50% 0;background:var(--moss);transform:rotate(45deg)}
 </style>
 </head>
 <body>
@@ -956,6 +963,11 @@ function powerOn(sc){
   setTimeout(function(){ sc.classList.remove("boot"); },620);
   energy=Math.min(1,energy+0.35);
 }
+var AHORA={
+  es:{t:"Ahora mismo",i:["En un curso de cerámica","Pinto al óleo de vez en cuando"]},
+  en:{t:"Right now",i:["Taking a ceramics course","Painting in oil now and then"]},
+  it:{t:"In questo momento",i:["Sto seguendo un corso di ceramica","Dipingo a olio ogni tanto"]}
+};
 function renderMe(){
   var el=$("#me"); if(!el) return;
   var pic = profile.photo ? '<img src="'+profile.photo+'" alt="'+esc(profile.name)+'">'
@@ -968,6 +980,8 @@ function renderMe(){
     '<div class="portrait" data-profile><i class="tape"></i><div class="frame">'+pic+'</div></div>'+
     '<div class="who"><b>Al mando</b><h2>'+esc(profile.name)+'</h2><p>'+esc(profile.bio)+'</p>'+
     (links.length?'<div class="links">'+links.join("")+'</div>':'')+
+    (function(){ var L=(typeof LANG!=="undefined"?LANG:"es"), A=AHORA[L]||AHORA.es;
+      return '<div class="ahora"><span class="aht">'+A.t+'</span><ul>'+A.i.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>'; })()+
     (editing?'<div class="editbar"><button data-editme>Editar perfil</button></div>':'')+
     '</div>';
 }
