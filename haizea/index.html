@@ -538,21 +538,13 @@ body.lang-it .specs div:nth-child(2) dd::before{content:"aggiornato il "}
 /* ===== adiós radio: cabecera limpia ===== */
 .console{border:0 !important;background:none !important;box-shadow:none !important;padding:0 !important;max-width:none !important;overflow:visible !important}
 .console .meters,.console .grille,.console .tuner,.console .branch{display:none !important}
-/* ===== Ahora mismo: panel de nogal como la radio ===== */
-.taller{margin:64px 0 0;max-width:620px;border:5px solid transparent;border-radius:16px;
-  background:linear-gradient(var(--panel),var(--panel)) padding-box, var(--wood) border-box;
-  box-shadow:0 18px 40px -22px rgba(60,35,15,.45);padding:22px 22px 10px}
-.taller-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 6px}
-.taller-h h2{font-family:var(--serif);font-weight:400;font-size:1.7rem;margin:0;line-height:1.1}
-.taller-h .lampdot{display:inline-block;flex:0 0 auto}
-.now{list-style:none;margin:0;padding:0}
-.now li{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:6px 14px;padding:14px 0;border-top:1px solid var(--line)}
-.now li:first-child{border-top:0}
-.now .nm{font-family:var(--serif);font-size:1.35rem;line-height:1.15;color:var(--ink)}
-.now .st{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:7px;white-space:nowrap}
-.now .st i{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--glow)}
-.now .st i.off{background:#8E8676;box-shadow:none}
-.now .ds{grid-column:1/-1;font-size:.92rem;color:var(--soft);line-height:1.55}
+/* ===== hobbies: una línea fina ===== */
+.taller{margin:28px 0 0;max-width:620px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.taller .hl{font-family:var(--sans);font-size:.8rem;color:var(--faint)}
+.taller .hi{display:flex;align-items:center;gap:14px;min-width:0}
+.taller .hi span{font-family:var(--serif);font-style:italic;font-size:1.08rem;color:var(--soft);white-space:nowrap}
+.taller .hi i{width:44px;height:1px;background:var(--faint);opacity:.55}
 .fchips{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 0}
 .fchips button{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-family:var(--sans);font-size:.8rem;color:var(--soft)}
 .fchips button[aria-pressed="true"]{background:#6B4329;border-color:#6B4329;color:#F6EDE0}
@@ -614,10 +606,7 @@ body.lang-it .specs div:nth-child(2) dd::before{content:"aggiornato il "}
         <div class="freq"><span>88</span><span>Desliza para sintonizar</span><span>108</span></div>
       </div>
     </div>
-<section class="taller" id="taller">
-  <div class="taller-h"><h2 id="tallerT">Ahora mismo</h2><i class="lampdot" aria-hidden="true"></i></div>
-  <ul class="now" id="nowList"></ul>
-</section>
+<section class="taller" id="taller"><span class="hl" id="hobbyL">Hobbies</span><span class="hi" id="hobbyI"></span></section>
     <p class="lede"><span>Herramientas para leer,</span><span>entender y no olvidar.</span><span class="leaf">Todas crecen despacio.</span></p>
     <section class="boletin" aria-label="Boletín del día">
       <div class="bcell bfrase"><b class="blabel">Para hoy · <span id="bday"></span></b><p id="bfrase"></p>
@@ -1982,15 +1971,11 @@ loadRemote().then(function(data){
 });
 
 /* ===== Ahora mismo ===== */
-var TALLER={
-  es:{t:"Ahora mismo",i:[["Cerámica","En curso","Haciendo un curso de cerámica.",1],["Óleo","A ratos","Pinto al óleo de vez en cuando.",0],["Teide","Entrenando","Preparándome en los montes de Bizkaia para subirlo.",1],["María Isabel","Escribiendo","Mi primer guion de largometraje.",1]]},
-  en:{t:"Right now",i:[["Ceramics","In progress","Taking a ceramics course.",1],["Oil painting","Now and then","I paint in oil every so often.",0],["Teide","Training","Getting ready in the Biscay mountains to climb it.",1],["María Isabel","Writing","My first feature-film screenplay.",1]]},
-  it:{t:"In questo momento",i:[["Ceramica","In corso","Sto seguendo un corso di ceramica.",1],["Pittura a olio","Ogni tanto","Dipingo a olio di tanto in tanto.",0],["Teide","In allenamento","Mi preparo sulle montagne della Biscaglia per salirci.",1],["María Isabel","In scrittura","La mia prima sceneggiatura di un lungometraggio.",1]]}
-};
+var HOBBIES={es:["Hobbies",["Cerámica","Óleo"]],en:["Hobbies",["Ceramics","Oil painting"]],it:["Passioni",["Ceramica","Pittura a olio"]]};
 function renderNow(){
-  var T=TALLER[(typeof LANG!=="undefined"&&TALLER[LANG])?LANG:"es"], ul=document.getElementById("nowList"), h=document.getElementById("tallerT");
-  if(!ul) return; if(h) h.textContent=T.t;
-  ul.innerHTML=T.i.map(function(x){ return '<li><span class="nm">'+esc(x[0])+'</span><span class="st"><i class="'+(x[3]?'':'off')+'"></i>'+esc(x[1])+'</span><span class="ds">'+esc(x[2])+'</span></li>'; }).join("");
+  var H=HOBBIES[(typeof LANG!=="undefined"&&HOBBIES[LANG])?LANG:"es"], l=document.getElementById("hobbyL"), i=document.getElementById("hobbyI");
+  if(!i) return; if(l) l.textContent=H[0]+":";
+  i.innerHTML=H[1].map(function(x){ return '<span>'+esc(x)+'</span>'; }).join('<i aria-hidden="true"></i>');
 }
 (function(){
   var sec=document.getElementById("taller"); if(!sec) return;
