@@ -664,10 +664,10 @@ body.lang-it .specs div:nth-child(2) dd::before{content:"aggiornato il "}
     <ol class="steps">
       <li><b>Nace de una necesidad</b><span>Cada herramienta empieza por algo que quiero recordar, entender u ordenar.</span></li>
       <li><b>La construyo desde la tablet</b><span>Sin ordenador: escribo, pruebo y corrijo con ayuda de la inteligencia artificial.</span></li>
-      <li><b>Se publica en su propia dirección</b><span>Cada una vive en Netlify y se instala en el móvil como una app más.</span></li>
-      <li><b>Firebase la mantiene viva</b><span>Los datos y este catálogo se actualizan solos, desde cualquier dispositivo.</span></li>
+      <li><b>Se publica en su propia dirección</b><span>Cada una vive en internet, en GitHub o Netlify, y se instala en el móvil como una app más.</span></li>
+      <li><b>Crece con el uso</b><span>Cada semana corrijo lo que falla y añado lo que echo en falta. Abajo, lo último.</span></li>
     </ol>
-    <div class="figs"><div><b>21</b><span>libros en fichas</span></div><div><b>63</b><span>filósofos en el mapa</span></div><div><b id="figQ">36</b><span>preguntas en el concurso</span></div></div>
+    <div class="figs"><div><b id="figA">—</b><span>cambios esta semana</span></div><div><b id="figB">—</b><span>herramientas actualizadas este mes</span></div><div><b id="figC">—</b><span>días desde el último cambio</span></div></div>
     <p class="secrets" id="secrets"></p>
   </section>
 
@@ -1602,10 +1602,10 @@ function D(es,en,it){ DICT.en[es]=en; DICT.it[es]=it; }
 ["La construyo desde la tablet","I build it on my tablet","La costruisco dal tablet"],
 ["Sin ordenador: escribo, pruebo y corrijo con ayuda de la inteligencia artificial.","No computer: I write, test and fix with the help of artificial intelligence.","Senza computer: scrivo, provo e correggo con l'aiuto dell'intelligenza artificiale."],
 ["Se publica en su propia dirección","It goes live at its own address","Viene pubblicato al suo indirizzo"],
-["Cada una vive en Netlify y se instala en el móvil como una app más.","Each one lives on Netlify and installs on your phone like any other app.","Ognuno vive su Netlify e si installa sul telefono come un'app qualsiasi."],
-["Firebase la mantiene viva","Firebase keeps it alive","Firebase lo tiene vivo"],
-["Los datos y este catálogo se actualizan solos, desde cualquier dispositivo.","The data and this catalogue update themselves, from any device.","I dati e questo catalogo si aggiornano da soli, da qualsiasi dispositivo."],
-["libros en fichas","books in notes","libri in schede"],["filósofos en el mapa","philosophers on the map","filosofi sulla mappa"],["preguntas en el concurso","questions in the quiz","domande nel quiz"],
+["Cada una vive en internet, en GitHub o Netlify, y se instala en el móvil como una app más.","Each one lives online, on GitHub or Netlify, and installs on your phone like any other app.","Ognuno vive online, su GitHub o Netlify, e si installa sul telefono come un'app qualsiasi."],
+["Crece con el uso","It grows as I use it","Cresce con l'uso"],
+["Cada semana corrijo lo que falla y añado lo que echo en falta. Abajo, lo último.","Every week I fix what breaks and add what I miss. The latest is below.","Ogni settimana correggo ciò che non va e aggiungo ciò che manca. Qui sotto, le ultime novità."],
+["cambios esta semana","changes this week","modifiche questa settimana"],["herramientas actualizadas este mes","tools updated this month","strumenti aggiornati questo mese"],["días desde el último cambio","days since the last change","giorni dall'ultima modifica"],["Llegan Hacia el Teide y Teórica Permiso B: ya son diez herramientas.","Hacia el Teide and Teórica Permiso B arrive: ten tools now.","Arrivano Hacia el Teide e Teórica Permiso B: ora sono dieci strumenti."],["El catálogo se instala como app, con icono nuevo: viento en el nogal.","The catalogue installs as an app, with a new icon: wind in the walnut tree.","Il catalogo si installa come app, con una nuova icona: vento nel noce."],["Adiós a la radio: la portada va directa a lo importante.","Goodbye to the radio: the front page gets straight to the point.","Addio alla radio: la copertina va dritta al punto."],
 ["Las siete herramientas se pueden instalar en el móvil.","All seven tools can now be installed on a phone.","I sette strumenti si possono installare sul telefono."],
 ["Mis libros estrena portada: un jardín que florece con cada repaso.","Mis libros has a new cover: a garden that blooms with every review.","Mis libros ha una nuova copertina: un giardino che fiorisce a ogni ripasso."],
 ["Nace este catálogo.","This catalogue is born.","Nasce questo catalogo."]
@@ -1664,6 +1664,23 @@ var DIARIO=(function(){ try{ var d=JSON.parse(localStorage.getItem("haizea:diari
   return [{f:"2026-10-06",t:"Las siete herramientas se pueden instalar en el móvil."},
           {f:"2026-10-02",t:"Mis libros estrena portada: un jardín que florece con cada repaso."},
           {f:"2026-10-01",t:"Nace este catálogo."}]; })();
+[{f:"2026-10-19",t:"Llegan Hacia el Teide y Teórica Permiso B: ya son diez herramientas."},{f:"2026-10-19",t:"El catálogo se instala como app, con icono nuevo: viento en el nogal."},{f:"2026-10-20",t:"Adiós a la radio: la portada va directa a lo importante."}].forEach(function(n){ if(!DIARIO.some(function(d){ return d.t===n.t; })) DIARIO.push(n); });
+function computeFigs(){
+  var A=document.getElementById("figA"),B=document.getElementById("figB"),C=document.getElementById("figC"); if(!A) return;
+  var now=Date.now(), day=86400000, upd=(apps||[]).map(function(a){ return a.updated?new Date(a.updated+"T12:00:00").getTime():0; });
+  B.textContent=upd.filter(function(t){ return t && now-t<=30*day; }).length;
+  var dd=DIARIO.map(function(d){ return new Date(d.f+"T12:00:00").getTime(); });
+  var local=function(){ var all=upd.concat(dd).filter(Boolean); A.textContent=all.filter(function(t){ return now-t<=7*day; }).length;
+    var last=Math.max.apply(null,all.length?all:[now]); C.textContent=Math.max(0,Math.floor((now-last)/day)); };
+  local();
+  try{ var since=new Date(now-7*day).toISOString();
+    fetch("https://api.github.com/repos/haizeacotore05-tech/haizeacotore05-tech.github.io/commits?per_page=100&since="+since).then(function(r){ return r.ok?r.json():null; }).then(function(js){
+      if(!Array.isArray(js)) return; A.textContent=js.length;
+      if(js[0]&&js[0].commit){ var t=new Date(js[0].commit.committer.date).getTime(); C.textContent=Math.max(0,Math.floor((now-t)/day)); }
+    }).catch(function(){});
+  }catch(e){}
+}
+setTimeout(computeFigs,60);
 function renderDiario(){
   var el=document.getElementById("diarioList"); if(!el) return;
   el.innerHTML=DIARIO.slice().sort(function(a,b){ return b.f.localeCompare(a.f); }).slice(0,8).map(function(d,i){
