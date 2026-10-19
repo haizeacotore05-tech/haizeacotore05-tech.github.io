@@ -606,7 +606,7 @@ body.lang-it .specs div:nth-child(2) dd::before{content:"aggiornato il "}
         <div class="freq"><span>88</span><span>Desliza para sintonizar</span><span>108</span></div>
       </div>
     </div>
-<section class="taller" id="taller"><span class="hl" id="hobbyL">Hobbies</span><span class="hi" id="hobbyI"></span></section>
+<section class="taller" id="taller"><span class="hl" id="hobbyL">Con las manos:</span><span class="hi" id="hobbyI"></span></section>
     <p class="lede"><span>Herramientas para leer,</span><span>entender y no olvidar.</span><span class="leaf">Todas crecen despacio.</span></p>
     <section class="boletin" aria-label="Boletín del día">
       <div class="bcell bfrase"><b class="blabel">Para hoy · <span id="bday"></span></b><p id="bfrase"></p>
@@ -1971,7 +1971,7 @@ loadRemote().then(function(data){
 });
 
 /* ===== Ahora mismo ===== */
-var HOBBIES={es:["Hobbies",["Cerámica","Óleo"]],en:["Hobbies",["Ceramics","Oil painting"]],it:["Passioni",["Ceramica","Pittura a olio"]]};
+var HOBBIES={es:["Con las manos",["Cerámica","Óleo"]],en:["With my hands",["Ceramics","Oil painting"]],it:["Con le mani",["Ceramica","Pittura a olio"]]};
 function renderNow(){
   var H=HOBBIES[(typeof LANG!=="undefined"&&HOBBIES[LANG])?LANG:"es"], l=document.getElementById("hobbyL"), i=document.getElementById("hobbyI");
   if(!i) return; if(l) l.textContent=H[0]+":";
