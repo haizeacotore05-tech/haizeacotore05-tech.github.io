@@ -693,6 +693,13 @@ body .grid::before,body .grid::after{display:none !important}
 /* descripciones con la letra de antes, más suave */
 .me .who p{font-family:var(--sans) !important;font-size:15px !important;line-height:1.7 !important;color:var(--soft) !important;font-weight:400 !important}
 .grid .unit .desc{font-family:var(--sans) !important;font-size:15.5px !important;line-height:1.7 !important;color:var(--soft) !important;font-weight:400 !important}
+
+/* sin animaciones al cargar: la imagen está y ya */
+body .grid .unit{opacity:1 !important;transform:none !important;transition:none !important;animation:none !important}
+body .grid .unit .screen,body .grid .unit .screen *{transition:none !important;animation:none !important}
+body .grid .unit .screen.off img,body .grid .unit .screen.off .noimg{opacity:1 !important}
+body .grid .unit .screen img{visibility:hidden}
+body .grid .unit .screen img.lista{visibility:visible}
 </style>
 </head>
 <body>
@@ -2213,17 +2220,17 @@ function cnum(){
 /* capturas: recorta el espacio vacío y aclara el marco negro de la tablet */
 var _claras={};
 function aclarar(img){
-  var src=img.getAttribute("src")||""; if(img._ok===src) return;
-  if(_claras[src]){ img._ok=_claras[src]; img.src=_claras[src]; return; }
-  if(src.indexOf("data:")!==0) return;
+  var src=img.getAttribute("src")||""; if(img._ok===src){ img.classList.add("lista"); return; }
+  if(_claras[src]){ img._ok=_claras[src]; img.src=_claras[src]; img.classList.add("lista"); return; }
+  if(src.indexOf("data:")!==0){ img.classList.add("lista"); return; }
   var go=function(){
     try{
-      var w=img.naturalWidth,h=img.naturalHeight; if(!w||!h) return;
+      var w=img.naturalWidth,h=img.naturalHeight; if(!w||!h){ img.classList.add("lista"); return; }
       var c=document.createElement("canvas"); c.width=w; c.height=h; var x=c.getContext("2d"); x.drawImage(img,0,0);
       var d=x.getImageData(0,0,w,h), p=d.data, bg=[p[0],p[1],p[2]];
       var x0=w,y0=h,x1=0,y1=0,i,j,k;
       for(j=0;j<h;j++) for(i=0;i<w;i++){ k=(j*w+i)*4; if(Math.abs(p[k]-bg[0])+Math.abs(p[k+1]-bg[1])+Math.abs(p[k+2]-bg[2])>40){ if(i<x0)x0=i; if(i>x1)x1=i; if(j<y0)y0=j; if(j>y1)y1=j; } }
-      if(x1<=x0||y1<=y0) return;
+      if(x1<=x0||y1<=y0){ img.classList.add("lista"); return; }
       var dark=new Uint8Array(w*h);
       for(i=0;i<w*h;i++){ k=i*4; var mx=Math.max(p[k],p[k+1],p[k+2]), mn=Math.min(p[k],p[k+1],p[k+2]); if((p[k]+p[k+1]+p[k+2])/3<75 && mx-mn<40) dark[i]=1; }
       var seen=new Uint8Array(w*h), st=[], cy=(y0+y1)>>1, cx=(x0+x1)>>1;
@@ -2244,8 +2251,9 @@ function aclarar(img){
       }
       var m=Math.round(0.05*Math.max(x1-x0,y1-y0)), ax=Math.max(0,x0-m), ay=Math.max(0,y0-m), bw=Math.min(w,x1+m)-ax, bh=Math.min(h,y1+m)-ay;
       var c2=document.createElement("canvas"); c2.width=bw; c2.height=bh; c2.getContext("2d").drawImage(c,ax,ay,bw,bh,0,0,bw,bh);
-      var out=c2.toDataURL("image/jpeg",0.9); _claras[src]=out; img._ok=out; img.src=out;
+      var out=c2.toDataURL("image/jpeg",0.9); _claras[src]=out; img._ok=out; img.src=out; img.classList.add("lista");
     }catch(e){}
+    img.classList.add("lista");
   };
   if(img.complete&&img.naturalWidth) go(); else img.addEventListener("load",go,{once:true});
 }
