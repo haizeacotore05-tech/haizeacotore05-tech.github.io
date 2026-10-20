@@ -560,6 +560,15 @@ body.lang-it .specs div:nth-child(2) dd::before{content:"aggiornato il "}
 
 .howto{margin-top:120px !important}
 .howto p{max-width:44ch;margin:0 auto !important}
+
+/* ===== ficha personal más horizontal ===== */
+.me.out{display:grid !important;grid-template-columns:64px 1fr;column-gap:16px;row-gap:0;align-items:center;max-width:620px}
+.me .portrait{width:64px !important;height:80px !important;padding:3px !important;grid-row:1}
+.me .portrait .tape{width:30px;height:10px;top:-6px}
+.me .who{display:contents}
+.me .who h2{grid-column:2;grid-row:1;margin:0 !important;font-size:1.6rem !important;align-self:center}
+.me .who p{grid-column:1/-1;margin:16px 0 0 !important;max-width:none !important;font-size:.98rem !important;line-height:1.7 !important}
+.me .who .links,.me .who .editbar{grid-column:1/-1}
 </style>
 </head>
 <body>
