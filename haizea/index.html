@@ -197,7 +197,7 @@ a.screen{display:block;text-decoration:none}
 .power{position:absolute;right:18px;bottom:16px;width:30px;height:30px;border-radius:50%;
   background:var(--chrome);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
   font-family:var(--mono);font-size:.6rem;color:var(--soft);z-index:5;box-shadow:0 1px 2px var(--shadow)}
-.tapme{position:absolute;right:56px;bottom:19px;font-family:var(--mono);font-size:.54rem;letter-spacing:.14em;
+.tapme{position:absolute;right:44px;bottom:19px;font-family:var(--mono);font-size:.54rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--faint);opacity:0;transition:opacity .3s}
 .screen.off .tapme{opacity:.9}
 .screen:not(.off) .tapme{opacity:0}
@@ -784,6 +784,7 @@ var VINE = '<svg class="vine" viewBox="0 0 90 90" fill="none" stroke="currentCol
  '<path d="M57 24c2-9 9-14 19-15-2 10-8 16-17 18"/>'+
  '</svg>';
 
+var DESK=!!(window.matchMedia && matchMedia("(hover:hover) and (pointer:fine)").matches);
 var LS="haizea:showroom:v1", LSKEY="haizea:showroom:key", LSP="haizea:showroom:profile";
 var PROFILE_DEFAULT = {
   name:"Haizea Cotoré",
@@ -889,11 +890,13 @@ function night(){ return document.body.classList.contains("night"); }
         x.beginPath(); x.moveTo(dp.x,dp.y); x.lineTo(dp.x-dp.l*0.18,dp.y+dp.l); x.stroke(); });
     }
     if(WEATHER==="cloud"){ x.fillStyle = dark ? "rgba(120,110,100,.06)" : "rgba(255,255,255,.12)"; x.fillRect(0,0,W,H*0.7); }
+    if(!DESK){ // en ordenador no hay punto de luz que siga al ratón
     var cxg=W/2+px*W*0.42, cyg=H*0.3+py*H*0.2;
     var lg=x.createRadialGradient(cxg,cyg,0,cxg,cyg,W*0.45);
     lg.addColorStop(0, dark?"rgba(224,118,60,.10)":"rgba(255,242,218,.55)");
     lg.addColorStop(1,"rgba(0,0,0,0)");
     x.fillStyle=lg; x.fillRect(0,0,W,H);
+    }
     requestAnimationFrame(loop);
   }
   loop();
@@ -1004,7 +1007,6 @@ function unit(a){
       '<div class="inner">'+img+'<div class="scan"></div><div class="beam"></div><div class="glare"></div></div>'+
       '<i class="dial"></i><i class="led'+(estado==="activa"?"":" off")+'"></i>'+
       '<span class="tapme">'+(a.url?"Toca para abrir":(estado==="privada"?"Uso interno":"Sin enlace"))+'</span>'+
-      '<button class="power" data-power aria-label="Encender o apagar">⏻</button>'+
     '</'+tag+'>'+
     '<p class="code">'+esc(a.code||"")+'</p>'+
     '<h2>'+esc(a.name)+'<span class="badge '+estado+'">'+label+'</span></h2>'+
