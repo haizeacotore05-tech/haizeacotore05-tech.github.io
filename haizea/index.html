@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon-nogal.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Mrs+Saint+Delafield&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#E7DECF; --panel:#F3EDE2; --ink:#1C1814; --soft:#5C5349; --faint:#8D8477;
@@ -603,6 +603,92 @@ body.night{--orange:#9BB683;--amber:#B9CC9F;--glow:rgba(155,182,131,.5)}
 h1.brand{display:inline-flex !important;align-items:center;gap:.5em}
 .brandmark{width:1.35em;height:1.35em;border-radius:24%;flex:0 0 auto;box-shadow:0 2px 6px var(--shadow)}
 .console .conhead>div:first-child{align-items:center !important}
+
+/* ===================== estilo Pinterest (oct 2026) ===================== */
+:root{--script:"Mrs Saint Delafield",cursive;--garamond:"EB Garamond",Georgia,serif}
+/* cabecera: logo + HAIZEA a la izquierda, idiomas y modo noche a la derecha */
+.console{background:none !important;border:0 !important;box-shadow:none !important;padding:0 !important;max-width:none !important;overflow:visible !important}
+.console .branch,.console .lampdot,.console .tag{display:none !important}
+.console .conhead{flex-direction:row !important;align-items:center !important;justify-content:space-between !important;gap:10px !important}
+.console .lamp{transform:scale(.85);transform-origin:right center}
+h1.brand{font-family:var(--garamond) !important;font-weight:500 !important;font-size:1.05rem !important;letter-spacing:.42em !important;gap:12px !important}
+.brandmark{width:32px !important;height:32px !important;border-radius:8px !important}
+/* el cuadro */
+.cuadro{position:relative;height:236px;margin:16px 0 0;border-radius:4px;overflow:hidden}
+.cuadro svg{position:absolute;inset:0;width:100%;height:100%}
+.cuadro .csello{position:absolute;left:50%;top:22px;width:44px;height:44px;margin-left:-22px;border-radius:11px;
+  box-shadow:0 4px 16px rgba(40,25,10,.35);outline:1px solid rgba(251,244,228,.5);outline-offset:4px}
+.cuadro .ctitulo{position:absolute;left:0;right:0;top:78px;margin:0;text-align:center;font-family:var(--script);font-weight:400;
+  font-size:46px;line-height:.86;color:#FBF4E4;text-shadow:0 2px 14px rgba(60,30,15,.35);letter-spacing:0}
+.cuadro .cpie{position:absolute;left:0;right:0;bottom:18px;margin:0;text-align:center;font-family:var(--garamond);font-size:11px;
+  letter-spacing:.24em;text-transform:uppercase;color:#FBF4E4}
+@media (min-width:700px){.cuadro{height:300px}.cuadro .ctitulo{top:96px;font-size:62px}.cuadro .csello{top:26px;width:52px;height:52px;margin-left:-26px}}
+/* tu ficha */
+.me.out{margin-top:22px !important;grid-template-columns:58px 1fr !important;column-gap:14px !important;align-items:center !important}
+.me .portrait{width:58px !important;height:74px !important;padding:0 !important;background:none !important;box-shadow:none !important;transform:none !important;
+  border-radius:29px 29px 3px 3px !important;outline:1.5px solid #6F7238;outline-offset:3px;overflow:hidden}
+.me .portrait .tape{display:none !important}
+.me .portrait .frame,.me .portrait img{width:100% !important;height:100% !important;border-radius:0 !important}
+.me .portrait img{object-fit:cover;filter:sepia(.18) saturate(1.05)}
+.me .who h2{grid-column:2;font-family:var(--script) !important;font-size:2rem !important;line-height:1 !important;color:var(--ink) !important;align-self:end !important}
+.me .who .barrio{grid-column:2;grid-row:2;align-self:start;font-family:var(--garamond);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#6F7238;margin-top:2px}
+body.night .me .who .barrio{color:#B9C08A}
+.me .portrait{grid-row:1/3 !important}
+.me .who p{font-family:var(--garamond) !important;font-size:15.5px !important;line-height:1.5 !important;margin:12px 0 0 !important;color:var(--ink) !important}
+.me .links{margin-top:12px !important}
+.me .links a{font-family:var(--garamond) !important;font-size:11px !important;letter-spacing:.24em !important;text-transform:uppercase !important;font-weight:400 !important;
+  color:var(--ink) !important;border:1px solid var(--ink) !important;padding:7px 14px !important;text-decoration:none}
+/* con las manos */
+.taller{margin-top:10px !important;padding:0 !important;gap:10px !important;border:0 !important}
+.taller .hl{font-family:var(--garamond) !important;font-size:10.5px !important;letter-spacing:.2em;text-transform:uppercase;color:var(--faint) !important}
+.taller .hi{gap:10px !important}
+.taller .hi span{font-family:var(--garamond) !important;font-style:italic;font-size:15px !important;color:var(--ink) !important;display:inline-flex;align-items:center;gap:8px}
+.taller .hi span::before{content:"";width:9px;height:9px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#9FAE97}
+.taller .hi span+i+span::before{background:#C9A48A}
+.taller .hi i{display:none !important}
+/* colecciones */
+.ola{display:block;width:100%;height:16px;margin:18px 0 0;color:#6F7238}
+body.night .ola{color:#9BB683}
+.stats{display:none !important}
+.rackhead{margin:6px 0 0 !important;display:flex !important;align-items:baseline !important;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.rackhead::after,.rackhead .sprig,#rackcount{display:none !important}
+.rackhead .colect{margin:0;font-family:var(--script);font-weight:400;font-size:34px;color:var(--ink);letter-spacing:0;text-transform:none}
+.rackhead .cnum{font-family:var(--garamond);font-style:italic;font-size:13px;color:var(--faint);letter-spacing:0;text-transform:none}
+.fchips{margin-top:2px !important;gap:4px 16px !important}
+.fchips button{font-family:var(--garamond) !important;font-style:italic;font-size:15px !important;color:var(--faint) !important;box-shadow:none !important;padding:2px 0 6px !important}
+.fchips button[aria-pressed="true"]{color:var(--ink) !important;font-weight:600 !important;box-shadow:none !important;text-decoration:underline wavy #6F7238;text-underline-offset:6px}
+/* las apps: una debajo de otra, centradas, en recuadros claros */
+body .grid{display:flex !important;flex-direction:column !important;align-items:center !important;gap:56px !important;padding-top:18px !important;perspective:none !important}
+body .grid .unit{width:86% !important;max-width:360px !important;text-align:center;align-items:center}
+.grid .slot,.grid .rail,.grid .vine,.grid .dial,.grid .led,.grid .tapme,.grid .power,.grid .scan,.grid .beam,.grid .glare,.grid .noise{display:none !important}
+body .grid .unit .screen{transform:none !important;aspect-ratio:auto !important;width:100%;background:#F6F1E6 !important;border:0 !important;border-radius:26px !important;
+  padding:6% !important;box-shadow:0 8px 26px rgba(60,40,20,.10) !important;animation:none !important}
+body.night .grid .unit .screen{background:#E9E2D3 !important}
+body .grid .unit .screen .inner{background:none !important;box-shadow:none !important;border-radius:0 !important;height:auto !important}
+body .grid .unit .screen img{opacity:1 !important;height:auto !important;max-height:340px;object-fit:contain !important;filter:none !important;transform:none !important;animation:none !important;margin:0 auto}
+body .grid .unit .screen .noimg{opacity:1 !important;aspect-ratio:4/3;border-radius:14px}
+.grid .unit .code{display:block !important;margin:16px 0 0 !important;font-family:var(--garamond) !important;font-size:12px !important;letter-spacing:.2em !important;text-transform:uppercase !important;color:var(--faint) !important;font-weight:400 !important}
+.grid .unit h2{font-family:var(--script) !important;font-size:44px !important;line-height:1 !important;margin:4px 0 0 !important;display:flex;flex-direction:column;align-items:center;gap:2px}
+.grid .unit h2 .badge{margin:0 !important;font-family:var(--garamond) !important;font-size:11px !important;letter-spacing:.16em !important;text-transform:uppercase !important}
+.grid .unit .desc{font-family:var(--garamond) !important;font-size:17px !important;line-height:1.5 !important;color:var(--ink) !important;margin:8px 0 0 !important;max-width:none !important}
+.grid .unit .uso{font-family:var(--garamond) !important;font-style:italic !important;font-size:16px !important;line-height:1.55 !important;color:var(--soft) !important;
+  margin:14px auto 0 !important;max-width:30ch !important;padding:16px 0 0 !important;border:0 !important;position:relative}
+.grid .unit .uso::before{content:"";position:absolute;top:0;left:50%;width:36px;margin-left:-18px;border-top:1px solid #6F7238}
+.grid .unit .specs{display:none !important}
+.grid .unit .entrar{display:inline-block;margin-top:16px;font-family:var(--garamond);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+  border:1px solid var(--ink);padding:6px 12px;text-decoration:none}
+.grid .unit .editbar{justify-content:center}
+
+@media (max-width:559px){.wrap{padding:0 22px !important}}
+.cuadro{margin-top:12px !important}
+.fchips{gap:4px 13px !important}
+.fchips button{font-size:14px !important}
+.taller{margin-top:12px !important}
+.ola{margin-top:14px !important}
+.fchips{flex-wrap:nowrap !important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.fchips::-webkit-scrollbar{display:none}
+.fchips button{white-space:nowrap;flex:0 0 auto}
+body .grid::before,body .grid::after{display:none !important}
 </style>
 </head>
 <body>
@@ -660,6 +746,25 @@ h1.brand{display:inline-flex !important;align-items:center;gap:.5em}
         </div>
         <div class="freq"><span>88</span><span>Desliza para sintonizar</span><span>108</span></div>
       </div>
+      <section class="cuadro" aria-label="Curiosa por naturaleza">
+        <svg viewBox="0 0 400 236" preserveAspectRatio="none" aria-hidden="true">
+          <defs><filter id="oleo" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9 .045" numOctaves="3" seed="4"/><feDisplacementMap in="SourceGraphic" scale="14"/></filter></defs>
+          <g filter="url(#oleo)">
+            <rect width="400" height="236" fill="#A4A98C"/>
+            <path d="M-10 0h70c-30 40 30 80 0 118s30 80 0 128h-70z" fill="#6F7238"/>
+            <path d="M60 0h58c-30 40 30 80 0 118s30 80 0 128H60c30-48-30-90 0-128S30 40 60 0z" fill="#D3C39E"/>
+            <path d="M118 0h62c-30 40 30 80 0 118s30 80 0 128h-62c30-48-30-90 0-128s-30-78 0-118z" fill="#A9B3AC"/>
+            <path d="M180 0h50c-30 40 30 80 0 118s30 80 0 128h-50c30-48-30-90 0-128s-30-78 0-118z" fill="#8C8F55"/>
+            <path d="M230 0h44c-30 40 30 80 0 118s30 80 0 128h-44c30-48-30-90 0-128s-30-78 0-118z" fill="#7A6A4E"/>
+            <path d="M274 0h60c-30 40 30 80 0 118s30 80 0 128h-60c30-48-30-90 0-128s-30-78 0-118z" fill="#C9B489"/>
+            <path d="M334 0h80v246h-80c30-48-30-90 0-128s-30-78 0-118z" fill="#8E9A93"/>
+          </g>
+          <rect width="400" height="236" fill="#3A2A18" opacity=".26"/>
+        </svg>
+        <img class="csello" src="icon-192-nogal.png" alt="HAIZEA" width="44" height="44">
+        <h2 class="ctitulo">Curiosa por<br>naturaleza</h2>
+        <p class="cpie">Hecho a mano en Bilbao</p>
+      </section>
     </div>
 <section class="taller" id="taller"><span class="hl" id="hobbyL">Con las manos:</span><span class="hi" id="hobbyI"></span></section>
     <p class="lede"><span>Herramientas para leer,</span><span>entender y no olvidar.</span><span class="leaf">Todas crecen despacio.</span></p>
@@ -1009,7 +1114,7 @@ function tuneByX(clientX){
 })();
 
 /* ---------- pintar ---------- */
-function unit(a){
+function unit(a,i){
   var img = a.img ? '<img src="'+a.img+'" alt="'+esc(a.name)+'" loading="lazy">'
                   : '<div class="noimg">'+esc((a.name||"?").slice(0,1))+'</div>';
   var estado=a.estado||"desarrollo";
@@ -1023,13 +1128,14 @@ function unit(a){
       '<i class="dial"></i><i class="led'+(estado==="activa"?"":" off")+'"></i>'+
       '<span class="tapme">'+(a.url?"Toca para abrir":(estado==="privada"?"Uso interno":"Sin enlace"))+'</span>'+
     '</'+tag+'>'+
-    '<p class="code">'+esc(a.code||"")+'</p>'+
+    '<p class="code">'+String((i||0)+1).padStart(2,"0")+(a.cat?' · '+esc(a.cat):'')+'</p>'+
     '<h2>'+esc(a.name)+'<span class="badge '+estado+'">'+label+'</span></h2>'+
     '<p class="desc">'+esc(a.desc||"")+'</p>'+
     (a.uso?'<p class="uso">'+esc(a.uso)+'</p>':'')+
     '<dl class="specs">'+(a.cat?'<div><dt>Categoría</dt><dd>'+esc(a.cat)+'</dd></div>':'<div style="display:none"></div>')+
       '<div><dt>Actualizada</dt><dd>'+fmt(a.updated)+'</dd></div>'+
       '<div><dt>Soporte</dt><dd>'+esc(a.soporte||"Navegador")+'</dd></div></dl>'+
+    (a.url?'<a class="entrar" href="'+esc(a.url)+'" target="_blank" rel="noopener">Entrar</a>':'')+
     (editing?'<div class="editbar"><button data-edit="'+esc(a.id)+'">Editar</button><button data-up="'+esc(a.id)+'">Subir</button><button data-del="'+esc(a.id)+'">Borrar</button></div>':'')+
   '</article>';
 }
@@ -1063,7 +1169,7 @@ function renderMe(){
   if(profile.web) links.push('<a href="'+esc(profile.web)+'" target="_blank" rel="noopener">Web</a>');
   el.innerHTML =
     '<div class="portrait" data-profile><i class="tape"></i><div class="frame">'+pic+'</div></div>'+
-    '<div class="who"><b>Al mando</b><h2>'+esc(profile.name)+'</h2><p>'+esc(profile.bio)+'</p>'+
+    '<div class="who"><b>Al mando</b><h2>'+esc(profile.name)+'</h2><small class="barrio">Begoña · Bilbao</small><p>'+esc(profile.bio)+'</p>'+
     (links.length?'<div class="links">'+links.join("")+'</div>':'')+
     (editing?'<div class="editbar"><button data-editme>Editar perfil</button></div>':'')+
     '</div>';
@@ -2061,7 +2167,7 @@ loadRemote().then(function(data){
 var HOBBIES={es:["Con las manos",["Cerámica","Óleo"]],en:["With my hands",["Ceramics","Oil painting"]],it:["Con le mani",["Ceramica","Pittura a olio"]]};
 function renderNow(){
   var H=HOBBIES[(typeof LANG!=="undefined"&&HOBBIES[LANG])?LANG:"es"], l=document.getElementById("hobbyL"), i=document.getElementById("hobbyI");
-  if(!i) return; if(l) l.textContent=H[0]+":";
+  if(!i) return; if(l) l.textContent=H[0];
   i.innerHTML=H[1].map(function(x){ return '<span>'+esc(x)+'</span>'; }).join('<i aria-hidden="true"></i>');
 }
 (function(){
@@ -2074,6 +2180,75 @@ function renderNow(){
     if(rack){ var fc=document.getElementById("fchips"); if(!fc){ fc=document.createElement("div"); fc.className="fchips"; fc.id="fchips"; }
       rack.parentNode.insertBefore(fc, rack.nextSibling); syncChips(); }
   },5);
+})();
+
+/* ===== estilo Pinterest: textos, colecciones y capturas sin bordes negros ===== */
+D("Hecho a mano en Bilbao","Handmade in Bilbao","Fatto a mano a Bilbao");
+D("Colecciones","Collections","Collezioni");
+D("Curiosa por","Curious by","Curiosa per"); D("naturaleza","nature","natura");
+D("Entrar","Open","Entra");
+(function(){
+  setTimeout(function(){
+    var rack=document.querySelector(".rackhead"); if(!rack) return;
+    if(!rack.querySelector(".colect")){
+      var h=document.createElement("h3"); h.className="colect"; h.textContent="Colecciones"; rack.insertBefore(h, rack.firstChild);
+      var n=document.createElement("span"); n.className="cnum"; rack.appendChild(n);
+      var ola=document.createElementNS("http://www.w3.org/2000/svg","svg"); ola.setAttribute("class","ola"); ola.setAttribute("viewBox","0 0 400 26");
+      ola.setAttribute("preserveAspectRatio","none"); ola.setAttribute("aria-hidden","true");
+      ola.innerHTML='<path d="M0 13c25-14 50-14 75 0s50 14 75 0 50-14 75 0 50 14 75 0 50-14 75 0 50 14 75 0" fill="none" stroke="currentColor" stroke-width="1.5"/>';
+      rack.parentNode.insertBefore(ola, rack);
+    }
+    cnum();
+  },20);
+})();
+function cnum(){
+  var n=document.querySelector(".rackhead .cnum"); if(!n||typeof apps==="undefined") return;
+  var u=apps.filter(function(a){ return a.estado==="activa"||a.estado==="privada"; }).length;
+  n.innerHTML=apps.length+"<span> herramientas · </span>"+u+"<span> en uso</span>";
+}
+/* capturas: recorta el espacio vacío y aclara el marco negro de la tablet */
+var _claras={};
+function aclarar(img){
+  var src=img.getAttribute("src")||""; if(img._ok===src) return;
+  if(_claras[src]){ img._ok=_claras[src]; img.src=_claras[src]; return; }
+  if(src.indexOf("data:")!==0) return;
+  var go=function(){
+    try{
+      var w=img.naturalWidth,h=img.naturalHeight; if(!w||!h) return;
+      var c=document.createElement("canvas"); c.width=w; c.height=h; var x=c.getContext("2d"); x.drawImage(img,0,0);
+      var d=x.getImageData(0,0,w,h), p=d.data, bg=[p[0],p[1],p[2]];
+      var x0=w,y0=h,x1=0,y1=0,i,j,k;
+      for(j=0;j<h;j++) for(i=0;i<w;i++){ k=(j*w+i)*4; if(Math.abs(p[k]-bg[0])+Math.abs(p[k+1]-bg[1])+Math.abs(p[k+2]-bg[2])>40){ if(i<x0)x0=i; if(i>x1)x1=i; if(j<y0)y0=j; if(j>y1)y1=j; } }
+      if(x1<=x0||y1<=y0) return;
+      var dark=new Uint8Array(w*h);
+      for(i=0;i<w*h;i++){ k=i*4; var mx=Math.max(p[k],p[k+1],p[k+2]), mn=Math.min(p[k],p[k+1],p[k+2]); if((p[k]+p[k+1]+p[k+2])/3<75 && mx-mn<40) dark[i]=1; }
+      var seen=new Uint8Array(w*h), st=[], cy=(y0+y1)>>1, cx=(x0+x1)>>1;
+      function seed(a,b){ var q=b*w+a; if(dark[q]&&!seen[q]){ seen[q]=1; st.push(q); return true; } return false; }
+      for(i=x0;i<cx;i++) if(seed(i,cy)) break;
+      for(i=x1;i>cx;i--) if(seed(i,cy)) break;
+      for(j=y0;j<cy;j++) if(seed(cx,j)) break;
+      while(st.length){ var q=st.pop(), a=q%w, b=(q/w)|0;
+        if(a>0&&dark[q-1]&&!seen[q-1]){seen[q-1]=1;st.push(q-1);} if(a<w-1&&dark[q+1]&&!seen[q+1]){seen[q+1]=1;st.push(q+1);}
+        if(b>0&&dark[q-w]&&!seen[q-w]){seen[q-w]=1;st.push(q-w);} if(b<h-1&&dark[q+w]&&!seen[q+w]){seen[q+w]=1;st.push(q+w);} }
+      var n=0; for(i=0;i<w*h;i++) if(seen[i]) n++;
+      if(n>w*h*0.02){
+        for(j=0;j<h;j++) for(i=0;i<w;i++){ var q2=j*w+i; if(!seen[q2]){ var nb=(i>1&&seen[q2-2])||(i<w-2&&seen[q2+2])||(j>1&&seen[q2-2*w])||(j<h-2&&seen[q2+2*w]); if(!nb) continue; k=q2*4; if((p[k]+p[k+1]+p[k+2])/3>=150) continue; }
+          else k=q2*4;
+          var t=Math.min(1,Math.max(0,((p[k]+p[k+1]+p[k+2])/3-20)/130)), f=0.9+0.12*t;
+          p[k]=214*f; p[k+1]=204*f; p[k+2]=186*f; }
+        x.putImageData(d,0,0);
+      }
+      var m=Math.round(0.05*Math.max(x1-x0,y1-y0)), ax=Math.max(0,x0-m), ay=Math.max(0,y0-m), bw=Math.min(w,x1+m)-ax, bh=Math.min(h,y1+m)-ay;
+      var c2=document.createElement("canvas"); c2.width=bw; c2.height=bh; c2.getContext("2d").drawImage(c,ax,ay,bw,bh,0,0,bw,bh);
+      var out=c2.toDataURL("image/jpeg",0.9); _claras[src]=out; img._ok=out; img.src=out;
+    }catch(e){}
+  };
+  if(img.complete&&img.naturalWidth) go(); else img.addEventListener("load",go,{once:true});
+}
+(function(){
+  var g=document.getElementById("grid"); if(!g) return;
+  var run=function(){ g.querySelectorAll(".screen img").forEach(function(im){ im.loading="eager"; aclarar(im); }); cnum(); };
+  new MutationObserver(run).observe(g,{childList:true}); run();
 })();
 function syncChips(){ var fc=document.getElementById("fchips"), st=document.getElementById("stations"); if(fc&&st) fc.innerHTML=st.innerHTML; }
 (function(){ var st=document.getElementById("stations"); if(st&&window.MutationObserver) new MutationObserver(syncChips).observe(st,{childList:true,subtree:true,attributes:true}); })();
