@@ -936,7 +936,7 @@ Reglas:
 Responde SOLO con un JSON: {"nombre":"…","maps":"texto para buscar en Google Maps","min":20,"min_siguiente":15,"que":"qué es, 1-2 frases sencillas","imprescindible":"lo que no hay que perderse","aviso":"si hace falta reservar, andar, horarios… o vacío"}
 ${LANG==="it"?"Escribe que, imprescindible y aviso en italiano. ":""}"min" = minutos de moto desde la parada anterior; "min_siguiente" = minutos desde la nueva hasta la siguiente${next?"":" (pon 0)"}.`;
   try{
-    const x=await sample.json(prompt,{modelTier:"default",cache:false});
+    const x=await sample.json(prompt,{modelTier:"quick",cache:false});
     if(!x||!x.nombre) throw {code:"invalid_json"};
     const nm=Math.max(1,Math.round(Number(x.min)||s.m)), nn=Math.max(0,Math.round(Number(x.min_siguiente)||(next?next.m:0)));
     if(type==="route"){
@@ -970,7 +970,7 @@ function buildPrompt(){
   const fechas=f.fecha?Array.from({length:f.dias},(_,i)=>{const iso=addDays(f.fecha,i);return `${iso} (${dayName(iso)}): anochece hacia las ${hm(sunsetMin(iso))}`}):[];
   const mes=f.fecha?D(f.fecha).toLocaleDateString(LOC(),{month:"long"}):"";
   const vistos=Object.values(st.visitados).map(v=>v.n);
-  const lug=DATA.lugares.filter(l=>!seen(l.n)).map(l=>`- ${l.n} [${CATN[l.cat]}, ${l.zona}, ${l.t} desde Bilbao]: ${l.que} Imprescindible: ${l.imp}${l.aviso?" Aviso: "+l.aviso:""}`).join("\n");
+  const lug=DATA.lugares.filter(l=>!seen(l.n)).map(l=>`- ${l.n} (${CATN[l.cat]}, ${l.zona}, ${l.t})`).join("\n");
   const baseTxt=base?`RUTA DE PARTIDA «${base.t}» (adáptala; cambia las paradas en las que ya han estado):\n`+base.days.map(([dn,s])=>dn+": "+s.map(x=>`${x.n} (${x.m} min de moto; ${x.que||""})`).join(" → ")).join("\n"):"";
   return `Eres quien planifica escapadas en moto para Haizea y Lorenzo, una pareja que vive en Bilbao. Lorenzo conduce la moto y Haizea va de pasajera. Monta un itinerario realista y bonito.
 
@@ -1049,7 +1049,7 @@ document.addEventListener("click",e=>{
   if(d.planlibre){const f=libreFor(d.planlibre);const m=f&&/desde (\d{1,2}:\d{2})/.exec(f.sabd.txt);let sal="10:00";if(m){const t=toMin(m[1])+30;sal=hm(t)}aiForm={...aiForm,ruta:"",fecha:f&&f.sabd.tipo!=="libre"?addDays(d.planlibre,1):d.planlibre,dias:f&&f.sabd.tipo==="libre"&&f.dom.tipo==="libre"?2:1,salida:sal};aiState={busy:false,res:null,err:""};go("ia");return}
   if(d.undo){const [,id,day]=d.undo.split(":");const c={...((st.rutas[id]||{}).cambios||{})};Object.keys(c).forEach(k=>{if(k.startsWith(day+"-"))delete c[k]});setRuta(id,{cambios:c});return}
   if(d.cat){lugCat=d.cat;render(false);return}
-  if(d.aiwith){const r=R(d.aiwith),s=st.rutas[d.aiwith]||{};aiForm={...aiForm,ruta:r.id,destino:"",fecha:s.fecha||aiForm.fecha,dias:2,salida:s.hSab||"10:00",tiempo:d.wx||s.tiempo||aiForm.tiempo||""};aiState={busy:false,res:null,err:""};go("ia");return}
+  if(d.aiwith){const r=R(d.aiwith),s=st.rutas[d.aiwith]||{};aiForm={...aiForm,ruta:r.id,destino:"",fecha:s.fecha||aiForm.fecha,dias:2,salida:s.hSab||"10:00",tiempo:d.wx||s.tiempo||aiForm.tiempo||"",notas:s.nota||aiForm.notas||""};aiState={busy:false,res:null,err:""};go("ia");return}
   if(d.aiplace){const l=DATA.lugares.find(x=>x.id===d.aiplace);aiForm={...aiForm,ruta:"",destino:"Un finde que incluya "+l.n+" ("+l.zona+")",dias:2};aiState={busy:false,res:null,err:""};go("ia");return}
   if(d.ailarga!==undefined){aiForm={...aiForm,ruta:"",destino:LANG==="it"?(d.ailarga?"Viaggio di più giorni in Francia, nella zona che merita di più":"Viaggio di più giorni, dove merita di più"):(d.ailarga?"Viaje de varios días a "+d.ailarga+", a la zona que más merezca la pena":"Viaje de varios días, a donde más merezca la pena"),dias:Math.max(4,aiForm.dias||4)};aiState={busy:false,res:null,err:""};go("ia");return}
   if(d.aipuente){aiForm={...aiForm,ruta:"",destino:d.aipuente,dias:Number(d.aidias)||3};aiState={busy:false,res:null,err:""};go("ia");return}
