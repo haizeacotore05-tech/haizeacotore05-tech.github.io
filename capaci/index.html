@@ -1445,11 +1445,11 @@ body.editing .emo[data-k]:empty::before{content:"+ añadir frase";opacity:.6}
  window.claude={use:async n=>n==='db'?db:n==='user'?{isOwner:async()=>isMe(await authReady)}:null};
  /* entrada escondida: tocar 5 veces el título */
  let n=0,t=0;
- document.addEventListener('click',async e=>{if(!e.target.closest('#barT,.gate-in h1,.tp-t'))return;const now=Date.now();n=now-t<1500?n+1:1;t=now;if(n<5)return;n=0;
+ document.addEventListener('click',async e=>{const tt=e.target.closest('b,h1,h2,p,span,div');if(!tt||!/^capaci di meraviglia$/i.test((tt.textContent||'').replace(/\s+/g,' ').trim()))return;const now=Date.now();n=now-t<1500?n+1:1;t=now;if(n<5)return;n=0;
   if(isMe(auth.currentUser)){if(confirm('Cerrar sesión de editora?')){await auth.signOut();location.reload()}return}
   const pr=new firebase.auth.GoogleAuthProvider();pr.setCustomParameters({login_hint:OWNER,prompt:'select_account'});
   try{const r=await auth.signInWithPopup(pr);if(isMe(r.user))location.reload();else{await auth.signOut();alert('Esta parte solo es para Haizea 💛')}}
-  catch(err){if(err&&(err.code==='auth/popup-blocked'||err.code==='auth/operation-not-supported-in-this-environment'))auth.signInWithRedirect(pr);else if(err&&err.code!=='auth/popup-closed-by-user'&&err.code!=='auth/cancelled-popup-request')alert('No se ha podido entrar: '+(err.code||err))}
+  catch(err){if(err&&(err.code==='auth/popup-blocked'||err.code==='auth/operation-not-supported-in-this-environment'))auth.signInWithRedirect(pr);else if(err&&err.code==='auth/unauthorized-domain')alert('Falta autorizar este dominio en Firebase: Authentication → Configuración → Dominios autorizados → añade '+location.hostname);else if(err&&err.code!=='auth/popup-closed-by-user'&&err.code!=='auth/cancelled-popup-request')alert('No se ha podido entrar: '+(err.code||err))}
  },true);
 })();
 </script>
