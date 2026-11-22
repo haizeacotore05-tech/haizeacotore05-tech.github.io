@@ -1443,14 +1443,20 @@ body.editing .emo[data-k]:empty::before{content:"+ añadir frase";opacity:.6}
    return{set:v=>r.set(v),onSnapshot:(cb,err)=>r.onSnapshot(sn=>{if(sn.exists)cb(sn);else cb({exists:true,data:()=>({items:DEF})})},err)}},
   collection:p=>fs.collection(p)};
  window.claude={use:async n=>n==='db'?db:n==='user'?{isOwner:async()=>isMe(await authReady)}:null};
+
+ function openLogin(){let m=document.getElementById('lgM');
+  if(!m){m=document.createElement('div');m.id='lgM';m.className='ed-m';m.innerHTML='<div class="ed-b"><p class="b-k">Entrar para editar</p><p class="ed-d">'+OWNER+'</p><label>Contraseña<input id="lgP" type="password" autocomplete="current-password" style="display:block;width:100%;margin-top:4px;font:inherit;padding:8px;border:1px solid var(--ink);background:var(--bg2);color:var(--ink);border-radius:0"></label><div class="ed-r"><button class="btn" id="lgX">Cancelar</button><button class="btn pri" id="lgOk">Entrar</button></div><p class="ed-e" id="lgE"></p></div>';document.body.appendChild(m);
+   m.querySelector('#lgX').onclick=()=>{m.hidden=true};
+   const go=async()=>{const pw=m.querySelector('#lgP').value;if(!pw)return;m.querySelector('#lgOk').disabled=true;m.querySelector('#lgE').textContent='';
+    try{await auth.signInWithEmailAndPassword(OWNER,pw);location.reload()}catch(err){const c=err&&err.code||'';m.querySelector('#lgE').textContent=/wrong-password|invalid-credential|invalid-login/.test(c)?'Contraseña incorrecta.':/user-not-found/.test(c)?'Falta crear tu usuario en Firebase (Authentication → Usuarios → Agregar usuario).':/operation-not-allowed/.test(c)?'Falta activar «Correo electrónico/contraseña» en Firebase (Authentication → Método de acceso).':'No se ha podido entrar: '+c}
+    m.querySelector('#lgOk').disabled=false};
+   m.querySelector('#lgOk').onclick=go;m.querySelector('#lgP').addEventListener('keydown',e=>{if(e.key==='Enter')go()})}
+  m.hidden=false;setTimeout(()=>{const x=document.getElementById('lgP');x.value='';x.focus()},50)}
  /* entrada escondida: tocar 5 veces el título */
  let n=0,t=0;
  document.addEventListener('click',async e=>{const tt=e.target.closest('b,h1,h2,p,span,div');if(!tt||!/^capaci di meraviglia$/i.test((tt.textContent||'').replace(/\s+/g,' ').trim()))return;const now=Date.now();n=now-t<1500?n+1:1;t=now;if(n<5)return;n=0;
   if(isMe(auth.currentUser)){if(confirm('Cerrar sesión de editora?')){await auth.signOut();location.reload()}return}
-  const pr=new firebase.auth.GoogleAuthProvider();pr.setCustomParameters({login_hint:OWNER,prompt:'select_account'});
-  try{const r=await auth.signInWithPopup(pr);if(isMe(r.user))location.reload();else{await auth.signOut();alert('Esta parte solo es para Haizea 💛')}}
-  catch(err){if(err&&(err.code==='auth/popup-blocked'||err.code==='auth/operation-not-supported-in-this-environment'))auth.signInWithRedirect(pr);else if(err&&err.code==='auth/unauthorized-domain')alert('Falta autorizar este dominio en Firebase: Authentication → Configuración → Dominios autorizados → añade '+location.hostname);else if(err&&err.code!=='auth/popup-closed-by-user'&&err.code!=='auth/cancelled-popup-request')alert('No se ha podido entrar: '+(err.code||err))}
- },true);
+  openLogin()},true);
 })();
 </script>
 </head>
